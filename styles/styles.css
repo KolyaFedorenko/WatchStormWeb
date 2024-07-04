@@ -460,3 +460,11 @@ progress::-webkit-progress-value {
   height: 30px;
   width: 30px;
 }
+
+.vertical-line{
+  height: 100px;
+  width: 4px;
+  background: linear-gradient(180deg, #FFF553 0%, #ff7553 100%);
+  border-radius: 100px;
+  margin-left: 20px;
+}

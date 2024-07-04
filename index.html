@@ -45,6 +45,21 @@
 			</button>
 		</div>
 	</dialog>
+	<dialog id="informationDialog" class="movie-item" data-delete="" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center;">
+			<img src="images/watchstorm-icon2.png" style="width: 100px; height: 100px; object-fit: cover; display: block;">
+			<span class="vertical-line"></span>
+			<div style="margin-left: 20px; color: white;">
+				<span>WatchStormWeb</span>
+				<span id="spanReleaseVersion" class="movie-year">Version 1.2</span>
+				<span id="spanReleaseDate" class="movie-year">Released: 18.07.2022</span>
+				<span id="spanShowReleaseNotes" class="movie-year" style="text-decoration: underline; cursor: pointer;">Release Notes</span>
+			</div>
+		</div>
+		<div id="releaseNotesContainer" class="movie-container" style="display: none; margin-top: 20px;">
+			<span id="spanReleaseNotes" class="default-text">Release Notes</span>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">

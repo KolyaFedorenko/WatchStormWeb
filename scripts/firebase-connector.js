@@ -509,7 +509,7 @@ function addOnSettingsButtonClickListener(){
 		`
 		<div class="settingsContainer movie" style="cursor:pointer;">
 			<div class="awardLine">
-				<div class="settingsItem">
+				<div class="settingsItem" id="buttonInformationDialog">
 					<div>
 						<i class="fa-solid fa-circle-info fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
@@ -560,7 +560,39 @@ function addOnSettingsButtonClickListener(){
 			</div>
 		</div>
 		`;
+		addOnButtonInformationDialogClickListener();
 	}
+}
+
+function addOnButtonInformationDialogClickListener(){
+	let buttonInformationDialog = document.getElementById("buttonInformationDialog");
+	let informationDialog = document.getElementById("informationDialog");
+	let releaseNotesContainer = document.getElementById("releaseNotesContainer");
+	let spanShowReleaseNotes = document.getElementById("spanShowReleaseNotes");
+
+	buttonInformationDialog.onclick = function(){
+		informationDialog.showModal();
+		getLatestReleaseInfo();
+	}
+
+	informationDialog.addEventListener('click', function (event) {
+		let rect = informationDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			informationDialog.close();
+		}
+	});
+
+	spanShowReleaseNotes.addEventListener('click', function (event) {
+		event.stopPropagation();
+		if (releaseNotesContainer.style.display == 'none'){
+			releaseNotesContainer.style.display = 'block';
+		}
+		else {
+			releaseNotesContainer.style.display = 'none';
+		}
+	});
 }
 
 function addOnButtonDeleteMovieClickListener(){
@@ -571,6 +603,20 @@ function addOnButtonDeleteMovieClickListener(){
 		getUserMovies(getCookie("username"), false);
 	}
 }
+
+async function getLatestReleaseInfo() {
+	let spanReleaseVersion = document.getElementById("spanReleaseVersion");
+	let spanReleaseDate = document.getElementById("spanReleaseDate");
+	let spanReleaseNotes = document.getElementById("spanReleaseNotes");
+	let jsonReleaseInfo;
+  
+	const res = await fetch('https://api.github.com/repositories/511941040/releases/latest');
+	jsonReleaseInfo = await res.json();
+
+	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
+	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
+	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
+  }
 
 window.onload = function(){
 	authorizeUser();
