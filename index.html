@@ -60,6 +60,22 @@
 			<span id="spanReleaseNotes" class="default-text">Release Notes</span>
 		</div>
 	</dialog>
+	<dialog id="verificationDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Verification</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span id="spanReleaseNotes" class="default-text">
+				Verified status can be obtained by users who have rated at least 100 movies. The relationship between the number of movies
+				you have rated and the number of movies you need to get verified status is shown below.
+				Please note that you can only get verified status in the WatchStorm mobile application.
+			</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px; display: flex; justify-content: center; align-items: center; padding: 10px;">
+			<progress id="verificationProgress" value="0" max="100" style="width: 270px;"></progress>
+			<span id="spanVerificationRelationship" class="default-text" style="font-size: 10px; margin-left: 12px;">0/100</span>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">

@@ -24,6 +24,7 @@ const storage = getStorage(app);
 const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
+var movieCount = 0;
 
 function getUserMovies(username, favorite){
     get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
@@ -126,6 +127,7 @@ function getUserMovies(username, favorite){
 				moviesList.innerHTML += movieItem;
 			}
             console.log(movies[movie].title);
+			movieCount++;
         }
     })
 }
@@ -515,7 +517,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonVerificationDialog" style="margin-top: 20px;">
 					 <div>
 					 	<i class="fa-solid fa-circle-check fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Verification</span>
@@ -561,6 +563,7 @@ function addOnSettingsButtonClickListener(){
 		</div>
 		`;
 		addOnButtonInformationDialogClickListener();
+		addOnButtonVerificatioDialogClickListener();
 	}
 }
 
@@ -595,6 +598,28 @@ function addOnButtonInformationDialogClickListener(){
 	});
 }
 
+function addOnButtonVerificatioDialogClickListener(){
+	let buttonVerificationDialog = document.getElementById("buttonVerificationDialog");
+	let verificationDialog = document.getElementById("verificationDialog");
+	let verificationProgress = document.getElementById("verificationProgress");
+	let spanVerificationRelationship = document.getElementById("spanVerificationRelationship");
+
+	buttonVerificationDialog.onclick = function(){
+		verificationDialog.showModal();
+		verificationProgress.value = movieCount;
+		spanVerificationRelationship.innerHTML = `${movieCount}/100`;
+	}
+
+	verificationDialog.addEventListener('click', function (event) {
+		let rect = verificationDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			verificationDialog.close();
+		}
+	});
+}
+
 function addOnButtonDeleteMovieClickListener(){
 	buttonDeleteMovie.onclick = function() {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
@@ -616,7 +641,7 @@ async function getLatestReleaseInfo() {
 	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
 	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
-  }
+}
 
 window.onload = function(){
 	authorizeUser();
