@@ -76,6 +76,26 @@
 			<span id="spanVerificationRelationship" class="default-text" style="font-size: 10px; margin-left: 12px;">0/100</span>
 		</div>
 	</dialog>
+	<dialog id="changeDigitCodeDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Change 6-digit code</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				Please enter a new 6-digit code to access WatchStormWeb and click the "Save 6-digit code" button.
+				In case you forget the 6-digit code and you do not have access to WatchStormWeb, you can log into
+				the WatchStorm mobile application using your password and change the 6-digit code in the "WatchStormWeb" settings section.
+			</span>
+		</div>
+		<input id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="background-color: rgb(40, 40, 40); margin-top: 10px;">
+		<button id="buttonSaveDigitCode" disabled class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Save 6-digit code</button>
+		<div id="notificationDigitCodeHasBeenChanged" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
+		</div>
+		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">

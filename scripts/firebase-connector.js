@@ -523,7 +523,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Verification</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
@@ -564,6 +564,7 @@ function addOnSettingsButtonClickListener(){
 		`;
 		addOnButtonInformationDialogClickListener();
 		addOnButtonVerificatioDialogClickListener();
+		addOnButtonChangeDigitCodeDialogListener();
 	}
 }
 
@@ -620,6 +621,46 @@ function addOnButtonVerificatioDialogClickListener(){
 	});
 }
 
+function addOnButtonChangeDigitCodeDialogListener(){
+	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
+	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
+	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
+	let buttonSaveDigitCode = document.getElementById("buttonSaveDigitCode");
+	let notificationDigitCodeHasBeenChanged = document.getElementById("notificationDigitCodeHasBeenChanged");
+	let notificationEnterValidDigitCode = document.getElementById("notificationEnterValidDigitCode");
+
+	buttonChangeDigitCodeDialog.onclick = function(){
+		changeDigitCodeDialog.showModal();
+	}
+
+	inputNewDigitCode.addEventListener('input', function(event){
+		if (inputNewDigitCode.value.length == 6) {
+			buttonSaveDigitCode.disabled = false;
+		} else {
+			buttonSaveDigitCode.disabled = true;
+		}
+	});
+
+	buttonSaveDigitCode.onclick = function(){
+		if (inputNewDigitCode.value.length == 6){
+			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
+			setCookie('digitCode', inputNewDigitCode.value, {});
+			showNotification(notificationDigitCodeHasBeenChanged, "flex");
+		} else {
+			showNotification(notificationEnterValidDigitCode, "flex");
+		}
+	}
+
+	changeDigitCodeDialog.addEventListener('click', function (event) {
+		let rect = changeDigitCodeDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			changeDigitCodeDialog.close();
+		}
+	});
+}
+
 function addOnButtonDeleteMovieClickListener(){
 	buttonDeleteMovie.onclick = function() {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
@@ -627,6 +668,11 @@ function addOnButtonDeleteMovieClickListener(){
 		moviesList.innerHTML = '';
 		getUserMovies(getCookie("username"), false);
 	}
+}
+
+function showNotification(notificationElement, displayType){
+	notificationElement.style.display = displayType;
+	setTimeout(()=> notificationElement.style.display = "none", 4000);
 }
 
 async function getLatestReleaseInfo() {
