@@ -529,7 +529,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
@@ -565,6 +565,7 @@ function addOnSettingsButtonClickListener(){
 		addOnButtonInformationDialogClickListener();
 		addOnButtonVerificatioDialogClickListener();
 		addOnButtonChangeDigitCodeDialogListener();
+		addOnButtonExportMoviesClickListener();
 	}
 }
 
@@ -659,6 +660,20 @@ function addOnButtonChangeDigitCodeDialogListener(){
 			changeDigitCodeDialog.close();
 		}
 	});
+}
+
+function addOnButtonExportMoviesClickListener(){
+	let buttonExportMovies = document.getElementById("buttonExportMovies");
+
+	buttonExportMovies.onclick = function(){
+		get(child(dbRef, `WatchStorm/${getCookie("username")}/Movies/`)).then((snapshot) => {
+			var a = document.createElement("a");
+			var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], {type: 'application/json'});
+			a.href = URL.createObjectURL(file);
+			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
+			a.click();
+		})
+	}
 }
 
 function addOnButtonDeleteMovieClickListener(){
