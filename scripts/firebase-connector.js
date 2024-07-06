@@ -535,7 +535,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
@@ -566,6 +566,7 @@ function addOnSettingsButtonClickListener(){
 		addOnButtonVerificatioDialogClickListener();
 		addOnButtonChangeDigitCodeDialogListener();
 		addOnButtonExportMoviesClickListener();
+		addOnButtonDownloadWatchStormAppClickListener();
 	}
 }
 
@@ -676,6 +677,14 @@ function addOnButtonExportMoviesClickListener(){
 	}
 }
 
+function addOnButtonDownloadWatchStormAppClickListener(){
+	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
+
+	buttonDownloadWatchStormApp.onclick = function(){
+		downloadWatchStormLatest();
+	}
+}
+
 function addOnButtonDeleteMovieClickListener(){
 	buttonDeleteMovie.onclick = function() {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
@@ -702,6 +711,12 @@ async function getLatestReleaseInfo() {
 	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
 	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
+}
+
+async function downloadWatchStormLatest(){
+	const res = await fetch('https://api.github.com/repos/KolyaFedorenko/WatchStorm/releases/latest');
+	let jsonReleaseInfo = await res.json();
+	window.open(`${jsonReleaseInfo.assets[0].browser_download_url}`);
 }
 
 window.onload = function(){
