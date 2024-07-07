@@ -541,10 +541,10 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
 					<div>
 						<i class="fa-brands fa-github fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStorm Github Repository</span>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
 					</div>
 				</div>
 				<div class="settingsItem" style="margin-top: 20px;">
@@ -567,6 +567,7 @@ function addOnSettingsButtonClickListener(){
 		addOnButtonChangeDigitCodeDialogListener();
 		addOnButtonExportMoviesClickListener();
 		addOnButtonDownloadWatchStormAppClickListener();
+		addOnButtonWatchStormWebRepositoryClickListener();
 	}
 }
 
@@ -691,6 +692,14 @@ function addOnButtonDeleteMovieClickListener(){
 		movieDialog.close();
 		moviesList.innerHTML = '';
 		getUserMovies(getCookie("username"), false);
+	}
+}
+
+function addOnButtonWatchStormWebRepositoryClickListener(){
+	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
+
+	buttonWatchStormWebRepository.onclick = function(){
+		window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
 	}
 }
 
