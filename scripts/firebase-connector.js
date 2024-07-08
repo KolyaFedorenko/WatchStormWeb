@@ -547,7 +547,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonLeaveFeedback" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-star fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
@@ -568,6 +568,7 @@ function addOnSettingsButtonClickListener(){
 		addOnButtonExportMoviesClickListener();
 		addOnButtonDownloadWatchStormAppClickListener();
 		addOnButtonWatchStormWebRepositoryClickListener();
+		addOnButtonLeaveFeedbackClickListener();
 	}
 }
 
@@ -684,6 +685,38 @@ function addOnButtonDownloadWatchStormAppClickListener(){
 	buttonDownloadWatchStormApp.onclick = function(){
 		downloadWatchStormLatest();
 	}
+}
+
+function addOnButtonLeaveFeedbackClickListener(){
+	let buttonLeaveFeedback = document.getElementById("buttonLeaveFeedback");
+	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
+	let inputFeedbackText = document.getElementById("inputFeedbackText");
+	let buttonSendFeedback = document.getElementById("buttonSendFeedback");
+	let notificationFeedbackHasBeenSent = document.getElementById("notificationFeedbackHasBeenSent");
+	let notificationPleaseFillFeedbackField = document.getElementById("notificationPleaseFillFeedbackField");
+
+	buttonLeaveFeedback.onclick = function(){
+		leaveFeedbackDialog.showModal();
+	}
+
+	buttonSendFeedback.onclick = function(){
+		if (inputFeedbackText.value.length > 0){
+			set(ref(db, `WatchStormWeb/Feedback/${getCookie("username")}`), inputFeedbackText.value);
+			inputFeedbackText.value = "";
+			showNotification(notificationFeedbackHasBeenSent, "flex");
+		} else {
+			showNotification(notificationPleaseFillFeedbackField, "flex");
+		}
+	}
+
+	leaveFeedbackDialog.addEventListener('click', function (event) {
+		let rect = leaveFeedbackDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			leaveFeedbackDialog.close();
+		}
+	});
 }
 
 function addOnButtonDeleteMovieClickListener(){

@@ -96,6 +96,25 @@
 			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
 		</div>
 	</dialog>
+	<dialog id="leaveFeedbackDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Leave a feedback</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				Here you can leave feedback about WatchStormWeb, as well as suggestions for improving it.
+				Please note that the maximum character limit for your feedback is 340 characters. Thank you.
+			</span>
+		</div>
+		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
+		<button id="buttonSendFeedback" class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Send feedback</button>
+		<div id="notificationFeedbackHasBeenSent" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification positive">Your feedback has been sent!</span>
+		</div>
+		<div id="notificationPleaseFillFeedbackField" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification negative">Please fill in the feedback field!</span>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">
