@@ -553,7 +553,7 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
 					</div>
 				</div>
-				<div class="settingsItem" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonContactTheDeveloper" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-envelope fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Contact The Developer</span>
@@ -569,6 +569,7 @@ function addOnSettingsButtonClickListener(){
 		addOnButtonDownloadWatchStormAppClickListener();
 		addOnButtonWatchStormWebRepositoryClickListener();
 		addOnButtonLeaveFeedbackClickListener();
+		addOnButtonContactTheDeveloperClickListener();
 	}
 }
 
@@ -734,6 +735,31 @@ function addOnButtonWatchStormWebRepositoryClickListener(){
 	buttonWatchStormWebRepository.onclick = function(){
 		window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
 	}
+}
+
+function addOnButtonContactTheDeveloperClickListener(){
+	let buttonContactTheDeveloper = document.getElementById("buttonContactTheDeveloper");
+	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
+	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
+	let notificationEmailHasBeenCopied = document.getElementById("notificationEmailHasBeenCopied");
+
+	buttonContactTheDeveloper.onclick = function(){
+		contactTheDeveloperDialog.showModal();
+	}
+
+	buttonCopyEmail.onclick = function(){
+		navigator.clipboard.writeText("administrator@watchstorm.ru");
+		showNotification(notificationEmailHasBeenCopied, "flex");
+	}
+
+	contactTheDeveloperDialog.addEventListener('click', function (event) {
+		let rect = contactTheDeveloperDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			contactTheDeveloperDialog.close();
+		}
+	});
 }
 
 function showNotification(notificationElement, displayType){

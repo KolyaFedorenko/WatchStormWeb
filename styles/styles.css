@@ -540,3 +540,14 @@ textarea::placeholder {
   font-size: 14px;
   font-family: Roboto, sans-serif;
 }
+
+.copy-button{
+  filter: grayscale(1);
+  transition-duration: 500ms;
+  cursor: pointer;
+}
+
+.copy-button:hover{
+  filter: grayscale(0);
+  transition-duration: 500ms;
+}
