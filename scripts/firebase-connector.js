@@ -344,6 +344,8 @@ function addOnAddNewMovieListener(){
 	let buttonSearchMovie = document.getElementById("buttonSearchMovie");
 	let searchMovieDialog = document.getElementById("searchMovieDialog");
 	let buttonSaveRating = document.getElementById("buttonSaveRating");
+	let notificationPleaseFillInAllFields = document.getElementById("notificationPleaseFillInAllFields");
+	let notificationPleaseEnterMovieTitle = document.getElementById("notificationPleaseEnterMovieTitle");
 
 	addNewMovieButton.onclick = function() {
 		let addMovieDialog = document.getElementById("addMovieDialog");
@@ -430,14 +432,15 @@ function addOnAddNewMovieListener(){
 			}
 			else
 			{
-				movieTitleField.classList.add("wrong-input");
-				setTimeout(()=> movieTitleField.classList.remove("wrong-input"), 1000);
+				showNotification(notificationPleaseEnterMovieTitle, "flex");
 			}
 		}
 	}
 
 	buttonSaveRating.onclick = function(){
-		if (movieVisualRating.value != "" &&  movieCastRating.value != "" && moviePlotRating.value != ""){
+		if (movieTitleField.value != "" && movieYearField.value != "" &&
+			moviePosterPath.value != "" && movieDescription.value != "" &&
+			movieVisualRating.value != "" && movieCastRating.value != "" && moviePlotRating.value != ""){
 			set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieTitleField.value}`), {
 				title: movieTitleField.value,
 				year: movieYearField.value,
@@ -455,14 +458,7 @@ function addOnAddNewMovieListener(){
 		}
 		else
 		{
-			movieVisualRating.classList.add("wrong-input");
-			movieCastRating.classList.add("wrong-input");
-			moviePlotRating.classList.add("wrong-input");
-			setTimeout(()=> {
-				movieVisualRating.classList.remove("wrong-input");
-				movieCastRating.classList.remove("wrong-input");
-				moviePlotRating.classList.remove("wrong-input");
-			}, 1000);
+			showNotification(notificationPleaseFillInAllFields, "flex");
 		}
 	}
 }
