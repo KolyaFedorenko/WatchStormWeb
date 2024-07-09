@@ -137,8 +137,8 @@ function showAuthorizationDialog(){
 
     moviesList.innerHTML += 
     `
-    <div class="movie-item">
-        <div id="authorizationForm" class="login100-form validate-form">
+    <div id="authorizationForm" class="movie-item">
+        <div class="login100-form validate-form">
             <div style="display: flex; justify-content: center;">
                 <img src="images/watchstorm-icon2.png" style="width: 30%; height: 30%">
             </div>
