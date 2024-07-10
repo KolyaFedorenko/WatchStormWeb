@@ -160,10 +160,10 @@ function showAuthorizationDialog(){
             <div style="display: flex; justify-content: center;">
                 <div class="input-fields-container movie-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
-                        <input id="loginField" class="input-field" placeholder="Your Username">
+                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your Username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input id="digitCodeField" class="input-field" placeholder="6-digit code">
+                        <input autocomplete="off" id="digitCodeField" class="input-field" placeholder="6-digit code">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="button-login">Sign In</button>
