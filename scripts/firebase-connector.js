@@ -456,6 +456,7 @@ function addOnAddNewMovieListener(){
 				usersAverageRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3),
 				compositeRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3)
 			});
+			clearInputFields(addMovieDialog);
 			addMovieDialog.close();
 			moviesList.innerHTML = '';
 			getUserMovies(getCookie("username"), false);
@@ -765,6 +766,13 @@ function addOnButtonContactTheDeveloperClickListener(){
 function showNotification(notificationElement, displayType){
 	notificationElement.style.display = displayType;
 	setTimeout(()=> notificationElement.style.display = "none", 4000);
+}
+
+function clearInputFields(inputFieldsParentElement){
+	let inputFields = inputFieldsParentElement.getElementsByTagName("input");
+	for(let i=0; i<inputFields.length; i++){
+		inputFields[i].value = '';
+	}
 }
 
 async function getLatestReleaseInfo() {
