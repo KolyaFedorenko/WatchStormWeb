@@ -168,6 +168,9 @@ function showAuthorizationDialog(){
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="button-login">Sign In</button>
                     </div>
+					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
+						<span class="default-text notification negative">Incorrect login or password!</span>
+					</div>
                 </div>
             </div>
         </div>
@@ -177,6 +180,7 @@ function showAuthorizationDialog(){
 	let loginField = document.getElementById("loginField");
 	let digitCodeField = document.getElementById("digitCodeField");
 	let buttonSignIn = document.getElementById("buttonSignIn");
+	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 
 	buttonSignIn.onclick = function() {
 		let userLogin = loginField.value;
@@ -199,7 +203,7 @@ function showAuthorizationDialog(){
 				addOnSettingsButtonClickListener();
 			} 
 			else {
-				alert("wrong");
+				showNotification(notificationIncorrectLoginOrPassword, "flex");
 			}
 		});
 	}
