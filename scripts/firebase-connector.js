@@ -24,7 +24,6 @@ const storage = getStorage(app);
 const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
-var movieCount = 0;
 
 function getUserMovies(username, favorite){
     get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
@@ -127,7 +126,6 @@ function getUserMovies(username, favorite){
 				moviesList.innerHTML += movieItem;
 			}
             console.log(movies[movie].title);
-			movieCount++;
         }
     })
 }
@@ -518,12 +516,6 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonVerificationDialog" style="margin-top: 20px;">
-					 <div>
-					 	<i class="fa-solid fa-circle-check fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">Verification</span>
-					</div>
-				</div>
 				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
@@ -532,13 +524,19 @@ function addOnSettingsButtonClickListener(){
 				</div>
 				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
 					<div>
-						<i class="fa-solid fa-file fa fa-fw"></i>
+						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
+				<div class="settingsItem" id="buttonImportMovies" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-file-arrow-up fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
+					</div>
+		   		</div>
 				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
 					<div>
-						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
+						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
@@ -564,8 +562,8 @@ function addOnSettingsButtonClickListener(){
 		</div>
 		`;
 		addOnButtonInformationDialogClickListener();
-		addOnButtonVerificatioDialogClickListener();
 		addOnButtonChangeDigitCodeDialogListener();
+		addOnButtonImportMoviesClickListener();
 		addOnButtonExportMoviesClickListener();
 		addOnButtonDownloadWatchStormAppClickListener();
 		addOnButtonWatchStormWebRepositoryClickListener();
@@ -605,28 +603,6 @@ function addOnButtonInformationDialogClickListener(){
 	});
 }
 
-function addOnButtonVerificatioDialogClickListener(){
-	let buttonVerificationDialog = document.getElementById("buttonVerificationDialog");
-	let verificationDialog = document.getElementById("verificationDialog");
-	let verificationProgress = document.getElementById("verificationProgress");
-	let spanVerificationRelationship = document.getElementById("spanVerificationRelationship");
-
-	buttonVerificationDialog.onclick = function(){
-		verificationDialog.showModal();
-		verificationProgress.value = movieCount;
-		spanVerificationRelationship.innerHTML = `${movieCount}/100`;
-	}
-
-	verificationDialog.addEventListener('click', function (event) {
-		let rect = verificationDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			verificationDialog.close();
-		}
-	});
-}
-
 function addOnButtonChangeDigitCodeDialogListener(){
 	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
 	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
@@ -652,6 +628,7 @@ function addOnButtonChangeDigitCodeDialogListener(){
 			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
 			setCookie('digitCode', inputNewDigitCode.value, {});
 			showNotification(notificationDigitCodeHasBeenChanged, "flex");
+			inputNewDigitCode.value = "";
 		} else {
 			showNotification(notificationEnterValidDigitCode, "flex");
 		}
@@ -679,6 +656,76 @@ function addOnButtonExportMoviesClickListener(){
 			a.click();
 		})
 	}
+}
+
+function addOnButtonImportMoviesClickListener(){
+	let buttonImportMovies = document.getElementById("buttonImportMovies");
+	let importMoviesDialog = document.getElementById("importMoviesDialog");
+	let dropZone = document.getElementById("dropZone");
+	let notificationUploadFileInJsonFormat = document.getElementById("notificationUploadFileInJsonFormat");
+	let buttonSaveImportedMovies = document.getElementById("buttonSaveImportedMovies");
+	let dropZoneText = document.getElementById("dropZoneText");
+	let uploadedItem = document.getElementById("uploadedItem");
+	let uploadedFileName = document.getElementById("uploadedFileName");
+	let userMoviesJson;
+
+	buttonImportMovies.onclick = function(){
+		importMoviesDialog.showModal();
+	}
+
+	dropZone.addEventListener("dragover", (e) => {
+		e.preventDefault();
+		dropZone.classList.add("drop-zone-over");
+	});
+
+	["dragleave", "dragend"].forEach((type) => {
+		dropZone.addEventListener(type, (e) => {
+			dropZone.classList.remove("drop-zone-over");
+		});
+	});
+
+	dropZone.addEventListener("drop", (e) => {
+		e.preventDefault();
+
+		const files = Array.from(e.dataTransfer.files);
+		const textFiles = files.filter(file => file.type === 'application/json');
+
+		const reader = new FileReader();
+		try {
+			reader.readAsText(textFiles[0]);
+			reader.addEventListener('load', () => {
+				const content = reader.result.toString();
+				userMoviesJson = content;
+				dropZoneText.style.display = "none";
+				uploadedItem.style.display = "block";
+				buttonSaveImportedMovies.style.display = "block";
+				uploadedFileName.innerHTML = `${textFiles[0].name}`;
+			});
+		} catch (e) {
+			showNotification(notificationUploadFileInJsonFormat, "flex");
+		}
+	
+		dropZone.classList.remove("drop-zone-over");
+	});
+
+	buttonSaveImportedMovies.onclick = function(){
+		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/`), JSON.parse(userMoviesJson));
+		importMoviesDialog.close();
+		moviesList.innerHTML = '';
+		getUserMovies(getCookie("username"), false);
+	}
+
+	importMoviesDialog.addEventListener('click', function (event) {
+		let rect = importMoviesDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			importMoviesDialog.close();
+			uploadedItem.style.display = "none";
+			buttonSaveImportedMovies.style.display = "none";
+			dropZoneText.style.display = "flex";
+		}
+	});
 }
 
 function addOnButtonDownloadWatchStormAppClickListener(){

@@ -66,22 +66,6 @@
 			<span id="spanReleaseNotes" class="default-text">Release Notes</span>
 		</div>
 	</dialog>
-	<dialog id="verificationDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
-		<div style="display: flex; align-items: center; justify-content: center;">
-			<span class="default-text">Verification</span>
-		</div>
-		<div class="movie-container" style="margin-top: 10px;">
-			<span id="spanReleaseNotes" class="default-text">
-				Verified status can be obtained by users who have rated at least 100 movies. The relationship between the number of movies
-				you have rated and the number of movies you need to get verified status is shown below.
-				Please note that you can only get verified status in the WatchStorm mobile application.
-			</span>
-		</div>
-		<div class="movie-container" style="margin-top: 10px; display: flex; justify-content: center; align-items: center; padding: 10px;">
-			<progress id="verificationProgress" value="0" max="100" style="width: 270px;"></progress>
-			<span id="spanVerificationRelationship" class="default-text" style="font-size: 10px; margin-left: 12px;">0/100</span>
-		</div>
-	</dialog>
 	<dialog id="changeDigitCodeDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center; justify-content: center;">
 			<span class="default-text">Change 6-digit code</span>
@@ -93,13 +77,43 @@
 				the WatchStorm mobile application using your password and change the 6-digit code in the "WatchStormWeb" settings section.
 			</span>
 		</div>
-		<input autocomplete="off" id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="background-color: rgb(40, 40, 40); margin-top: 10px;">
-		<button id="buttonSaveDigitCode" disabled class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Save 6-digit code</button>
+		<input autocomplete="off" id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="margin-top: 10px;">
+		<button id="buttonSaveDigitCode" disabled class="button-login" style="margin-top: 10px;">Save 6-digit code</button>
 		<div id="notificationDigitCodeHasBeenChanged" style="display: none; align-items: center; justify-content: center;">
 			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
 		</div>
 		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
 			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
+		</div>
+	</dialog>
+	<dialog id="importMoviesDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Import movies from JSON</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				Please note that importing movies from JSON will replace any movies you added with the movies from the file.
+				If you need to save the movies you added, please export them to JSON and copy the contents into the file you want to import.
+				Please do not upload multiple files at once, this may result in them being saved incorrectly.
+			</span>
+		</div>
+		<div id="dropZone" class="drop-zone">
+			<div id="dropZoneText" style="display: flex; justify-content: center; align-items: center;">
+				<div style="filter: grayscale(1); opacity: 0.5;">
+					<i class="fa-solid fa-file-arrow-up fa fa-3x"></i>
+				</div>
+				<span class="default-text drop-zone-text">Drop a list of movies in JSON format here</span>
+			</div>
+			<div id="uploadedItem" class="uploaded-item">
+				<i style="margin-left: 70px; margin-top: 60px; filter: grayscale(1);" class="fa-solid fa-file fa fa-5x"></i>
+				<div class="file-name-container">
+					<span id="uploadedFileName" class="file-name">movies.json</span>
+				</div>
+			</div>
+		</div>
+		<button id="buttonSaveImportedMovies" class="button-login" style="display: none; background-color: rgb(40, 40, 40); margin-top: 10px;">Import movies</button>
+		<div id="notificationUploadFileInJsonFormat" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification negative">Please upload file in JSON format!</span>
 		</div>
 	</dialog>
 	<dialog id="leaveFeedbackDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">

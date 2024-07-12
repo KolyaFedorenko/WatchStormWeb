@@ -104,7 +104,7 @@ h6 {
 }
 
 .movie-container{
-    background-color: rgb(40, 40, 40);
+    background-color: rgb(30, 30, 30);
     border-radius: 15px;
     width: 350px;
     margin-top: 10px;
@@ -222,7 +222,7 @@ progress::-webkit-progress-value {
   }
 
   .input-field{
-    background-color: rgb(60, 60, 60);
+    background-color: rgb(40, 40, 40);
     border: 1px solid rgba(255, 255, 255, .06);
     border-radius: 20px;
     width: 100%;
@@ -245,11 +245,11 @@ progress::-webkit-progress-value {
     text-transform: uppercase;
     cursor: pointer;
     transition-duration: 400ms;
-    background-color: rgb(60, 60, 60);  
+    background-color: rgb(50, 50, 50);  
   }
 
   .button-login:hover{
-    background-color: rgb(80, 80, 80);  
+    background-color: rgb(60, 60, 60);  
   }
 
   .button-login:active{
@@ -316,7 +316,7 @@ progress::-webkit-progress-value {
   }
 
   .dialog-input{
-    background-color:#424242;
+    background-color: rgb(40, 40, 40);
   }
 
   ::-webkit-scrollbar {
@@ -398,7 +398,7 @@ progress::-webkit-progress-value {
 }
 
 .movie-main-info{
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(30, 30, 30);
   border-radius: 20px;
   padding-left: 15px;
   width: 350px;
@@ -527,7 +527,7 @@ button:disabled:active{
 }
 
 textarea{
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(30, 30, 30);
   margin-top: 10px;
   padding: 10px 20px;
   border: 1px solid rgba(255, 255, 255, .06);
@@ -555,4 +555,54 @@ textarea::placeholder {
 .copy-button:hover{
   filter: grayscale(0);
   transition-duration: 500ms;
+}
+
+.drop-zone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 348px;
+  height: 280px;
+  border: 2px dashed rgb(60, 60, 60);
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.drop-zone-over{
+  border: 4px dashed rgb(60, 60, 60);
+}
+
+.drop-zone-text{
+  font-size: 20px;
+  margin-left: 20px;
+  width: 200px;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.uploaded-item{
+  display: none;
+  width: 200px;
+  height: 200px;
+  background-color: rgb(30, 30, 30);
+  border-radius: 20px;
+}
+
+.file-name-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  background-color: rgb(40, 40, 40);
+  width: 200px;
+  height: 25px;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.file-name{
+  font-size: 11px;
+  color: white;
+  opacity: 0.75;
+  user-select: none;
 }
