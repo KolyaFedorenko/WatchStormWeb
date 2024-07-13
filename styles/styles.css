@@ -251,6 +251,7 @@ progress::-webkit-progress-value {
     cursor: pointer;
     transition-duration: 400ms;
     background-color: rgb(50, 50, 50);  
+    user-select: none;
   }
 
   .button-login:hover{
@@ -459,6 +460,7 @@ progress::-webkit-progress-value {
   filter: grayscale(100%);
   transition-duration: 500ms;
   cursor: pointer;
+  user-select: none;
 }
 
 .settingsItem:hover {
@@ -611,5 +613,9 @@ textarea::placeholder {
   font-size: 11px;
   color: white;
   opacity: 0.75;
+  user-select: none;
+}
+
+img{
   user-select: none;
 }
