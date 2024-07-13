@@ -139,11 +139,16 @@ progress{
 }
 
 progress::-moz-progress-bar {
-    background: linear-gradient(90deg, #FFF553 0%, #ff7553 100%);;
+    background: linear-gradient(90deg, #FFF553 0%, #ff7553 100%);
+}
+
+progress::-webkit-progress-bar {
+    background: rgb(50, 50, 50);
 }
 
 progress::-webkit-progress-value {
-    background: linear-gradient(90deg, #FFF553 0%, #ff7553 100%);;
+    background: linear-gradient(90deg, #FFF553 0%, #ff7553 100%);
+    border-radius: 5px;
 }
 
 .menu-header{

@@ -304,7 +304,7 @@ function updateUserDataInSidebar(username) {
 				<div style="display:flex-inline; align-items:center; justify-content:center;">
 					<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 75px; height: 75px; transition-duration: 1s; border-radius: 50%;">
 				</div>
-				<div style="display:block; align-items:center; justify-content:center; margin-left: 15px;">
+				<div style="display:block; align-items:center; justify-content:center; margin-left: 10px;">
 					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 18px;">${username}</header>
 					<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 14px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
 				</div>
