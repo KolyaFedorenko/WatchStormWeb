@@ -285,8 +285,10 @@ progress::-webkit-progress-value {
 
   .user-info-container{
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    padding-left: 20px;
+    padding-top: 5%;
     animation-duration: 2s;
     animation-name: translate-user-info-container;
     filter: grayscale(100%);

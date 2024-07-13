@@ -299,14 +299,14 @@ function updateUserDataInSidebar(username) {
 	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
 		headersContainer.innerHTML +=
 		`
-		<div id="userInfoHeader" class="user-info-header" style="height: 100px;     background-color: rgb(30, 30, 30); padding-top: 15px; padding-bottom: 15px;">
+		<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
 			<div class="user-info-container">
 				<div style="display:flex-inline; align-items:center; justify-content:center;">
-					<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 75px; height: 75px; transition-duration: 1s; border-radius: 50%;">
+					<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
 				</div>
-				<div style="display:block; align-items:center; justify-content:center; margin-left: 10px;">
-					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 18px;">${username}</header>
-					<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 14px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
+				<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
+					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
+					<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 12px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
 				</div>
 			</div>
 		</div>
