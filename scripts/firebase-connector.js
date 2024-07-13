@@ -161,7 +161,7 @@ function showAuthorizationDialog(){
                         <input autocomplete="off" id="loginField" class="input-field" placeholder="Your Username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input autocomplete="off" id="digitCodeField" class="input-field" placeholder="6-digit code">
+                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="button-login">Sign In</button>
@@ -181,6 +181,17 @@ function showAuthorizationDialog(){
 	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 
 	buttonSignIn.onclick = function() {
+		signIn();
+	}
+
+	digitCodeField.addEventListener('keydown', (event) => {
+		if(event.key === 'Enter') {
+			event.preventDefault();
+			signIn();
+		}
+	});
+
+	function signIn(){
 		let userLogin = loginField.value;
 		let userDigitCode = digitCodeField.value;
 
