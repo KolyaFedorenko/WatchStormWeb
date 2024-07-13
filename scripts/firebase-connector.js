@@ -210,6 +210,7 @@ function showAuthorizationDialog(){
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
 				addOnSettingsButtonClickListener();
+				addOnSignOutListener();
 			} 
 			else {
 				showNotification(notificationIncorrectLoginOrPassword, "flex");
@@ -282,6 +283,7 @@ function authorizeUser() {
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
 				addOnSettingsButtonClickListener();
+				addOnSignOutListener();
 			} 
 			else {
 				showAuthorizationDialog();
@@ -295,45 +297,29 @@ function authorizeUser() {
 
 function updateUserDataInSidebar(username) {
 	let headersContainer = document.getElementById("headersContainer");
+	var userImageUrl = "https://i.ibb.co/YLMWZqz/director-placeholder.jpg";
 
 	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
-		headersContainer.innerHTML +=
-		`
-		<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
-			<div class="user-info-container">
-				<div style="display:flex-inline; align-items:center; justify-content:center;">
-					<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
-				</div>
-				<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
-					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
-					<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 12px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
-				</div>
+		userImageUrl = url;
+	});
+
+	headersContainer.innerHTML +=
+	`
+	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
+		<div class="user-info-container">
+			<div style="display:flex-inline; align-items:center; justify-content:center;">
+				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
+			</div>
+			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
+				<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
+				<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 12px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
 			</div>
 		</div>
-		`
+	</div>
+	`
 
-		let userProfileImage = document.getElementById("userProfileImage");
-		setTimeout(()=> userProfileImage.src = url, 100);
-		addOnSignOutListener();
-	});
-}
-
-function addOnSignOutListener(){
-	let signOutButton = document.getElementById("signOutButton");
-	signOutButton.onclick = function(){
-		let moviesList = document.getElementById("moviesList");
-		let sidebar = document.getElementById("sidebar");
-		let userInfoHeader = document.getElementById("userInfoHeader");
-
-		moviesList.innerHTML = '';
-		sidebar.style.transform = "translate(-300px, 0px)";
-		userInfoHeader.remove();
-
-		deleteCookie("username");
-		deleteCookie("digitCode");
-		
-		showAuthorizationDialog();
-	}
+	let userProfileImage = document.getElementById("userProfileImage");
+	setTimeout(()=> userProfileImage.src = userImageUrl, 500);
 }
 
 function addOnFavoriteMoviesButtonClickListener(username){
@@ -510,6 +496,25 @@ function addOnNewsButtonClickListener(){
 				moviesList.innerHTML += newwItem;
 			}
 		})
+	}
+}
+
+function addOnSignOutListener(){
+	let signOutButton = document.getElementById("signOutButton");
+
+	signOutButton.onclick = function(){
+		let moviesList = document.getElementById("moviesList");
+		let sidebar = document.getElementById("sidebar");
+		let userInfoHeader = document.getElementById("userInfoHeader");
+
+		moviesList.innerHTML = '';
+		sidebar.style.transform = "translate(-300px, 0px)";
+		if(userInfoHeader != null) userInfoHeader.remove();
+
+		deleteCookie("username");
+		deleteCookie("digitCode");
+		
+		showAuthorizationDialog();
 	}
 }
 
