@@ -319,7 +319,7 @@ function updateUserDataInSidebar(username) {
 	`
 
 	let userProfileImage = document.getElementById("userProfileImage");
-	setTimeout(()=> userProfileImage.src = userImageUrl, 500);
+	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
 }
 
 function addOnFavoriteMoviesButtonClickListener(username){
