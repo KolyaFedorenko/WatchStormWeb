@@ -521,7 +521,7 @@ function setOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonImportMovies" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonImportMoviesDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-up fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
@@ -539,13 +539,13 @@ function setOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonLeaveFeedback" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonLeaveFeedbackDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-star fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonContactTheDeveloper" style="margin-top: 20px;">
+				<div class="settingsItem" id="buttonContactTheDeveloperDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-envelope fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Contact The Developer</span>
@@ -556,12 +556,12 @@ function setOnSettingsButtonClickListener(){
 		`;
 		setOnButtonInformationDialogClickListener();
 		setOnButtonChangeDigitCodeDialogListener();
-		setOnButtonImportMoviesClickListener();
+		setOnButtonImportMoviesDialogClickListener();
 		setOnButtonExportMoviesClickListener();
 		setOnButtonDownloadWatchStormAppClickListener();
 		setOnButtonWatchStormWebRepositoryClickListener();
-		setOnButtonLeaveFeedbackClickListener();
-		setOnButtonContactTheDeveloperClickListener();
+		setOnButtonLeaveFeedbackDialogClickListener();
+		setOnButtonContactTheDeveloperDialogClickListener();
 	}
 }
 
@@ -637,8 +637,8 @@ function setOnButtonExportMoviesClickListener(){
 	}
 }
 
-function setOnButtonImportMoviesClickListener(){
-	let buttonImportMovies = document.getElementById("buttonImportMovies");
+function setOnButtonImportMoviesDialogClickListener(){
+	let buttonImportMoviesDialog = document.getElementById("buttonImportMoviesDialog");
 	let importMoviesDialog = document.getElementById("importMoviesDialog");
 	let dropZone = document.getElementById("dropZone");
 	let notificationUploadFileInJsonFormat = document.getElementById("notificationUploadFileInJsonFormat");
@@ -648,7 +648,7 @@ function setOnButtonImportMoviesClickListener(){
 	let uploadedFileName = document.getElementById("uploadedFileName");
 	let userMoviesJson;
 
-	buttonImportMovies.onclick = function(){
+	buttonImportMoviesDialog.onclick = function(){
 		importMoviesDialog.showModal();
 	}
 
@@ -709,15 +709,15 @@ function setOnButtonDownloadWatchStormAppClickListener(){
 	}
 }
 
-function setOnButtonLeaveFeedbackClickListener(){
-	let buttonLeaveFeedback = document.getElementById("buttonLeaveFeedback");
+function setOnButtonLeaveFeedbackDialogClickListener(){
+	let buttonLeaveFeedbackDialog = document.getElementById("buttonLeaveFeedbackDialog");
 	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
 	let inputFeedbackText = document.getElementById("inputFeedbackText");
 	let buttonSendFeedback = document.getElementById("buttonSendFeedback");
 	let notificationFeedbackHasBeenSent = document.getElementById("notificationFeedbackHasBeenSent");
 	let notificationPleaseFillFeedbackField = document.getElementById("notificationPleaseFillFeedbackField");
 
-	buttonLeaveFeedback.onclick = function(){
+	buttonLeaveFeedbackDialog.onclick = function(){
 		leaveFeedbackDialog.showModal();
 	}
 
@@ -751,13 +751,13 @@ function setOnButtonWatchStormWebRepositoryClickListener(){
 	}
 }
 
-function setOnButtonContactTheDeveloperClickListener(){
-	let buttonContactTheDeveloper = document.getElementById("buttonContactTheDeveloper");
+function setOnButtonContactTheDeveloperDialogClickListener(){
+	let buttonContactTheDeveloperDialog = document.getElementById("buttonContactTheDeveloperDialog");
 	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
 	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
 	let notificationEmailHasBeenCopied = document.getElementById("notificationEmailHasBeenCopied");
 
-	buttonContactTheDeveloper.onclick = function(){
+	buttonContactTheDeveloperDialog.onclick = function(){
 		contactTheDeveloperDialog.showModal();
 	}
 
