@@ -331,18 +331,13 @@ function addOnAddNewMovieListener(){
 	addNewMovieButton.onclick = function() {
 		let addMovieDialog = document.getElementById("addMovieDialog");
 		addMovieDialog.showModal();
-		addMovieDialog.addEventListener('click', function (event) {
-			let rect = addMovieDialog.getBoundingClientRect();
-			let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-			  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-			if (!isInDialog) {
-				addMovieDialog.close();
-				if (searchMovieDialog != null){
-					searchMovieDialog.innerHTML = '';
-					searchMovieDialog.close();
-				}
+
+		setOnOutsideDialogClickListener(addMovieDialog, function(){
+			if (searchMovieDialog != null){
+				searchMovieDialog.innerHTML = '';
+				searchMovieDialog.close();
 			}
-		});
+		})
 
 		buttonSearchMovie.onclick = function(){
 			searchMovieDialog.innerHTML = '';
@@ -581,14 +576,7 @@ function addOnButtonInformationDialogClickListener(){
 		getLatestReleaseInfo();
 	}
 
-	informationDialog.addEventListener('click', function (event) {
-		let rect = informationDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			informationDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(informationDialog);
 
 	spanShowReleaseNotes.addEventListener('click', function (event) {
 		event.stopPropagation();
@@ -632,14 +620,7 @@ function addOnButtonChangeDigitCodeDialogListener(){
 		}
 	}
 
-	changeDigitCodeDialog.addEventListener('click', function (event) {
-		let rect = changeDigitCodeDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			changeDigitCodeDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(changeDigitCodeDialog);
 }
 
 function addOnButtonExportMoviesClickListener(){
@@ -713,16 +694,10 @@ function addOnButtonImportMoviesClickListener(){
 		getUserMovies(getCookie("username"), false);
 	}
 
-	importMoviesDialog.addEventListener('click', function (event) {
-		let rect = importMoviesDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			importMoviesDialog.close();
-			uploadedItem.style.display = "none";
-			buttonSaveImportedMovies.style.display = "none";
-			dropZoneText.style.display = "flex";
-		}
+	setOnOutsideDialogClickListener(importMoviesDialog, function(){
+		uploadedItem.style.display = "none";
+		buttonSaveImportedMovies.style.display = "none";
+		dropZoneText.style.display = "flex";
 	});
 }
 
@@ -756,14 +731,7 @@ function addOnButtonLeaveFeedbackClickListener(){
 		}
 	}
 
-	leaveFeedbackDialog.addEventListener('click', function (event) {
-		let rect = leaveFeedbackDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			leaveFeedbackDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(leaveFeedbackDialog);
 }
 
 function addOnButtonDeleteMovieClickListener(){
@@ -798,12 +766,17 @@ function addOnButtonContactTheDeveloperClickListener(){
 		showNotification(notificationEmailHasBeenCopied, "flex");
 	}
 
-	contactTheDeveloperDialog.addEventListener('click', function (event) {
-		let rect = contactTheDeveloperDialog.getBoundingClientRect();
+	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
+}
+
+function setOnOutsideDialogClickListener(dialog, functionToExecute){
+	dialog.addEventListener('click', function (event) {
+		let rect = dialog.getBoundingClientRect();
 		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
 		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
 		if (!isInDialog) {
-			contactTheDeveloperDialog.close();
+			dialog.close();
+			if(typeof functionToExecute != 'undefined') executeFunction(functionToExecute);
 		}
 	});
 }
@@ -851,6 +824,10 @@ async function downloadWatchStormLatest(){
 	const res = await fetch('https://api.github.com/repos/KolyaFedorenko/WatchStorm/releases/latest');
 	let jsonReleaseInfo = await res.json();
 	window.open(`${jsonReleaseInfo.assets[0].browser_download_url}`);
+}
+
+const executeFunction = (functionToExecute) => {
+	functionToExecute();
 }
 
 window.onload = function(){
