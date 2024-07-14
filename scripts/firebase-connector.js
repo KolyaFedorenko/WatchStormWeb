@@ -201,16 +201,7 @@ function showAuthorizationDialog(){
 				setCookie('username', userLogin, {});
 				setCookie('digitCode', userDigitCode, {});
 				closeAuthorizationDialog();
-				showSidebar();
-				updateUserDataInSidebar(userLogin);
-				getUserMovies(userLogin, false);
-				addOnFavoriteMoviesButtonClickListener(userLogin);
-				addOnMoviesButtonClickListener(userLogin);
-				addOnAddNewMovieListener();
-				addOnButtonDeleteMovieClickListener();
-				addOnNewsButtonClickListener();
-				addOnSettingsButtonClickListener();
-				addOnSignOutListener();
+				setListeners(userLogin);
 			} 
 			else {
 				showNotification(notificationIncorrectLoginOrPassword, "flex");
@@ -274,16 +265,7 @@ function authorizeUser() {
 		get(child(dbRef, `WatchStormWeb/WebCodes/${savedUsername}`)).then((snapshot) => {
 			let receivedDigitCode = snapshot.val();
 			if (savedDigitCode == receivedDigitCode) {
-				showSidebar();
-				updateUserDataInSidebar(savedUsername);
-				getUserMovies(savedUsername, false);
-				addOnFavoriteMoviesButtonClickListener(savedUsername);
-				addOnMoviesButtonClickListener(savedUsername);
-				addOnAddNewMovieListener();
-				addOnButtonDeleteMovieClickListener();
-				addOnNewsButtonClickListener();
-				addOnSettingsButtonClickListener();
-				addOnSignOutListener();
+				setListeners(savedUsername);
 			} 
 			else {
 				showAuthorizationDialog();
@@ -836,6 +818,19 @@ function clearInputFields(inputFieldsParentElement){
 	for(let i=0; i<inputFields.length; i++){
 		inputFields[i].value = '';
 	}
+}
+
+function setListeners(userLogin){
+	showSidebar();
+	updateUserDataInSidebar(userLogin);
+	getUserMovies(userLogin, false);
+	addOnFavoriteMoviesButtonClickListener(userLogin);
+	addOnMoviesButtonClickListener(userLogin);
+	addOnAddNewMovieListener();
+	addOnButtonDeleteMovieClickListener();
+	addOnNewsButtonClickListener();
+	addOnSettingsButtonClickListener();
+	addOnSignOutListener();
 }
 
 async function getLatestReleaseInfo() {
