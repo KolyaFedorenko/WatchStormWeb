@@ -320,7 +320,7 @@ function setOnMoviesButtonClickListener(username){
 	}
 }
 
-function setOnAddNewMovieListener(){
+function setOnAddNewMovieButtonClickListener(){
 	let addNewMovieButton = document.getElementById("addNewMovieButton");
 	let buttonSearchMovie = document.getElementById("buttonSearchMovie");
 	let searchMovieDialog = document.getElementById("searchMovieDialog");
@@ -476,7 +476,7 @@ function setOnNewsButtonClickListener(){
 	}
 }
 
-function setOnSignOutListener(){
+function setOnSignOutButtonClickListener(){
 	let signOutButton = document.getElementById("signOutButton");
 
 	signOutButton.onclick = function(){
@@ -775,11 +775,11 @@ function setListeners(userLogin){
 	getUserMovies(userLogin, false);
 	setOnFavoriteMoviesButtonClickListener(userLogin);
 	setOnMoviesButtonClickListener(userLogin);
-	setOnAddNewMovieListener();
+	setOnAddNewMovieButtonClickListener();
 	setOnButtonDeleteMovieClickListener();
 	setOnNewsButtonClickListener();
 	setOnSettingsButtonClickListener();
-	setOnSignOutListener();
+	setOnSignOutButtonClickListener();
 }
 
 function setOnOutsideDialogClickListener(dialog, functionToExecute){
