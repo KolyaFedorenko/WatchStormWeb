@@ -115,7 +115,7 @@ function getUserMovies(username, favorite){
 					</div>
 				</div>
 			</div>
-            `
+            `;
 			if (favorite) {
 				if (movies[movie].compositeRating == 100) {
 					moviesList.innerHTML += movieItem;
@@ -127,7 +127,7 @@ function getUserMovies(username, favorite){
 			}
             console.log(movies[movie].title);
         }
-    })
+    });
 }
 
 function showAuthorizationDialog(){
@@ -173,7 +173,7 @@ function showAuthorizationDialog(){
             </div>
         </div>
     </div>   
-    `
+    `;
 
 	let loginField = document.getElementById("loginField");
 	let digitCodeField = document.getElementById("digitCodeField");
@@ -254,7 +254,7 @@ function setCookie(name, value, options = {}) {
 function deleteCookie(name) {
 	setCookie(name, "", {
 	  'max-age': -1
-	})
+	});
   }
 
 function authorizeUser() {
@@ -298,7 +298,7 @@ function updateUserDataInSidebar(username) {
 			</div>
 		</div>
 	</div>
-	`
+	`;
 
 	let userProfileImage = document.getElementById("userProfileImage");
 	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
@@ -374,7 +374,7 @@ function setOnAddNewMovieButtonClickListener(){
 										</div>
 									</div>
 								</div>
-								`
+								`;
 							}
 						}
 						if (json.results[i].media_type == "tv"){
@@ -400,7 +400,7 @@ function setOnAddNewMovieButtonClickListener(){
 										</div>
 									</div>
 								</div>
-								`
+								`;
 							}
 						}
 					}
@@ -469,10 +469,10 @@ function setOnNewsButtonClickListener(){
 						</div>
 					</div>
 				</div>
-				`
+				`;
 				moviesList.innerHTML += newwItem;
 			}
-		})
+		});
 	}
 }
 
@@ -633,7 +633,7 @@ function setOnButtonExportMoviesClickListener(){
 			a.href = URL.createObjectURL(file);
 			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
 			a.click();
-		})
+		});
 	}
 }
 
