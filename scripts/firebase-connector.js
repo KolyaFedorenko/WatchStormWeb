@@ -125,7 +125,6 @@ function getUserMovies(username, favorite){
 			else {
 				moviesList.innerHTML += movieItem;
 			}
-            console.log(movies[movie].title);
         }
     });
 }
