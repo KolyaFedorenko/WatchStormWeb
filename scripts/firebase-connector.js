@@ -337,7 +337,7 @@ function addOnAddNewMovieListener(){
 				searchMovieDialog.innerHTML = '';
 				searchMovieDialog.close();
 			}
-		})
+		});
 
 		buttonSearchMovie.onclick = function(){
 			searchMovieDialog.innerHTML = '';
@@ -769,6 +769,19 @@ function addOnButtonContactTheDeveloperClickListener(){
 	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
 }
 
+function setListeners(userLogin){
+	showSidebar();
+	updateUserDataInSidebar(userLogin);
+	getUserMovies(userLogin, false);
+	addOnFavoriteMoviesButtonClickListener(userLogin);
+	addOnMoviesButtonClickListener(userLogin);
+	addOnAddNewMovieListener();
+	addOnButtonDeleteMovieClickListener();
+	addOnNewsButtonClickListener();
+	addOnSettingsButtonClickListener();
+	addOnSignOutListener();
+}
+
 function setOnOutsideDialogClickListener(dialog, functionToExecute){
 	dialog.addEventListener('click', function (event) {
 		let rect = dialog.getBoundingClientRect();
@@ -791,19 +804,6 @@ function clearInputFields(inputFieldsParentElement){
 	for(let i=0; i<inputFields.length; i++){
 		inputFields[i].value = '';
 	}
-}
-
-function setListeners(userLogin){
-	showSidebar();
-	updateUserDataInSidebar(userLogin);
-	getUserMovies(userLogin, false);
-	addOnFavoriteMoviesButtonClickListener(userLogin);
-	addOnMoviesButtonClickListener(userLogin);
-	addOnAddNewMovieListener();
-	addOnButtonDeleteMovieClickListener();
-	addOnNewsButtonClickListener();
-	addOnSettingsButtonClickListener();
-	addOnSignOutListener();
 }
 
 async function getLatestReleaseInfo() {
