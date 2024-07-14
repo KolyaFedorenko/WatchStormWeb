@@ -304,7 +304,7 @@ function updateUserDataInSidebar(username) {
 	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
 }
 
-function addOnFavoriteMoviesButtonClickListener(username){
+function setOnFavoriteMoviesButtonClickListener(username){
 	let favoriteMoviesButton = document.getElementById("favoriteMoviesButton");
 	favoriteMoviesButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -312,7 +312,7 @@ function addOnFavoriteMoviesButtonClickListener(username){
 	}
 }
 
-function addOnMoviesButtonClickListener(username){
+function setOnMoviesButtonClickListener(username){
 	let moviesButton = document.getElementById("moviesButton");
 	moviesButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -320,7 +320,7 @@ function addOnMoviesButtonClickListener(username){
 	}
 }
 
-function addOnAddNewMovieListener(){
+function setOnAddNewMovieListener(){
 	let addNewMovieButton = document.getElementById("addNewMovieButton");
 	let buttonSearchMovie = document.getElementById("buttonSearchMovie");
 	let searchMovieDialog = document.getElementById("searchMovieDialog");
@@ -440,7 +440,7 @@ function addOnAddNewMovieListener(){
 	}
 }
 
-function addOnNewsButtonClickListener(){
+function setOnNewsButtonClickListener(){
 	let newsButton = document.getElementById("newsButton");
 	newsButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -476,7 +476,7 @@ function addOnNewsButtonClickListener(){
 	}
 }
 
-function addOnSignOutListener(){
+function setOnSignOutListener(){
 	let signOutButton = document.getElementById("signOutButton");
 
 	signOutButton.onclick = function(){
@@ -495,7 +495,7 @@ function addOnSignOutListener(){
 	}
 }
 
-function addOnSettingsButtonClickListener(){
+function setOnSettingsButtonClickListener(){
 	let settingsButton = document.getElementById("settingsButton");
 	settingsButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -554,18 +554,18 @@ function addOnSettingsButtonClickListener(){
 			</div>
 		</div>
 		`;
-		addOnButtonInformationDialogClickListener();
-		addOnButtonChangeDigitCodeDialogListener();
-		addOnButtonImportMoviesClickListener();
-		addOnButtonExportMoviesClickListener();
-		addOnButtonDownloadWatchStormAppClickListener();
-		addOnButtonWatchStormWebRepositoryClickListener();
-		addOnButtonLeaveFeedbackClickListener();
-		addOnButtonContactTheDeveloperClickListener();
+		setOnButtonInformationDialogClickListener();
+		setOnButtonChangeDigitCodeDialogListener();
+		setOnButtonImportMoviesClickListener();
+		setOnButtonExportMoviesClickListener();
+		setOnButtonDownloadWatchStormAppClickListener();
+		setOnButtonWatchStormWebRepositoryClickListener();
+		setOnButtonLeaveFeedbackClickListener();
+		setOnButtonContactTheDeveloperClickListener();
 	}
 }
 
-function addOnButtonInformationDialogClickListener(){
+function setOnButtonInformationDialogClickListener(){
 	let buttonInformationDialog = document.getElementById("buttonInformationDialog");
 	let informationDialog = document.getElementById("informationDialog");
 	let releaseNotesContainer = document.getElementById("releaseNotesContainer");
@@ -589,7 +589,7 @@ function addOnButtonInformationDialogClickListener(){
 	});
 }
 
-function addOnButtonChangeDigitCodeDialogListener(){
+function setOnButtonChangeDigitCodeDialogListener(){
 	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
 	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
 	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
@@ -623,7 +623,7 @@ function addOnButtonChangeDigitCodeDialogListener(){
 	setOnOutsideDialogClickListener(changeDigitCodeDialog);
 }
 
-function addOnButtonExportMoviesClickListener(){
+function setOnButtonExportMoviesClickListener(){
 	let buttonExportMovies = document.getElementById("buttonExportMovies");
 
 	buttonExportMovies.onclick = function(){
@@ -637,7 +637,7 @@ function addOnButtonExportMoviesClickListener(){
 	}
 }
 
-function addOnButtonImportMoviesClickListener(){
+function setOnButtonImportMoviesClickListener(){
 	let buttonImportMovies = document.getElementById("buttonImportMovies");
 	let importMoviesDialog = document.getElementById("importMoviesDialog");
 	let dropZone = document.getElementById("dropZone");
@@ -701,7 +701,7 @@ function addOnButtonImportMoviesClickListener(){
 	});
 }
 
-function addOnButtonDownloadWatchStormAppClickListener(){
+function setOnButtonDownloadWatchStormAppClickListener(){
 	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
 
 	buttonDownloadWatchStormApp.onclick = function(){
@@ -709,7 +709,7 @@ function addOnButtonDownloadWatchStormAppClickListener(){
 	}
 }
 
-function addOnButtonLeaveFeedbackClickListener(){
+function setOnButtonLeaveFeedbackClickListener(){
 	let buttonLeaveFeedback = document.getElementById("buttonLeaveFeedback");
 	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
 	let inputFeedbackText = document.getElementById("inputFeedbackText");
@@ -734,7 +734,7 @@ function addOnButtonLeaveFeedbackClickListener(){
 	setOnOutsideDialogClickListener(leaveFeedbackDialog);
 }
 
-function addOnButtonDeleteMovieClickListener(){
+function setOnButtonDeleteMovieClickListener(){
 	buttonDeleteMovie.onclick = function() {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
 		movieDialog.close();
@@ -743,7 +743,7 @@ function addOnButtonDeleteMovieClickListener(){
 	}
 }
 
-function addOnButtonWatchStormWebRepositoryClickListener(){
+function setOnButtonWatchStormWebRepositoryClickListener(){
 	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
 
 	buttonWatchStormWebRepository.onclick = function(){
@@ -751,7 +751,7 @@ function addOnButtonWatchStormWebRepositoryClickListener(){
 	}
 }
 
-function addOnButtonContactTheDeveloperClickListener(){
+function setOnButtonContactTheDeveloperClickListener(){
 	let buttonContactTheDeveloper = document.getElementById("buttonContactTheDeveloper");
 	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
 	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
@@ -773,13 +773,13 @@ function setListeners(userLogin){
 	showSidebar();
 	updateUserDataInSidebar(userLogin);
 	getUserMovies(userLogin, false);
-	addOnFavoriteMoviesButtonClickListener(userLogin);
-	addOnMoviesButtonClickListener(userLogin);
-	addOnAddNewMovieListener();
-	addOnButtonDeleteMovieClickListener();
-	addOnNewsButtonClickListener();
-	addOnSettingsButtonClickListener();
-	addOnSignOutListener();
+	setOnFavoriteMoviesButtonClickListener(userLogin);
+	setOnMoviesButtonClickListener(userLogin);
+	setOnAddNewMovieListener();
+	setOnButtonDeleteMovieClickListener();
+	setOnNewsButtonClickListener();
+	setOnSettingsButtonClickListener();
+	setOnSignOutListener();
 }
 
 function setOnOutsideDialogClickListener(dialog, functionToExecute){
