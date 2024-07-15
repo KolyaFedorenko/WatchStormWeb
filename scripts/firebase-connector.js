@@ -24,7 +24,6 @@ const storage = getStorage(app);
 const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
-var movieCount = 0;
 
 function getUserMovies(username, favorite){
     get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
@@ -127,7 +126,6 @@ function getUserMovies(username, favorite){
 				moviesList.innerHTML += movieItem;
 			}
             console.log(movies[movie].title);
-			movieCount++;
         }
     })
 }
@@ -160,14 +158,17 @@ function showAuthorizationDialog(){
             <div style="display: flex; justify-content: center;">
                 <div class="input-fields-container movie-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
-                        <input id="loginField" class="input-field" placeholder="Your Username">
+                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your Username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input id="digitCodeField" class="input-field" placeholder="6-digit code">
+                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="button-login">Sign In</button>
                     </div>
+					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
+						<span class="default-text notification negative">Incorrect login or password!</span>
+					</div>
                 </div>
             </div>
         </div>
@@ -177,8 +178,20 @@ function showAuthorizationDialog(){
 	let loginField = document.getElementById("loginField");
 	let digitCodeField = document.getElementById("digitCodeField");
 	let buttonSignIn = document.getElementById("buttonSignIn");
+	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 
 	buttonSignIn.onclick = function() {
+		signIn();
+	}
+
+	digitCodeField.addEventListener('keydown', (event) => {
+		if(event.key === 'Enter') {
+			event.preventDefault();
+			signIn();
+		}
+	});
+
+	function signIn(){
 		let userLogin = loginField.value;
 		let userDigitCode = digitCodeField.value;
 
@@ -197,9 +210,10 @@ function showAuthorizationDialog(){
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
 				addOnSettingsButtonClickListener();
+				addOnSignOutListener();
 			} 
 			else {
-				alert("wrong");
+				showNotification(notificationIncorrectLoginOrPassword, "flex");
 			}
 		});
 	}
@@ -269,6 +283,7 @@ function authorizeUser() {
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
 				addOnSettingsButtonClickListener();
+				addOnSignOutListener();
 			} 
 			else {
 				showAuthorizationDialog();
@@ -282,45 +297,29 @@ function authorizeUser() {
 
 function updateUserDataInSidebar(username) {
 	let headersContainer = document.getElementById("headersContainer");
+	var userImageUrl = "https://i.ibb.co/YLMWZqz/director-placeholder.jpg";
 
 	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
-		headersContainer.innerHTML +=
-		`
-		<div id="userInfoHeader" class="user-info-header" style="height: 100px;     background-color: rgb(30, 30, 30); padding-top: 15px; padding-bottom: 15px;">
-			<div class="user-info-container">
-				<div style="display:flex-inline; align-items:center; justify-content:center;">
-					<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 75px; height: 75px; transition-duration: 1s; border-radius: 50%;">
-				</div>
-				<div style="display:block; align-items:center; justify-content:center; margin-left: 15px;">
-					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 18px;">${username}</header>
-					<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 14px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
-				</div>
+		userImageUrl = url;
+	});
+
+	headersContainer.innerHTML +=
+	`
+	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
+		<div class="user-info-container">
+			<div style="display:flex-inline; align-items:center; justify-content:center;">
+				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
+			</div>
+			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
+				<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
+				<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 12px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
 			</div>
 		</div>
-		`
+	</div>
+	`
 
-		let userProfileImage = document.getElementById("userProfileImage");
-		setTimeout(()=> userProfileImage.src = url, 100);
-		addOnSignOutListener();
-	});
-}
-
-function addOnSignOutListener(){
-	let signOutButton = document.getElementById("signOutButton");
-	signOutButton.onclick = function(){
-		let moviesList = document.getElementById("moviesList");
-		let sidebar = document.getElementById("sidebar");
-		let userInfoHeader = document.getElementById("userInfoHeader");
-
-		moviesList.innerHTML = '';
-		sidebar.style.transform = "translate(-300px, 0px)";
-		userInfoHeader.remove();
-
-		deleteCookie("username");
-		deleteCookie("digitCode");
-		
-		showAuthorizationDialog();
-	}
+	let userProfileImage = document.getElementById("userProfileImage");
+	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
 }
 
 function addOnFavoriteMoviesButtonClickListener(username){
@@ -452,6 +451,7 @@ function addOnAddNewMovieListener(){
 				usersAverageRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3),
 				compositeRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3)
 			});
+			clearInputFields(addMovieDialog);
 			addMovieDialog.close();
 			moviesList.innerHTML = '';
 			getUserMovies(getCookie("username"), false);
@@ -499,6 +499,25 @@ function addOnNewsButtonClickListener(){
 	}
 }
 
+function addOnSignOutListener(){
+	let signOutButton = document.getElementById("signOutButton");
+
+	signOutButton.onclick = function(){
+		let moviesList = document.getElementById("moviesList");
+		let sidebar = document.getElementById("sidebar");
+		let userInfoHeader = document.getElementById("userInfoHeader");
+
+		moviesList.innerHTML = '';
+		sidebar.style.transform = "translate(-300px, 0px)";
+		if(userInfoHeader != null) userInfoHeader.remove();
+
+		deleteCookie("username");
+		deleteCookie("digitCode");
+		
+		showAuthorizationDialog();
+	}
+}
+
 function addOnSettingsButtonClickListener(){
 	let settingsButton = document.getElementById("settingsButton");
 	settingsButton.onclick = function() {
@@ -513,12 +532,6 @@ function addOnSettingsButtonClickListener(){
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonVerificationDialog" style="margin-top: 20px;">
-					 <div>
-					 	<i class="fa-solid fa-circle-check fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">Verification</span>
-					</div>
-				</div>
 				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
@@ -527,13 +540,19 @@ function addOnSettingsButtonClickListener(){
 				</div>
 				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
 					<div>
-						<i class="fa-solid fa-file fa fa-fw"></i>
+						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
+				<div class="settingsItem" id="buttonImportMovies" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-file-arrow-up fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
+					</div>
+		   		</div>
 				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
 					<div>
-						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
+						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
@@ -559,8 +578,8 @@ function addOnSettingsButtonClickListener(){
 		</div>
 		`;
 		addOnButtonInformationDialogClickListener();
-		addOnButtonVerificatioDialogClickListener();
 		addOnButtonChangeDigitCodeDialogListener();
+		addOnButtonImportMoviesClickListener();
 		addOnButtonExportMoviesClickListener();
 		addOnButtonDownloadWatchStormAppClickListener();
 		addOnButtonWatchStormWebRepositoryClickListener();
@@ -600,28 +619,6 @@ function addOnButtonInformationDialogClickListener(){
 	});
 }
 
-function addOnButtonVerificatioDialogClickListener(){
-	let buttonVerificationDialog = document.getElementById("buttonVerificationDialog");
-	let verificationDialog = document.getElementById("verificationDialog");
-	let verificationProgress = document.getElementById("verificationProgress");
-	let spanVerificationRelationship = document.getElementById("spanVerificationRelationship");
-
-	buttonVerificationDialog.onclick = function(){
-		verificationDialog.showModal();
-		verificationProgress.value = movieCount;
-		spanVerificationRelationship.innerHTML = `${movieCount}/100`;
-	}
-
-	verificationDialog.addEventListener('click', function (event) {
-		let rect = verificationDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			verificationDialog.close();
-		}
-	});
-}
-
 function addOnButtonChangeDigitCodeDialogListener(){
 	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
 	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
@@ -647,6 +644,7 @@ function addOnButtonChangeDigitCodeDialogListener(){
 			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
 			setCookie('digitCode', inputNewDigitCode.value, {});
 			showNotification(notificationDigitCodeHasBeenChanged, "flex");
+			inputNewDigitCode.value = "";
 		} else {
 			showNotification(notificationEnterValidDigitCode, "flex");
 		}
@@ -674,6 +672,76 @@ function addOnButtonExportMoviesClickListener(){
 			a.click();
 		})
 	}
+}
+
+function addOnButtonImportMoviesClickListener(){
+	let buttonImportMovies = document.getElementById("buttonImportMovies");
+	let importMoviesDialog = document.getElementById("importMoviesDialog");
+	let dropZone = document.getElementById("dropZone");
+	let notificationUploadFileInJsonFormat = document.getElementById("notificationUploadFileInJsonFormat");
+	let buttonSaveImportedMovies = document.getElementById("buttonSaveImportedMovies");
+	let dropZoneText = document.getElementById("dropZoneText");
+	let uploadedItem = document.getElementById("uploadedItem");
+	let uploadedFileName = document.getElementById("uploadedFileName");
+	let userMoviesJson;
+
+	buttonImportMovies.onclick = function(){
+		importMoviesDialog.showModal();
+	}
+
+	dropZone.addEventListener("dragover", (e) => {
+		e.preventDefault();
+		dropZone.classList.add("drop-zone-over");
+	});
+
+	["dragleave", "dragend"].forEach((type) => {
+		dropZone.addEventListener(type, (e) => {
+			dropZone.classList.remove("drop-zone-over");
+		});
+	});
+
+	dropZone.addEventListener("drop", (e) => {
+		e.preventDefault();
+
+		const files = Array.from(e.dataTransfer.files);
+		const textFiles = files.filter(file => file.type === 'application/json');
+
+		const reader = new FileReader();
+		try {
+			reader.readAsText(textFiles[0]);
+			reader.addEventListener('load', () => {
+				const content = reader.result.toString();
+				userMoviesJson = content;
+				dropZoneText.style.display = "none";
+				uploadedItem.style.display = "block";
+				buttonSaveImportedMovies.style.display = "block";
+				uploadedFileName.innerHTML = `${textFiles[0].name}`;
+			});
+		} catch (e) {
+			showNotification(notificationUploadFileInJsonFormat, "flex");
+		}
+	
+		dropZone.classList.remove("drop-zone-over");
+	});
+
+	buttonSaveImportedMovies.onclick = function(){
+		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/`), JSON.parse(userMoviesJson));
+		importMoviesDialog.close();
+		moviesList.innerHTML = '';
+		getUserMovies(getCookie("username"), false);
+	}
+
+	importMoviesDialog.addEventListener('click', function (event) {
+		let rect = importMoviesDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			importMoviesDialog.close();
+			uploadedItem.style.display = "none";
+			buttonSaveImportedMovies.style.display = "none";
+			dropZoneText.style.display = "flex";
+		}
+	});
 }
 
 function addOnButtonDownloadWatchStormAppClickListener(){
@@ -761,6 +829,13 @@ function addOnButtonContactTheDeveloperClickListener(){
 function showNotification(notificationElement, displayType){
 	notificationElement.style.display = displayType;
 	setTimeout(()=> notificationElement.style.display = "none", 4000);
+}
+
+function clearInputFields(inputFieldsParentElement){
+	let inputFields = inputFieldsParentElement.getElementsByTagName("input");
+	for(let i=0; i<inputFields.length; i++){
+		inputFields[i].value = '';
+	}
 }
 
 async function getLatestReleaseInfo() {
