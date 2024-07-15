@@ -15,7 +15,6 @@ WatchStormWeb is a web version of the WatchStorm mobile app designed to add rati
 - Automatic movie search by title
 - Score movies on three dimensions: plot, cast and visuals
 - Calculating the average user rating for each movie
-- An automatically populated list of the user's favorite movies
 - Displaying the average audience rating of a movie if the movie was found via search
 - Displaying the latest news about WatchStorm in the "WatchStorm News" section
 - Download the latest version of the WatchStorm mobile application
