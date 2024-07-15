@@ -45,6 +45,100 @@
 			</button>
 		</div>
 	</dialog>
+	<dialog id="informationDialog" class="movie-item" data-delete="" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center;">
+			<img src="images/watchstorm-icon2.png" style="width: 100px; height: 100px; object-fit: cover; display: block;">
+			<span class="vertical-line"></span>
+			<div style="margin-left: 20px; color: white;">
+				<span>WatchStormWeb</span>
+				<span id="spanReleaseVersion" class="movie-year">Version 1.2</span>
+				<span id="spanReleaseDate" class="movie-year">Released: 18.07.2022</span>
+				<span id="spanShowReleaseNotes" class="movie-year" style="text-decoration: underline; cursor: pointer;">Release Notes</span>
+			</div>
+		</div>
+		<div id="releaseNotesContainer" class="movie-container" style="display: none; margin-top: 20px;">
+			<span id="spanReleaseNotes" class="default-text">Release Notes</span>
+		</div>
+	</dialog>
+	<dialog id="verificationDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Verification</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span id="spanReleaseNotes" class="default-text">
+				Verified status can be obtained by users who have rated at least 100 movies. The relationship between the number of movies
+				you have rated and the number of movies you need to get verified status is shown below.
+				Please note that you can only get verified status in the WatchStorm mobile application.
+			</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px; display: flex; justify-content: center; align-items: center; padding: 10px;">
+			<progress id="verificationProgress" value="0" max="100" style="width: 270px;"></progress>
+			<span id="spanVerificationRelationship" class="default-text" style="font-size: 10px; margin-left: 12px;">0/100</span>
+		</div>
+	</dialog>
+	<dialog id="changeDigitCodeDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Change 6-digit code</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				Please enter a new 6-digit code to access WatchStormWeb and click the "Save 6-digit code" button.
+				In case you forget the 6-digit code and you do not have access to WatchStormWeb, you can log into
+				the WatchStorm mobile application using your password and change the 6-digit code in the "WatchStormWeb" settings section.
+			</span>
+		</div>
+		<input id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="background-color: rgb(40, 40, 40); margin-top: 10px;">
+		<button id="buttonSaveDigitCode" disabled class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Save 6-digit code</button>
+		<div id="notificationDigitCodeHasBeenChanged" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
+		</div>
+		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
+		</div>
+	</dialog>
+	<dialog id="leaveFeedbackDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Leave a feedback</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				Here you can leave feedback about WatchStormWeb, as well as suggestions for improving it.
+				Please note that the maximum character limit for your feedback is 340 characters. Thank you.
+			</span>
+		</div>
+		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
+		<button id="buttonSendFeedback" class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Send feedback</button>
+		<div id="notificationFeedbackHasBeenSent" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification positive">Your feedback has been sent!</span>
+		</div>
+		<div id="notificationPleaseFillFeedbackField" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification negative">Please fill in the feedback field!</span>
+		</div>
+	</dialog>
+	<dialog id="contactTheDeveloperDialog" class="movie-item" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Contact the developer</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px;">
+			<span class="default-text">
+				If you would like to contact the developer of WatchStorm regarding any issue, please send an email to this email address:
+			</span>
+		</div>
+		<div class="movie-container" style="margin-top: 10px; display: flex; align-items: center; justify-content: center;">
+			<div style="filter: grayscale(1);">
+				<i class="fa-solid fa-envelope fa fa-fw"></i>
+			</div>
+			<span class="default-text" style="margin-left: 10px; margin-right: 80px;">
+				administrator@watchstorm.ru
+			</span>
+			<div id="buttonCopyEmail" class="copy-button">
+				<i class="fa-solid fa-copy fa fa-fw"></i>
+			</div>
+		</div>
+		<div id="notificationEmailHasBeenCopied" style="display: none; align-items: center; justify-content: center;">
+			<span class="default-text notification positive">Email has been copied to clipboard!</span>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">
@@ -58,7 +152,7 @@
 				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i>My Favorite Movies</a></li>
 				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i>Add New Movie</a></li>
 				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i>WatchStorm News</a></li>
-				<li><a id="awardsButton"><i class="fa-solid fa-award fa fa-fw"></i>WatchStorm Awards</a></li>
+				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i>Settings</a></li>
 				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i>Sign Out</a></li>
 			</ul>
 	   </div>

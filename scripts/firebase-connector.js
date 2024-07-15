@@ -24,6 +24,7 @@ const storage = getStorage(app);
 const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
+var movieCount = 0;
 
 function getUserMovies(username, favorite){
     get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
@@ -126,6 +127,7 @@ function getUserMovies(username, favorite){
 				moviesList.innerHTML += movieItem;
 			}
             console.log(movies[movie].title);
+			movieCount++;
         }
     })
 }
@@ -194,7 +196,7 @@ function showAuthorizationDialog(){
 				addOnAddNewMovieListener();
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
-				addOnAwardsButtonClickListener();
+				addOnSettingsButtonClickListener();
 			} 
 			else {
 				alert("wrong");
@@ -266,7 +268,7 @@ function authorizeUser() {
 				addOnAddNewMovieListener();
 				addOnButtonDeleteMovieClickListener();
 				addOnNewsButtonClickListener();
-				addOnAwardsButtonClickListener();
+				addOnSettingsButtonClickListener();
 			} 
 			else {
 				showAuthorizationDialog();
@@ -501,212 +503,221 @@ function addOnNewsButtonClickListener(){
 	}
 }
 
-function addOnAwardsButtonClickListener(){
-	let awardsButton = document.getElementById("awardsButton");
-	awardsButton.onclick = function() {
+function addOnSettingsButtonClickListener(){
+	let settingsButton = document.getElementById("settingsButton");
+	settingsButton.onclick = function() {
 		moviesList.innerHTML = '';
 		moviesList.innerHTML += 				
 		`
-		<div class="awardsContainer movie" style="cursor:pointer;">
+		<div class="settingsContainer movie" style="cursor:pointer;">
 			<div class="awardLine">
-				<div class="awardBlock">
-					<div class="login100-form validate-form">
-						<div class="movie-header award-center">
-							<div class="movie-main-info" style="width: 330px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-									<span class="movie-title">Best Directors</span>
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/YLMWZqz/director-placeholder.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">David Fincher</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1984 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/YLMWZqz/director-placeholder.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Christopher Nolan</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1998 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/YLMWZqz/director-placeholder.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Quentin Tarantino</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1983 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/YLMWZqz/director-placeholder.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Martin Scorsese</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1959 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/YLMWZqz/director-placeholder.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Vince Gilligan</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1990 - Present Time</span>
-								</div>
-							</div>
-						</div>
+				<div class="settingsItem" id="buttonInformationDialog">
+					<div>
+						<i class="fa-solid fa-circle-info fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="awardBlock" style="margin-left: 20px">
-					<div class="login100-form validate-form">
-						<div class="movie-header award-center">
-							<div class="movie-main-info" style="width: 330px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
-								<div class="movie-title-and-year">
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-									<span class="movie-title">Best Movies</span>
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Fight Club</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1999, Thriller</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">American History X</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1998, Drama</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Se7en</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1995, Thriller</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Drive</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2011, Thriller</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">The Gentlemen</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2019, Action Movie</span>
-								</div>
-							</div>
-						</div>
+				<div class="settingsItem" id="buttonVerificationDialog" style="margin-top: 20px;">
+					 <div>
+					 	<i class="fa-solid fa-circle-check fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Verification</span>
 					</div>
 				</div>
-			</div>
-			<div class="awardLine" style="margin-top: 20px">
-				<div class="awardBlock">
-					<div class="login100-form validate-form">
-						<div class="movie-header award-center">
-							<div class="movie-main-info" style="width: 330px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-									<span class="movie-title">Best TV Series</span>
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/7yDVRst/tv-series-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Breaking Bad</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2008 - 2013</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/7yDVRst/tv-series-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Snowfall</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2017 - 2023</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/7yDVRst/tv-series-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Mindhunter</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2017 - 2019</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/7yDVRst/tv-series-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">True Detective</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2014 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/7yDVRst/tv-series-placeholder2.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Better Call Saul</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2015 - 2022</span>
-								</div>
-							</div>
-						</div>
+				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-lock fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
 					</div>
 				</div>
-				<div class="awardBlock" style="margin-left: 20px">
-					<div class="login100-form validate-form">
-						<div class="movie-header award-center">
-							<div class="movie-main-info" style="width: 330px; height: 50px; display: flex; align-items: center; justify-content: center; padding: 0;">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-									<span class="movie-title">Best Animated Series</span>
-									<i class="fa-solid fa-award fa fa-fw award-icon"></i>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Tmj31Dg/animated-series-placeholder6.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">The Simpsons</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1989 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Tmj31Dg/animated-series-placeholder6.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Rick And Morty</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2013 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Tmj31Dg/animated-series-placeholder6.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Brickleberry</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2012 - 2015</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Tmj31Dg/animated-series-placeholder6.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Duncanville</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">2020 - Present Time</span>
-								</div>
-							</div>
-							<div class="movie-main-info" style="width: 330px; margin-top: 10px; height: 45px;">
-								<img class="movie-image mini" src="https://i.ibb.co/Tmj31Dg/animated-series-placeholder6.jpg">
-								<div class="movie-title-and-year" style="display: inline-flex;">
-									<span class="movie-title" style="font-size: 14px;">Futurama</span>
-									<span class="movie-year" style="margin-left: 5px; font-size: 14px; margin-top: 0px;">1999 - Present Time</span>
-								</div>
-							</div>
-						</div>
+				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-file fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
+					</div>
+				</div>
+				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
+					</div>
+				</div>
+				<div class="settingsItem" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
+					<div>
+						<i class="fa-brands fa-github fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
+					</div>
+				</div>
+				<div class="settingsItem" id="buttonLeaveFeedback" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-star fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
+					</div>
+				</div>
+				<div class="settingsItem" id="buttonContactTheDeveloper" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-envelope fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Contact The Developer</span>
 					</div>
 				</div>
 			</div>
 		</div>
 		`;
+		addOnButtonInformationDialogClickListener();
+		addOnButtonVerificatioDialogClickListener();
+		addOnButtonChangeDigitCodeDialogListener();
+		addOnButtonExportMoviesClickListener();
+		addOnButtonDownloadWatchStormAppClickListener();
+		addOnButtonWatchStormWebRepositoryClickListener();
+		addOnButtonLeaveFeedbackClickListener();
+		addOnButtonContactTheDeveloperClickListener();
 	}
+}
+
+function addOnButtonInformationDialogClickListener(){
+	let buttonInformationDialog = document.getElementById("buttonInformationDialog");
+	let informationDialog = document.getElementById("informationDialog");
+	let releaseNotesContainer = document.getElementById("releaseNotesContainer");
+	let spanShowReleaseNotes = document.getElementById("spanShowReleaseNotes");
+
+	buttonInformationDialog.onclick = function(){
+		informationDialog.showModal();
+		getLatestReleaseInfo();
+	}
+
+	informationDialog.addEventListener('click', function (event) {
+		let rect = informationDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			informationDialog.close();
+		}
+	});
+
+	spanShowReleaseNotes.addEventListener('click', function (event) {
+		event.stopPropagation();
+		if (releaseNotesContainer.style.display == 'none'){
+			releaseNotesContainer.style.display = 'block';
+		}
+		else {
+			releaseNotesContainer.style.display = 'none';
+		}
+	});
+}
+
+function addOnButtonVerificatioDialogClickListener(){
+	let buttonVerificationDialog = document.getElementById("buttonVerificationDialog");
+	let verificationDialog = document.getElementById("verificationDialog");
+	let verificationProgress = document.getElementById("verificationProgress");
+	let spanVerificationRelationship = document.getElementById("spanVerificationRelationship");
+
+	buttonVerificationDialog.onclick = function(){
+		verificationDialog.showModal();
+		verificationProgress.value = movieCount;
+		spanVerificationRelationship.innerHTML = `${movieCount}/100`;
+	}
+
+	verificationDialog.addEventListener('click', function (event) {
+		let rect = verificationDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			verificationDialog.close();
+		}
+	});
+}
+
+function addOnButtonChangeDigitCodeDialogListener(){
+	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
+	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
+	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
+	let buttonSaveDigitCode = document.getElementById("buttonSaveDigitCode");
+	let notificationDigitCodeHasBeenChanged = document.getElementById("notificationDigitCodeHasBeenChanged");
+	let notificationEnterValidDigitCode = document.getElementById("notificationEnterValidDigitCode");
+
+	buttonChangeDigitCodeDialog.onclick = function(){
+		changeDigitCodeDialog.showModal();
+	}
+
+	inputNewDigitCode.addEventListener('input', function(event){
+		if (inputNewDigitCode.value.length == 6) {
+			buttonSaveDigitCode.disabled = false;
+		} else {
+			buttonSaveDigitCode.disabled = true;
+		}
+	});
+
+	buttonSaveDigitCode.onclick = function(){
+		if (inputNewDigitCode.value.length == 6){
+			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
+			setCookie('digitCode', inputNewDigitCode.value, {});
+			showNotification(notificationDigitCodeHasBeenChanged, "flex");
+		} else {
+			showNotification(notificationEnterValidDigitCode, "flex");
+		}
+	}
+
+	changeDigitCodeDialog.addEventListener('click', function (event) {
+		let rect = changeDigitCodeDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			changeDigitCodeDialog.close();
+		}
+	});
+}
+
+function addOnButtonExportMoviesClickListener(){
+	let buttonExportMovies = document.getElementById("buttonExportMovies");
+
+	buttonExportMovies.onclick = function(){
+		get(child(dbRef, `WatchStorm/${getCookie("username")}/Movies/`)).then((snapshot) => {
+			var a = document.createElement("a");
+			var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], {type: 'application/json'});
+			a.href = URL.createObjectURL(file);
+			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
+			a.click();
+		})
+	}
+}
+
+function addOnButtonDownloadWatchStormAppClickListener(){
+	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
+
+	buttonDownloadWatchStormApp.onclick = function(){
+		downloadWatchStormLatest();
+	}
+}
+
+function addOnButtonLeaveFeedbackClickListener(){
+	let buttonLeaveFeedback = document.getElementById("buttonLeaveFeedback");
+	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
+	let inputFeedbackText = document.getElementById("inputFeedbackText");
+	let buttonSendFeedback = document.getElementById("buttonSendFeedback");
+	let notificationFeedbackHasBeenSent = document.getElementById("notificationFeedbackHasBeenSent");
+	let notificationPleaseFillFeedbackField = document.getElementById("notificationPleaseFillFeedbackField");
+
+	buttonLeaveFeedback.onclick = function(){
+		leaveFeedbackDialog.showModal();
+	}
+
+	buttonSendFeedback.onclick = function(){
+		if (inputFeedbackText.value.length > 0){
+			set(ref(db, `WatchStormWeb/Feedback/${getCookie("username")}`), inputFeedbackText.value);
+			inputFeedbackText.value = "";
+			showNotification(notificationFeedbackHasBeenSent, "flex");
+		} else {
+			showNotification(notificationPleaseFillFeedbackField, "flex");
+		}
+	}
+
+	leaveFeedbackDialog.addEventListener('click', function (event) {
+		let rect = leaveFeedbackDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			leaveFeedbackDialog.close();
+		}
+	});
 }
 
 function addOnButtonDeleteMovieClickListener(){
@@ -716,6 +727,64 @@ function addOnButtonDeleteMovieClickListener(){
 		moviesList.innerHTML = '';
 		getUserMovies(getCookie("username"), false);
 	}
+}
+
+function addOnButtonWatchStormWebRepositoryClickListener(){
+	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
+
+	buttonWatchStormWebRepository.onclick = function(){
+		window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
+	}
+}
+
+function addOnButtonContactTheDeveloperClickListener(){
+	let buttonContactTheDeveloper = document.getElementById("buttonContactTheDeveloper");
+	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
+	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
+	let notificationEmailHasBeenCopied = document.getElementById("notificationEmailHasBeenCopied");
+
+	buttonContactTheDeveloper.onclick = function(){
+		contactTheDeveloperDialog.showModal();
+	}
+
+	buttonCopyEmail.onclick = function(){
+		navigator.clipboard.writeText("administrator@watchstorm.ru");
+		showNotification(notificationEmailHasBeenCopied, "flex");
+	}
+
+	contactTheDeveloperDialog.addEventListener('click', function (event) {
+		let rect = contactTheDeveloperDialog.getBoundingClientRect();
+		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		if (!isInDialog) {
+			contactTheDeveloperDialog.close();
+		}
+	});
+}
+
+function showNotification(notificationElement, displayType){
+	notificationElement.style.display = displayType;
+	setTimeout(()=> notificationElement.style.display = "none", 4000);
+}
+
+async function getLatestReleaseInfo() {
+	let spanReleaseVersion = document.getElementById("spanReleaseVersion");
+	let spanReleaseDate = document.getElementById("spanReleaseDate");
+	let spanReleaseNotes = document.getElementById("spanReleaseNotes");
+	let jsonReleaseInfo;
+  
+	const res = await fetch('https://api.github.com/repositories/511941040/releases/latest');
+	jsonReleaseInfo = await res.json();
+
+	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
+	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
+	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
+}
+
+async function downloadWatchStormLatest(){
+	const res = await fetch('https://api.github.com/repos/KolyaFedorenko/WatchStorm/releases/latest');
+	let jsonReleaseInfo = await res.json();
+	window.open(`${jsonReleaseInfo.assets[0].browser_download_url}`);
 }
 
 window.onload = function(){
