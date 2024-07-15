@@ -19,7 +19,7 @@ WatchStormWeb is a web version of the WatchStorm mobile app designed to add rati
 - Displaying the latest news about WatchStorm in the "WatchStorm News" section
 - Download the latest version of the WatchStorm mobile application
 - Import a list of user movies from JSON
-- Export a list of user films to JSON
+- Export a list of user movies to JSON
 
 ### Important notes
 > [!NOTE]  
