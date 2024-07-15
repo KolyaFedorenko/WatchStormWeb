@@ -378,25 +378,6 @@ div#foundMovieItem:hover {
   cursor: pointer;
 }
 
-.wrong-input {
-  animation-duration: 1s;
-  animation-name: show-wrong-input;
-}
-
-@keyframes show-wrong-input {
-  from {
-    border: 2px solid white;
-  }
-
-  50% {
-    border: 2px solid #fff553;
-  }
-
-  to {
-    border: 2px solid white;
-  }
-}
-
 .favorite-movie {
   transition-duration: 500ms;
 }
@@ -469,11 +450,6 @@ div#foundMovieItem:hover {
   filter: grayscale(0%);
   transform: scale(1.025);
   transition-duration: 500ms;
-}
-
-.mini {
-  height: 30px;
-  width: 30px;
 }
 
 .vertical-line {
