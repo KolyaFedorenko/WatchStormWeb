@@ -367,7 +367,7 @@ function setOnAddNewMovieButtonClickListener(){
 										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title}</header>
+												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title.substring(0, 25)}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">Movie, ${(json.results[i].release_date).substring(0, 4)}</header>
 											</div>
 										</div>
@@ -393,7 +393,7 @@ function setOnAddNewMovieButtonClickListener(){
 										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header style="font-size: 14px; color: white;">${json.results[i].name}</header>
+												<header style="font-size: 14px; color: white;">${json.results[i].name.substring(0, 25)}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">TV, ${(json.results[i].first_air_date).substring(0, 4)}</header>
 											</div>
 										</div>
