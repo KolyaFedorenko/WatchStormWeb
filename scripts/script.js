@@ -54,10 +54,10 @@ function getUserMovies(username, favorite){
 								<span class="movie-year">${movies[movie].year}</span>
 							</div>
 						</div>
-						<div class="description movie-container">
+						<div class="description accent-container">
 							<span class="default-text">${movies[movie].description}</span>
 						</div>
-						<div class="ratings movie-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
+						<div class="ratings accent-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
 							<div class="ratings-container" style="width: 30%;">
 								<span class="default-text rating-name">
 									Visual Rating:
@@ -88,7 +88,7 @@ function getUserMovies(username, favorite){
 								</span>
 							</div>
 						</div>
-						<div class="average-ratings movie-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
+						<div class="average-ratings accent-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
 							<div class="ratings-container" style="width: 53%;">
 								<span class="default-text rating-name">
 									Your average rating:
@@ -143,7 +143,7 @@ function showAuthorizationDialog(){
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="description movie-container">
+                <div class="description accent-container">
                     <span class="default-text">Welcome to the web version of Watch 
                         Storm! To log in, enter your username and the 6-digit code
                         that you specified in the mobile application to access the
@@ -155,7 +155,7 @@ function showAuthorizationDialog(){
                 </div>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="input-fields-container movie-container" style="margin-top: 10px; padding: 20px;">
+                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
                         <input autocomplete="off" id="loginField" class="input-field" placeholder="Your Username">
                     </div>
@@ -462,7 +462,7 @@ function setOnNewsButtonClickListener(){
 									<span class="movie-year">${news[neww].date}</span>
 								</div>
 							</div>
-							<div class="description movie-container">
+							<div class="description accent-container">
 								<span class="default-text">${news[neww].description}</span>
 							</div>
 						</div>
