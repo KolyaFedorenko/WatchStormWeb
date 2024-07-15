@@ -18,7 +18,9 @@ WatchStormWeb is a web version of the WatchStorm mobile app designed to add rati
 - An automatically populated list of the user's favorite movies
 - Displaying the average audience rating of a movie if the movie was found via search
 - Displaying the latest news about WatchStorm in the "WatchStorm News" section
-- Displaying the directors, films and series marked with the WatchStorm quality mark
+- Download the latest version of the WatchStorm mobile application
+- Import a list of user movies from JSON
+- Export a list of user films to JSON
 
 ### Important notes
 > [!NOTE]  
