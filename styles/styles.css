@@ -30,7 +30,7 @@ h6 {
   margin: 0;
 }
 
-.login100-form {
+.default-container-content {
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -48,7 +48,7 @@ h6 {
   padding-bottom: 15px;
 }
 
-.movie-item {
+.default-container {
   width: 390px;
   background-color: rgb(20, 20, 20);
   border-radius: 20px;
@@ -72,7 +72,7 @@ h6 {
   }
 }
 
-.movie-header {
+.movie-item {
   margin-left: 20px;
   display: inline-block;
 }
@@ -119,7 +119,7 @@ h6 {
   font-size: 14px;
 }
 
-.movie-item:hover {
+.default-container:hover {
   transform: scale(1.025);
   transition-duration: 500ms;
 }
@@ -415,7 +415,7 @@ div#foundMovieItem:hover {
   font-weight: bold;
 }
 
-.settingsContainer {
+.settings-container {
   width: 800px;
   height: 800px;
   background-color: rgb(20, 20, 20);
@@ -431,7 +431,7 @@ div#foundMovieItem:hover {
   cursor: default !important;
 }
 
-.settingsItem {
+.settings-item {
   width: 740px;
   height: 75px;
   background-color: rgb(30, 30, 30);
@@ -445,7 +445,7 @@ div#foundMovieItem:hover {
   user-select: none;
 }
 
-.settingsItem:hover {
+.settings-item:hover {
   background-color: rgb(40, 40, 40);
   filter: grayscale(0%);
   transform: scale(1.025);

@@ -31,7 +31,7 @@ function getUserMovies(username, favorite){
         for (let movie in movies) {
             let movieItem = 
             `
-            <div class="movie-item movie" style="cursor:pointer;" 
+            <div class="default-container movie" style="cursor:pointer;" 
 			onclick="
 			 selectedMovieImage.src='https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg';
 			 movieDialog.setAttribute('data-delete', '${movies[movie].title}');
@@ -45,8 +45,8 @@ function getUserMovies(username, favorite){
 				}
 			});
 			">
-				<div class="login100-form validate-form">
-					<div class="movie-header">
+				<div class="default-container-content">
+					<div class="movie-item">
 						<div class="movie-main-info">
 							<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 							<div class="movie-title-and-year">
@@ -134,8 +134,8 @@ function showAuthorizationDialog(){
 
     moviesList.innerHTML += 
     `
-    <div id="authorizationForm" class="movie-item">
-        <div class="login100-form validate-form">
+    <div id="authorizationForm" class="default-container">
+        <div class="default-container-content">
             <div style="display: flex; justify-content: center;">
                 <img src="images/watchstorm-icon2.png" style="width: 30%; height: 30%">
             </div>
@@ -449,9 +449,9 @@ function setOnNewsButtonClickListener(){
 			for (let neww in news) {
 				let newwItem = 
 				`
-				<div class="movie-item movie" style="user-select: none;">
-					<div class="login100-form validate-form">
-						<div class="movie-header">
+				<div class="default-container" style="user-select: none;">
+					<div class="default-container-content">
+						<div class="movie-item">
 							<div class="movie-main-info">
 								<img class="movie-image" src="https://i.ibb.co/7tpcQH5/newlogo6.jpg">
 								<div class="movie-title-and-year">
@@ -500,51 +500,51 @@ function setOnSettingsButtonClickListener(){
 		moviesList.innerHTML = '';
 		moviesList.innerHTML += 				
 		`
-		<div class="settingsContainer movie" style="cursor:pointer;">
+		<div class="settings-container" style="cursor:pointer;">
 			<div class="awardLine">
-				<div class="settingsItem" id="buttonInformationDialog">
+				<div class="settings-item" id="buttonInformationDialog">
 					<div>
 						<i class="fa-solid fa-circle-info fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonImportMoviesDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonImportMoviesDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-up fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
 					</div>
 		   		</div>
-				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
 					<div>
 						<i class="fa-brands fa-github fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonLeaveFeedbackDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonLeaveFeedbackDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-star fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonContactTheDeveloperDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonContactTheDeveloperDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-envelope fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Contact The Developer</span>
