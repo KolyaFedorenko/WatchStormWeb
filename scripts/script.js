@@ -31,7 +31,7 @@ function getUserMovies(username, favorite){
         for (let movie in movies) {
             let movieItem = 
             `
-            <div class="movie-item movie" style="cursor:pointer;" 
+            <div class="default-container movie" style="cursor:pointer;" 
 			onclick="
 			 selectedMovieImage.src='https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg';
 			 movieDialog.setAttribute('data-delete', '${movies[movie].title}');
@@ -45,8 +45,8 @@ function getUserMovies(username, favorite){
 				}
 			});
 			">
-				<div class="login100-form validate-form">
-					<div class="movie-header">
+				<div class="default-container-content">
+					<div class="movie-item">
 						<div class="movie-main-info">
 							<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 							<div class="movie-title-and-year">
@@ -115,7 +115,7 @@ function getUserMovies(username, favorite){
 					</div>
 				</div>
 			</div>
-            `
+            `;
 			if (favorite) {
 				if (movies[movie].compositeRating == 100) {
 					moviesList.innerHTML += movieItem;
@@ -125,9 +125,8 @@ function getUserMovies(username, favorite){
 			else {
 				moviesList.innerHTML += movieItem;
 			}
-            console.log(movies[movie].title);
         }
-    })
+    });
 }
 
 function showAuthorizationDialog(){
@@ -135,8 +134,8 @@ function showAuthorizationDialog(){
 
     moviesList.innerHTML += 
     `
-    <div id="authorizationForm" class="movie-item">
-        <div class="login100-form validate-form">
+    <div id="authorizationForm" class="default-container">
+        <div class="default-container-content">
             <div style="display: flex; justify-content: center;">
                 <img src="images/watchstorm-icon2.png" style="width: 30%; height: 30%">
             </div>
@@ -173,7 +172,7 @@ function showAuthorizationDialog(){
             </div>
         </div>
     </div>   
-    `
+    `;
 
 	let loginField = document.getElementById("loginField");
 	let digitCodeField = document.getElementById("digitCodeField");
@@ -201,16 +200,7 @@ function showAuthorizationDialog(){
 				setCookie('username', userLogin, {});
 				setCookie('digitCode', userDigitCode, {});
 				closeAuthorizationDialog();
-				showSidebar();
-				updateUserDataInSidebar(userLogin);
-				getUserMovies(userLogin, false);
-				addOnFavoriteMoviesButtonClickListener(userLogin);
-				addOnMoviesButtonClickListener(userLogin);
-				addOnAddNewMovieListener();
-				addOnButtonDeleteMovieClickListener();
-				addOnNewsButtonClickListener();
-				addOnSettingsButtonClickListener();
-				addOnSignOutListener();
+				setListeners(userLogin);
 			} 
 			else {
 				showNotification(notificationIncorrectLoginOrPassword, "flex");
@@ -263,7 +253,7 @@ function setCookie(name, value, options = {}) {
 function deleteCookie(name) {
 	setCookie(name, "", {
 	  'max-age': -1
-	})
+	});
   }
 
 function authorizeUser() {
@@ -274,16 +264,7 @@ function authorizeUser() {
 		get(child(dbRef, `WatchStormWeb/WebCodes/${savedUsername}`)).then((snapshot) => {
 			let receivedDigitCode = snapshot.val();
 			if (savedDigitCode == receivedDigitCode) {
-				showSidebar();
-				updateUserDataInSidebar(savedUsername);
-				getUserMovies(savedUsername, false);
-				addOnFavoriteMoviesButtonClickListener(savedUsername);
-				addOnMoviesButtonClickListener(savedUsername);
-				addOnAddNewMovieListener();
-				addOnButtonDeleteMovieClickListener();
-				addOnNewsButtonClickListener();
-				addOnSettingsButtonClickListener();
-				addOnSignOutListener();
+				setListeners(savedUsername);
 			} 
 			else {
 				showAuthorizationDialog();
@@ -316,13 +297,13 @@ function updateUserDataInSidebar(username) {
 			</div>
 		</div>
 	</div>
-	`
+	`;
 
 	let userProfileImage = document.getElementById("userProfileImage");
 	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
 }
 
-function addOnFavoriteMoviesButtonClickListener(username){
+function setOnFavoriteMoviesButtonClickListener(username){
 	let favoriteMoviesButton = document.getElementById("favoriteMoviesButton");
 	favoriteMoviesButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -330,7 +311,7 @@ function addOnFavoriteMoviesButtonClickListener(username){
 	}
 }
 
-function addOnMoviesButtonClickListener(username){
+function setOnMoviesButtonClickListener(username){
 	let moviesButton = document.getElementById("moviesButton");
 	moviesButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -338,7 +319,7 @@ function addOnMoviesButtonClickListener(username){
 	}
 }
 
-function addOnAddNewMovieListener(){
+function setOnAddNewMovieButtonClickListener(){
 	let addNewMovieButton = document.getElementById("addNewMovieButton");
 	let buttonSearchMovie = document.getElementById("buttonSearchMovie");
 	let searchMovieDialog = document.getElementById("searchMovieDialog");
@@ -349,16 +330,11 @@ function addOnAddNewMovieListener(){
 	addNewMovieButton.onclick = function() {
 		let addMovieDialog = document.getElementById("addMovieDialog");
 		addMovieDialog.showModal();
-		addMovieDialog.addEventListener('click', function (event) {
-			let rect = addMovieDialog.getBoundingClientRect();
-			let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-			  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-			if (!isInDialog) {
-				addMovieDialog.close();
-				if (searchMovieDialog != null){
-					searchMovieDialog.innerHTML = '';
-					searchMovieDialog.close();
-				}
+
+		setOnOutsideDialogClickListener(addMovieDialog, function(){
+			if (searchMovieDialog != null){
+				searchMovieDialog.innerHTML = '';
+				searchMovieDialog.close();
 			}
 		});
 
@@ -391,13 +367,13 @@ function addOnAddNewMovieListener(){
 										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title}</header>
+												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title.substring(0, 25)}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">Movie, ${(json.results[i].release_date).substring(0, 4)}</header>
 											</div>
 										</div>
 									</div>
 								</div>
-								`
+								`;
 							}
 						}
 						if (json.results[i].media_type == "tv"){
@@ -417,13 +393,13 @@ function addOnAddNewMovieListener(){
 										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header style="font-size: 14px; color: white;">${json.results[i].name}</header>
+												<header style="font-size: 14px; color: white;">${json.results[i].name.substring(0, 25)}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">TV, ${(json.results[i].first_air_date).substring(0, 4)}</header>
 											</div>
 										</div>
 									</div>
 								</div>
-								`
+								`;
 							}
 						}
 					}
@@ -463,7 +439,7 @@ function addOnAddNewMovieListener(){
 	}
 }
 
-function addOnNewsButtonClickListener(){
+function setOnNewsButtonClickListener(){
 	let newsButton = document.getElementById("newsButton");
 	newsButton.onclick = function() {
 		moviesList.innerHTML = '';
@@ -473,9 +449,9 @@ function addOnNewsButtonClickListener(){
 			for (let neww in news) {
 				let newwItem = 
 				`
-				<div class="movie-item movie" style="user-select: none;">
-					<div class="login100-form validate-form">
-						<div class="movie-header">
+				<div class="default-container" style="user-select: none;">
+					<div class="default-container-content">
+						<div class="movie-item">
 							<div class="movie-main-info">
 								<img class="movie-image" src="https://i.ibb.co/7tpcQH5/newlogo6.jpg">
 								<div class="movie-title-and-year">
@@ -492,14 +468,14 @@ function addOnNewsButtonClickListener(){
 						</div>
 					</div>
 				</div>
-				`
+				`;
 				moviesList.innerHTML += newwItem;
 			}
-		})
+		});
 	}
 }
 
-function addOnSignOutListener(){
+function setOnSignOutButtonClickListener(){
 	let signOutButton = document.getElementById("signOutButton");
 
 	signOutButton.onclick = function(){
@@ -518,57 +494,57 @@ function addOnSignOutListener(){
 	}
 }
 
-function addOnSettingsButtonClickListener(){
+function setOnSettingsButtonClickListener(){
 	let settingsButton = document.getElementById("settingsButton");
 	settingsButton.onclick = function() {
 		moviesList.innerHTML = '';
 		moviesList.innerHTML += 				
 		`
-		<div class="settingsContainer movie" style="cursor:pointer;">
+		<div class="settings-container" style="cursor:pointer;">
 			<div class="awardLine">
-				<div class="settingsItem" id="buttonInformationDialog">
+				<div class="settings-item" id="buttonInformationDialog">
 					<div>
 						<i class="fa-solid fa-circle-info fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonExportMovies" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonImportMovies" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonImportMoviesDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file-arrow-up fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
 					</div>
 		   		</div>
-				<div class="settingsItem" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
 					<div>
 						<i class="fa-brands fa-github fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonLeaveFeedback" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonLeaveFeedbackDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-star fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Leave a Feedback</span>
 					</div>
 				</div>
-				<div class="settingsItem" id="buttonContactTheDeveloper" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonContactTheDeveloperDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-envelope fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Contact The Developer</span>
@@ -577,18 +553,18 @@ function addOnSettingsButtonClickListener(){
 			</div>
 		</div>
 		`;
-		addOnButtonInformationDialogClickListener();
-		addOnButtonChangeDigitCodeDialogListener();
-		addOnButtonImportMoviesClickListener();
-		addOnButtonExportMoviesClickListener();
-		addOnButtonDownloadWatchStormAppClickListener();
-		addOnButtonWatchStormWebRepositoryClickListener();
-		addOnButtonLeaveFeedbackClickListener();
-		addOnButtonContactTheDeveloperClickListener();
+		setOnButtonInformationDialogClickListener();
+		setOnButtonChangeDigitCodeDialogListener();
+		setOnButtonImportMoviesDialogClickListener();
+		setOnButtonExportMoviesClickListener();
+		setOnButtonDownloadWatchStormAppClickListener();
+		setOnButtonWatchStormWebRepositoryClickListener();
+		setOnButtonLeaveFeedbackDialogClickListener();
+		setOnButtonContactTheDeveloperDialogClickListener();
 	}
 }
 
-function addOnButtonInformationDialogClickListener(){
+function setOnButtonInformationDialogClickListener(){
 	let buttonInformationDialog = document.getElementById("buttonInformationDialog");
 	let informationDialog = document.getElementById("informationDialog");
 	let releaseNotesContainer = document.getElementById("releaseNotesContainer");
@@ -599,14 +575,7 @@ function addOnButtonInformationDialogClickListener(){
 		getLatestReleaseInfo();
 	}
 
-	informationDialog.addEventListener('click', function (event) {
-		let rect = informationDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			informationDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(informationDialog);
 
 	spanShowReleaseNotes.addEventListener('click', function (event) {
 		event.stopPropagation();
@@ -619,7 +588,7 @@ function addOnButtonInformationDialogClickListener(){
 	});
 }
 
-function addOnButtonChangeDigitCodeDialogListener(){
+function setOnButtonChangeDigitCodeDialogListener(){
 	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
 	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
 	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
@@ -650,17 +619,10 @@ function addOnButtonChangeDigitCodeDialogListener(){
 		}
 	}
 
-	changeDigitCodeDialog.addEventListener('click', function (event) {
-		let rect = changeDigitCodeDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			changeDigitCodeDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(changeDigitCodeDialog);
 }
 
-function addOnButtonExportMoviesClickListener(){
+function setOnButtonExportMoviesClickListener(){
 	let buttonExportMovies = document.getElementById("buttonExportMovies");
 
 	buttonExportMovies.onclick = function(){
@@ -670,12 +632,12 @@ function addOnButtonExportMoviesClickListener(){
 			a.href = URL.createObjectURL(file);
 			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
 			a.click();
-		})
+		});
 	}
 }
 
-function addOnButtonImportMoviesClickListener(){
-	let buttonImportMovies = document.getElementById("buttonImportMovies");
+function setOnButtonImportMoviesDialogClickListener(){
+	let buttonImportMoviesDialog = document.getElementById("buttonImportMoviesDialog");
 	let importMoviesDialog = document.getElementById("importMoviesDialog");
 	let dropZone = document.getElementById("dropZone");
 	let notificationUploadFileInJsonFormat = document.getElementById("notificationUploadFileInJsonFormat");
@@ -685,7 +647,7 @@ function addOnButtonImportMoviesClickListener(){
 	let uploadedFileName = document.getElementById("uploadedFileName");
 	let userMoviesJson;
 
-	buttonImportMovies.onclick = function(){
+	buttonImportMoviesDialog.onclick = function(){
 		importMoviesDialog.showModal();
 	}
 
@@ -731,20 +693,14 @@ function addOnButtonImportMoviesClickListener(){
 		getUserMovies(getCookie("username"), false);
 	}
 
-	importMoviesDialog.addEventListener('click', function (event) {
-		let rect = importMoviesDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			importMoviesDialog.close();
-			uploadedItem.style.display = "none";
-			buttonSaveImportedMovies.style.display = "none";
-			dropZoneText.style.display = "flex";
-		}
+	setOnOutsideDialogClickListener(importMoviesDialog, function(){
+		uploadedItem.style.display = "none";
+		buttonSaveImportedMovies.style.display = "none";
+		dropZoneText.style.display = "flex";
 	});
 }
 
-function addOnButtonDownloadWatchStormAppClickListener(){
+function setOnButtonDownloadWatchStormAppClickListener(){
 	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
 
 	buttonDownloadWatchStormApp.onclick = function(){
@@ -752,15 +708,15 @@ function addOnButtonDownloadWatchStormAppClickListener(){
 	}
 }
 
-function addOnButtonLeaveFeedbackClickListener(){
-	let buttonLeaveFeedback = document.getElementById("buttonLeaveFeedback");
+function setOnButtonLeaveFeedbackDialogClickListener(){
+	let buttonLeaveFeedbackDialog = document.getElementById("buttonLeaveFeedbackDialog");
 	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
 	let inputFeedbackText = document.getElementById("inputFeedbackText");
 	let buttonSendFeedback = document.getElementById("buttonSendFeedback");
 	let notificationFeedbackHasBeenSent = document.getElementById("notificationFeedbackHasBeenSent");
 	let notificationPleaseFillFeedbackField = document.getElementById("notificationPleaseFillFeedbackField");
 
-	buttonLeaveFeedback.onclick = function(){
+	buttonLeaveFeedbackDialog.onclick = function(){
 		leaveFeedbackDialog.showModal();
 	}
 
@@ -774,17 +730,10 @@ function addOnButtonLeaveFeedbackClickListener(){
 		}
 	}
 
-	leaveFeedbackDialog.addEventListener('click', function (event) {
-		let rect = leaveFeedbackDialog.getBoundingClientRect();
-		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-		if (!isInDialog) {
-			leaveFeedbackDialog.close();
-		}
-	});
+	setOnOutsideDialogClickListener(leaveFeedbackDialog);
 }
 
-function addOnButtonDeleteMovieClickListener(){
+function setOnButtonDeleteMovieClickListener(){
 	buttonDeleteMovie.onclick = function() {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
 		movieDialog.close();
@@ -793,7 +742,7 @@ function addOnButtonDeleteMovieClickListener(){
 	}
 }
 
-function addOnButtonWatchStormWebRepositoryClickListener(){
+function setOnButtonWatchStormWebRepositoryClickListener(){
 	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
 
 	buttonWatchStormWebRepository.onclick = function(){
@@ -801,13 +750,13 @@ function addOnButtonWatchStormWebRepositoryClickListener(){
 	}
 }
 
-function addOnButtonContactTheDeveloperClickListener(){
-	let buttonContactTheDeveloper = document.getElementById("buttonContactTheDeveloper");
+function setOnButtonContactTheDeveloperDialogClickListener(){
+	let buttonContactTheDeveloperDialog = document.getElementById("buttonContactTheDeveloperDialog");
 	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
 	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
 	let notificationEmailHasBeenCopied = document.getElementById("notificationEmailHasBeenCopied");
 
-	buttonContactTheDeveloper.onclick = function(){
+	buttonContactTheDeveloperDialog.onclick = function(){
 		contactTheDeveloperDialog.showModal();
 	}
 
@@ -816,12 +765,30 @@ function addOnButtonContactTheDeveloperClickListener(){
 		showNotification(notificationEmailHasBeenCopied, "flex");
 	}
 
-	contactTheDeveloperDialog.addEventListener('click', function (event) {
-		let rect = contactTheDeveloperDialog.getBoundingClientRect();
+	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
+}
+
+function setListeners(userLogin){
+	showSidebar();
+	updateUserDataInSidebar(userLogin);
+	getUserMovies(userLogin, false);
+	setOnFavoriteMoviesButtonClickListener(userLogin);
+	setOnMoviesButtonClickListener(userLogin);
+	setOnAddNewMovieButtonClickListener();
+	setOnButtonDeleteMovieClickListener();
+	setOnNewsButtonClickListener();
+	setOnSettingsButtonClickListener();
+	setOnSignOutButtonClickListener();
+}
+
+function setOnOutsideDialogClickListener(dialog, functionToExecute){
+	dialog.addEventListener('click', function (event) {
+		let rect = dialog.getBoundingClientRect();
 		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
 		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
 		if (!isInDialog) {
-			contactTheDeveloperDialog.close();
+			dialog.close();
+			if(typeof functionToExecute != 'undefined') executeFunction(functionToExecute);
 		}
 	});
 }
@@ -856,6 +823,10 @@ async function downloadWatchStormLatest(){
 	const res = await fetch('https://api.github.com/repos/KolyaFedorenko/WatchStorm/releases/latest');
 	let jsonReleaseInfo = await res.json();
 	window.open(`${jsonReleaseInfo.assets[0].browser_download_url}`);
+}
+
+const executeFunction = (functionToExecute) => {
+	functionToExecute();
 }
 
 window.onload = function(){
