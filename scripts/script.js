@@ -496,6 +496,7 @@ function setOnSignOutButtonClickListener(){
 
 function setOnRecommendationsButtonClickListener(){
 	let recommendationsButton = document.getElementById("recommendationsButton");
+	let TMDBisAvailable = false;
 
 	recommendationsButton.onclick = function(){
 		moviesList.innerHTML = '';
@@ -503,9 +504,17 @@ function setOnRecommendationsButtonClickListener(){
 		`
 		<div class="messages-container" style="cursor:pointer;">
 			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
-				<div class="accent-container" style="display: flex; justify-content: center; align-items: center; width: 260px;">
+				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
 					<span style="font-size: 16px; color: white; margin-left: 5px;">WatchStorm Assistant</span>
+					<div id="availableStatusContainer" class="availability-status-container">
+						<div class="availability-indicator"></div>
+						<span class="availability-status">available</span>
+					</div>
+					<div id="unavailableStatusContainer" class="availability-status-container" style="background-color: rgba(255, 83, 83, 0.1);">
+						<div class="availability-indicator" style="  background-color: rgb(255, 83, 83, 0.6);"></div>
+						<span class="availability-status" style="color: rgb(255, 83, 83, 0.6);">unavailable</span>
+					</div>
 				</div>
 			</div>
 			<div class="messages-container-content" id="messagesContainer"></div>
@@ -518,10 +527,27 @@ function setOnRecommendationsButtonClickListener(){
 		</div>
 		`;
 		setTimeout(()=> sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
+		checkTMDBAvailability();
 		
 		let messagesContainer = document.getElementById("messagesContainer");
+		let assistantContainer = document.getElementById("assistantContainer");
+		let availableStatusContainer = document.getElementById("availableStatusContainer");
+		let unavailableStatusContainer = document.getElementById("unavailableStatusContainer");
 		let inputUserMessage = document.getElementById("inputUserMessage");
 		let buttonSendMessage = document.getElementById("buttonSendMessage");
+
+		assistantContainer.onclick = function(){
+			if (availableStatusContainer.style.display != "flex" && unavailableStatusContainer.style.display != "flex") {
+				if (TMDBisAvailable) {
+					availableStatusContainer.style.display = "flex";
+				} else {
+					unavailableStatusContainer.style.display = "flex";
+				}
+			} else {
+				availableStatusContainer.style.display = "none";
+				unavailableStatusContainer.style.display = "none";
+			}
+		}
 
 		buttonSendMessage.onclick = function(){
 			sendMessage("user", inputUserMessage.value, "none");
@@ -609,7 +635,10 @@ function setOnRecommendationsButtonClickListener(){
 				})
 				.catch(err => console.error(err));
 			})
-			.catch(err => console.error(err));
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
 		}
 
 		function findTrendingMovies(){
@@ -621,7 +650,10 @@ function setOnRecommendationsButtonClickListener(){
 					The second most popular was "${response.results[1].title}" with an AAR of ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%.
 					"${response.results[2].title}" closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.`, "block");
 			})
-			.catch(err => console.error(err));
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
 		}
 
 		function findTopRatedMovies(){
@@ -634,7 +666,20 @@ function setOnRecommendationsButtonClickListener(){
 				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.
 				<br>Also, the list of the most highly rated films includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
 			})
-			.catch(err => console.error(err));
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function checkTMDBAvailability(){
+			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			.then(response => response.json())
+			.then(TMDBisAvailable = true)
+			.catch(err => {
+				console.error(err);
+				TMDBisAvailable = false;
+			});
 		}
 	}
 }
