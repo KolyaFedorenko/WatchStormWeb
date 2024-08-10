@@ -494,6 +494,151 @@ function setOnSignOutButtonClickListener(){
 	}
 }
 
+function setOnRecommendationsButtonClickListener(){
+	let recommendationsButton = document.getElementById("recommendationsButton");
+
+	recommendationsButton.onclick = function(){
+		moviesList.innerHTML = '';
+		moviesList.innerHTML += 
+		`
+		<div class="messages-container" style="cursor:pointer;">
+			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
+				<div class="accent-container" style="display: flex; justify-content: center; align-items: center; width: 260px;">
+					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+					<span style="font-size: 16px; color: white; margin-left: 5px;">WatchStorm Assistant</span>
+				</div>
+			</div>
+			<div class="messages-container-content" id="messagesContainer"></div>
+			<div style="display: inline-flex; margin-top: 20px;">
+				<input id="inputUserMessage" autocomplete="off" class="input-field input-message">
+				<div id="buttonSendMessage" class="accent-container rounded-button">
+					<i class="fa-solid fa-arrow-up fa fa-fw"></i>
+				</div>
+			</div>
+		</div>
+		`;
+		setTimeout(()=> sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
+		
+		let messagesContainer = document.getElementById("messagesContainer");
+		let inputUserMessage = document.getElementById("inputUserMessage");
+		let buttonSendMessage = document.getElementById("buttonSendMessage");
+
+		buttonSendMessage.onclick = function(){
+			sendMessage("user", inputUserMessage.value, "none");
+		}
+
+		inputUserMessage.addEventListener('keydown', (event) => {
+			if(event.key === 'Enter') {
+				event.preventDefault();
+				sendMessage("user", inputUserMessage.value, "none");
+			}
+		});
+
+		function sendMessage(messageSender, messageText, displayWatchStormIcon){
+			messagesContainer.innerHTML +=
+			`
+			<div class="message-from-${messageSender}-container message">
+				<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%; display: ${displayWatchStormIcon};">
+				<div class="message-from-${messageSender}">
+					<span class="default-text">${messageText}</span>
+				</div>
+			</div>
+			`
+			messagesContainer.scrollTop = messagesContainer.scrollHeight;
+			inputUserMessage.value = "";
+
+			if (messageSender == "user") {
+				setTimeout(()=> replyToUserMessage(messageText), 500);
+			}
+
+			setTimeout(()=> document.getElementsByClassName("message")[0].classList.remove("message"), 500);
+		}
+
+		function replyToUserMessage(userMessageText){
+			if (userMessageText.includes("/commands") || userMessageText.includes("/help")) {
+				sendMessage("watchstorm",
+				 `List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
+				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
+				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
+				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'" class="command">/top</span>
+				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
+				 command is identical to the /commands command. <br>`, "block");
+			}
+			else if (userMessageText.includes("/recommendations")) {
+				if (userMessageText.split("/recommendations")[1] != "") {
+					findRecommendations(userMessageText.split("/recommendations ")[1]);
+				}
+				else {
+					sendMessage("watchstorm", "Please enter the movie name after the command!", "block")
+				}
+			}
+			else if (userMessageText.includes("/trending")) {
+				findTrendingMovies();
+			}
+			else if (userMessageText.includes("/top")) {
+				findTopRatedMovies();
+			}
+			else if ((userMessageText.includes("ello") || userMessageText.includes("ey") || userMessageText.includes("sup")) && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "Hello!", "block");
+			}
+			else if ((userMessageText.includes("hank you") || userMessageText.includes("anks")) && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "You're welcome!", "block");
+			}
+			else if (userMessageText.includes("ye") && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "See you again!", "block");
+			}
+			else {
+				sendMessage("watchstorm", "Sorry, I can't recognize your message. Please see the list of supported commands by sending " +
+				"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'\" class=\"command\">\"\/commands\"</span>", "block");
+			}
+		}
+
+		function findRecommendations(movieTitle){
+			let recommendations = "";
+
+			fetch(`https://api.themoviedb.org/3/search/multi?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=${movieTitle}`)
+			.then(response => response.json())
+			.then(response => {
+				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`)
+				.then(response => response.json())
+				.then(response => {
+					for (let i = 0; i < 10; i++) {
+						recommendations += `<i class="fa-solid fa-circle-dot fa" style="filter: grayscale(1); padding-right: 5px;"></i> ${response.results[i].title} (${response.results[i].release_date.substring(0, 4)}) <br>`;
+					}
+					sendMessage("watchstorm", `Here's what i can recommend you to watch if you liked "${movieTitle}": <br> ${recommendations}`, "block");
+				})
+				.catch(err => console.error(err));
+			})
+			.catch(err => console.error(err));
+		}
+
+		function findTrendingMovies(){
+			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `
+					The most popular for the week was "${response.results[0].title}" with an average user rating of ${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%.
+					The second most popular was "${response.results[1].title}" with an AAR of ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%.
+					"${response.results[2].title}" closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.`, "block");
+			})
+			.catch(err => console.error(err));
+		}
+
+		function findTopRatedMovies(){
+			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `The first place of the most highly rated films is deservedly occupied by "${response.results[0].title}" with an average rating of
+				${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[0].release_date).substring(0, 4)}.
+				<br>In second place is "${response.results[1].title}" with AAR ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[1].release_date).substring(0, 4)}.
+				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.
+				<br>Also, the list of the most highly rated films includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
+			})
+			.catch(err => console.error(err));
+		}
+	}
+}
+
 function setOnSettingsButtonClickListener(){
 	let settingsButton = document.getElementById("settingsButton");
 	settingsButton.onclick = function() {
@@ -777,6 +922,7 @@ function setListeners(userLogin){
 	setOnAddNewMovieButtonClickListener();
 	setOnButtonDeleteMovieClickListener();
 	setOnNewsButtonClickListener();
+	setOnRecommendationsButtonClickListener();
 	setOnSettingsButtonClickListener();
 	setOnSignOutButtonClickListener();
 }

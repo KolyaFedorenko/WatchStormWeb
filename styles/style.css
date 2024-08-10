@@ -596,3 +596,173 @@ textarea::placeholder {
 img {
   user-select: none;
 }
+
+.messages-container {
+  position: relative;
+  width: 800px;
+  height: 800px;
+  background-color: rgb(20, 20, 20);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 15px;
+  transition-duration: 500ms;
+  animation-duration: 1s;
+  animation-name: show-movies;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-left: 300px;
+  padding: 30px;
+  cursor: default !important;
+}
+
+.messages-container-content {
+  width: 740px;
+  height: 610px;
+  margin-top: 30px;
+  overflow-y: auto;
+}
+
+.rounded-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  margin-left: 10px;
+  border-radius: 20px;
+  filter: grayscale(1);
+  transition-duration: 500ms;
+  cursor: pointer;
+}
+
+.rounded-button:hover {
+  filter: grayscale(0);
+  transition-duration: 500ms;
+}
+
+.input-message {
+  width: 690px;
+  margin-bottom: 30px;
+  background-color: rgb(30, 30, 30);
+  text-align: left;
+  padding-left: 20px;
+}
+
+.message-from-watchstorm-container {
+  display: inline-flex;
+  margin-top: 10px;
+}
+
+.message-from-watchstorm {
+  background-color: rgb(40, 40, 40);
+  max-width: 250px;
+  width: fit-content;
+  padding: 10px;
+  padding-inline: 15px;
+  margin-left: 5px;
+  border-radius: 20px;
+}
+
+.message-from-user-container {
+  margin-top: 10px;
+  scale: 1 !important;
+}
+
+.message-from-user {
+  background-color: rgb(40, 40, 40);
+  max-width: 250px;
+  width: fit-content;
+  padding: 10px;
+  padding-inline: 15px;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 20px;
+}
+
+.message {
+  animation-name: message-animation;
+  animation-duration: 500ms;
+}
+
+@keyframes message-animation {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.command {
+  background-color: rgb(60, 60, 60);
+  border-radius: 5px;
+  padding-inline: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.command:hover {
+  color: #fff553;
+}
+
+.indicator-negative {
+  background: rgb(255, 83, 83);
+	border-radius: 50%;
+	margin-top: 10px;
+  margin-right: 5px;
+	height: 8px;
+	width: 8px;
+
+	box-shadow: 0 0 0 0 rgba(255, 83, 83, 1);
+	transform: scale(1);
+	animation: fade-in 4s, pulse-negative 2s infinite;
+}
+
+@keyframes pulse-negative {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(255, 83, 83, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(255, 83, 83, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(255, 83, 83, 0);
+	}
+}
+
+.indicator-positive {
+  background: rgb(82, 255, 174);
+	border-radius: 50%;
+	margin-top: 10px;
+  margin-right: 5px;
+	height: 8px;
+	width: 8px;
+
+	box-shadow: 0 0 0 0 rgba(82, 255, 174, 1);
+	transform: scale(1);
+	animation: fade-in 4s, pulse-positive 2s infinite;
+}
+
+@keyframes pulse-positive {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(82, 255, 174, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(82, 255, 174, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(82, 255, 174, 0);
+	}
+}

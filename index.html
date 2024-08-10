@@ -35,9 +35,11 @@
 				<button id="buttonSaveRating" class="button-login">Save Rating For This Movie</button>
 			</div>
 			<div id="notificationPleaseEnterMovieTitle" style="display: none; align-items: center; justify-content: center;">
+				<div class="indicator-negative"></div>
 				<span class="default-text notification negative">Please enter movie title to search!</span>
 			</div>
 			<div id="notificationPleaseFillInAllFields" style="display: none; align-items: center; justify-content: center;">
+				<div class="indicator-negative"></div>
 				<span class="default-text notification negative">Please fill in all fields!</span>
 			</div>
 		</div>
@@ -80,9 +82,11 @@
 		<input autocomplete="off" id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="margin-top: 10px;">
 		<button id="buttonSaveDigitCode" disabled class="button-login" style="margin-top: 10px;">Save 6-digit code</button>
 		<div id="notificationDigitCodeHasBeenChanged" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-positive"></div>
 			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
 		</div>
 		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-negative"></div>
 			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
 		</div>
 	</dialog>
@@ -113,6 +117,7 @@
 		</div>
 		<button id="buttonSaveImportedMovies" class="button-login" style="display: none; margin-top: 10px;">Import movies</button>
 		<div id="notificationUploadFileInJsonFormat" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-negative"></div>
 			<span class="default-text notification negative">Please upload file in JSON format!</span>
 		</div>
 	</dialog>
@@ -129,9 +134,11 @@
 		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
 		<button id="buttonSendFeedback" class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Send feedback</button>
 		<div id="notificationFeedbackHasBeenSent" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-positive"></div>
 			<span class="default-text notification positive">Your feedback has been sent!</span>
 		</div>
 		<div id="notificationPleaseFillFeedbackField" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-negative"></div>
 			<span class="default-text notification negative">Please fill in the feedback field!</span>
 		</div>
 	</dialog>
@@ -156,6 +163,7 @@
 			</div>
 		</div>
 		<div id="notificationEmailHasBeenCopied" style="display: none; align-items: center; justify-content: center;">
+			<div class="indicator-positive"></div>
 			<span class="default-text notification positive">Email has been copied to clipboard!</span>
 		</div>
 	</dialog>
@@ -172,6 +180,7 @@
 				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i>My Favorite Movies</a></li>
 				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i>Add New Movie</a></li>
 				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i>WatchStorm News</a></li>
+				<li><a id="recommendationsButton"><i class="fa-solid fa-earth-americas fa fa-fw"></i>WatchStorm Assistant</a></li>
 				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i>Settings</a></li>
 				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i>Sign Out</a></li>
 			</ul>
