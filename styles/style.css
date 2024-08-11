@@ -654,7 +654,7 @@ img {
 }
 
 .message-from-watchstorm {
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(35, 35, 35);
   max-width: 250px;
   width: fit-content;
   padding: 10px;
@@ -669,7 +669,7 @@ img {
 }
 
 .message-from-user {
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(35, 35, 35);
   max-width: 250px;
   width: fit-content;
   padding: 10px;

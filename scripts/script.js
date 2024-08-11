@@ -506,7 +506,7 @@ function setOnRecommendationsButtonClickListener(){
 			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
 				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
-					<span style="font-size: 16px; color: white; margin-left: 5px;">WatchStorm Assistant</span>
+					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;	">WatchStorm Assistant</span>
 					<div id="availableStatusContainer" class="availability-status-container">
 						<div class="availability-indicator"></div>
 						<span class="availability-status">available</span>
