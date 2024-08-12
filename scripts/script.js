@@ -279,18 +279,13 @@ function authorizeUser() {
 
 function updateUserDataInSidebar(username) {
 	let headersContainer = document.getElementById("headersContainer");
-	var userImageUrl = "https://i.ibb.co/YLMWZqz/director-placeholder.jpg";
-
-	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
-		userImageUrl = url;
-	});
 
 	headersContainer.innerHTML +=
 	`
 	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
-				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
+				<img id="userProfileImage" src="images/director_placeholder.jpg" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
 			</div>
 			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
 				<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
@@ -299,9 +294,12 @@ function updateUserDataInSidebar(username) {
 		</div>
 	</div>
 	`;
-
+	
 	let userProfileImage = document.getElementById("userProfileImage");
-	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
+
+	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
+		userProfileImage.src = url;
+	});
 }
 
 function setOnFavoriteMoviesButtonClickListener(username){
