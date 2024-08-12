@@ -166,6 +166,7 @@ function showAuthorizationDialog(){
                         <button id="buttonSignIn" class="button-login">Sign In</button>
                     </div>
 					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
+						<div class="indicator-negative"></div>
 						<span class="default-text notification negative">Incorrect login or password!</span>
 					</div>
                 </div>
