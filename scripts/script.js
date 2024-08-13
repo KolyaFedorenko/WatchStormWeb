@@ -343,7 +343,7 @@ function setOnAddNewMovieButtonClickListener(){
 			let url;
 			
 			if (movieTitleField.value != ""){
-				url = `https://api.themoviedb.org/3/search/multi?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=${movieTitleField.value}`;
+				url = `https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitleField.value}`;
 				searchMovieDialog.showModal();
 				fetch(url)
 				.then(jsonResponse => jsonResponse.json())
@@ -621,10 +621,10 @@ function setOnRecommendationsButtonClickListener(){
 		function findRecommendations(movieTitle){
 			let recommendations = "";
 
-			fetch(`https://api.themoviedb.org/3/search/multi?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=${movieTitle}`)
+			fetch(`https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitle}`)
 			.then(response => response.json())
 			.then(response => {
-				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb`)
+				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=88323c284697a03104d20067cd85c910`)
 				.then(response => response.json())
 				.then(response => {
 					for (let i = 0; i < 10; i++) {
@@ -641,7 +641,7 @@ function setOnRecommendationsButtonClickListener(){
 		}
 
 		function findTrendingMovies(){
-			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=88323c284697a03104d20067cd85c910")
 			.then(response => response.json())
 			.then(response => {
 				sendMessage("watchstorm", `
@@ -656,7 +656,7 @@ function setOnRecommendationsButtonClickListener(){
 		}
 
 		function findTopRatedMovies(){
-			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=88323c284697a03104d20067cd85c910")
 			.then(response => response.json())
 			.then(response => {
 				sendMessage("watchstorm", `The first place of the most highly rated films is deservedly occupied by "${response.results[0].title}" with an average rating of
@@ -672,7 +672,7 @@ function setOnRecommendationsButtonClickListener(){
 		}
 
 		function checkTMDBAvailability(){
-			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb")
+			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=88323c284697a03104d20067cd85c910")
 			.then(response => response.json())
 			.then(TMDBisAvailable = true)
 			.catch(err => {
