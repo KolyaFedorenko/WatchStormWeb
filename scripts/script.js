@@ -628,7 +628,7 @@ function setOnRecommendationsButtonClickListener(){
 				.then(response => response.json())
 				.then(response => {
 					for (let i = 0; i < 10; i++) {
-						recommendations += `<i class="fa-solid fa-circle-dot fa" style="filter: grayscale(1); padding-right: 5px;"></i> ${response.results[i].title} (${response.results[i].release_date.substring(0, 4)}) <br>`;
+						recommendations += `<i class="fa-solid fa-caret-right fa" style="filter: grayscale(1); padding-right: 5px;"></i> ${response.results[i].title} (${response.results[i].release_date.substring(0, 4)}) <br>`;
 					}
 					sendMessage("watchstorm", `Here's what i can recommend you to watch if you liked "${movieTitle}": <br> ${recommendations}`, "block");
 				})
