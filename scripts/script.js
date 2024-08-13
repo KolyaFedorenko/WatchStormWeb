@@ -33,7 +33,7 @@ function getUserMovies(username, favorite){
             `
             <div class="default-container movie" style="cursor:pointer;" 
 			onclick="
-			 selectedMovieImage.src='https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg';
+			 selectedMovieImage.src='images/movie_placeholder2.jpg';
 			 movieDialog.setAttribute('data-delete', '${movies[movie].title}');
 			 movieDialog.showModal();
 			 movieDialog.addEventListener('click', function (event) {
@@ -48,7 +48,7 @@ function getUserMovies(username, favorite){
 				<div class="default-container-content">
 					<div class="movie-item">
 						<div class="movie-main-info">
-							<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+							<img class="movie-image" src="images/movie_placeholder2.jpg">
 							<div class="movie-title-and-year">
 								<span class="movie-title">${movies[movie].title}</span>
 								<span class="movie-year">${movies[movie].year}</span>
@@ -285,7 +285,7 @@ function updateUserDataInSidebar(username) {
 	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
-				<img id="userProfileImage" src="images/director_placeholder.jpg" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
+				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
 			</div>
 			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
 				<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
@@ -363,7 +363,7 @@ function setOnAddNewMovieButtonClickListener(){
 									searchMovieDialog.close();
 								 ">
 									<div>
-										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
 												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title.substring(0, 25)}</header>
@@ -389,7 +389,7 @@ function setOnAddNewMovieButtonClickListener(){
 									searchMovieDialog.close();
 								 ">
 									<div>
-										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
 												<header style="font-size: 14px; color: white;">${json.results[i].name.substring(0, 25)}</header>
@@ -452,7 +452,7 @@ function setOnNewsButtonClickListener(){
 					<div class="default-container-content">
 						<div class="movie-item">
 							<div class="movie-main-info">
-								<img class="movie-image" src="https://i.ibb.co/7tpcQH5/newlogo6.jpg">
+								<img class="movie-image" src="images/newlogo6.jpg">
 								<div class="movie-title-and-year">
 									<div style="display: inline-flex">
 										<span class="movie-title">WatchStorm</span>
