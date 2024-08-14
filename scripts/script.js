@@ -588,22 +588,25 @@ function setOnRecommendationsButtonClickListener(){
 				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
 				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
 				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'" class="command">/top</span>
-				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
+				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
+				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
 				 command is identical to the /commands command. <br>`, "block");
 			}
 			else if (userMessageText.includes("/recommendations")) {
 				if (userMessageText.split("/recommendations")[1] != "") {
-					findRecommendations(userMessageText.split("/recommendations ")[1]);
-				}
-				else {
+					searchForRecommendations(userMessageText.split("/recommendations ")[1]);
+				} else {
 					sendMessage("watchstorm", "Please enter the movie name after the command!", "block")
 				}
 			}
 			else if (userMessageText.includes("/trending")) {
-				findTrendingMovies();
+				searchForTrendingMovies();
 			}
 			else if (userMessageText.includes("/top")) {
-				findTopRatedMovies();
+				searchForTopRatedMovies();
+			}
+			else if (userMessageText.includes("/upcoming")){
+				searchForUpcomingMovies();
 			}
 			else if ((userMessageText.includes("ello") || userMessageText.includes("ey") || userMessageText.includes("sup")) && !userMessageText.includes("\/")) {
 				sendMessage("watchstorm", "Hello!", "block");
@@ -620,19 +623,18 @@ function setOnRecommendationsButtonClickListener(){
 			}
 		}
 
-		function findRecommendations(movieTitle){
-			let recommendations = "";
-
+		function searchForRecommendations(movieTitle){
 			fetch(`https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitle}`)
 			.then(response => response.json())
 			.then(response => {
 				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=88323c284697a03104d20067cd85c910`)
 				.then(response => response.json())
 				.then(response => {
-					for (let i = 0; i < 10; i++) {
-						recommendations += `<i class="fa-solid fa-caret-right fa" style="filter: grayscale(1); padding-right: 5px;"></i> ${response.results[i].title} (${response.results[i].release_date.substring(0, 4)}) <br>`;
-					}
-					sendMessage("watchstorm", `Here's what i can recommend you to watch if you liked "${movieTitle}": <br> ${recommendations}`, "block");
+					sendMessage("watchstorm", `If you liked the movie "${movieTitle}", I can recommend you movies like ${response.results[0].title} (${(response.results[0].release_date).substring(0, 4)}),
+					${response.results[1].title} (${(response.results[1].release_date).substring(0, 4)}) and ${response.results[2].title} (${(response.results[2].release_date).substring(0, 4)}).
+					You might also like ${response.results[3].title} (${(response.results[3].release_date).substring(0, 4)}), ${response.results[4].title} (${(response.results[4].release_date).substring(0, 4)}),
+					${response.results[5].title} (${(response.results[5].release_date).substring(0, 4)}), ${response.results[6].title} (${(response.results[6].release_date).substring(0, 4)})
+					and ${response.results[7].title} (${(response.results[7].release_date).substring(0, 4)}).`, "block");
 				})
 				.catch(err => console.error(err));
 			})
@@ -642,7 +644,7 @@ function setOnRecommendationsButtonClickListener(){
 			});
 		}
 
-		function findTrendingMovies(){
+		function searchForTrendingMovies(){
 			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=88323c284697a03104d20067cd85c910")
 			.then(response => response.json())
 			.then(response => {
@@ -657,15 +659,30 @@ function setOnRecommendationsButtonClickListener(){
 			});
 		}
 
-		function findTopRatedMovies(){
+		function searchForTopRatedMovies(){
 			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=88323c284697a03104d20067cd85c910")
 			.then(response => response.json())
 			.then(response => {
-				sendMessage("watchstorm", `The first place of the most highly rated films is deservedly occupied by "${response.results[0].title}" with an average rating of
+				sendMessage("watchstorm", `The first place of the most highly rated movies is deservedly occupied by "${response.results[0].title}" with an average rating of
 				${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[0].release_date).substring(0, 4)}.
 				<br>In second place is "${response.results[1].title}" with AAR ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[1].release_date).substring(0, 4)}.
 				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.
-				<br>Also, the list of the most highly rated films includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
+				<br>Also, the list of the most highly rated movies includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
+			})
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function searchForUpcomingMovies() {
+			fetch("https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&region=US&api_key=88323c284697a03104d20067cd85c910")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `The most anticipated upcoming movie is "${response.results[0].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[0].release_date)).toLocaleDateString("ru-RU")}.
+				The second most popular upcoming movie is "${response.results[1].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[1].release_date)).toLocaleDateString("ru-RU")}.
+				Closes the top three is "${response.results[2].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[2].release_date)).toLocaleDateString("ru-RU")}.
+				Also due out in the near future are movies such as "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
 			})
 			.catch(err => {
 				console.error(err);
