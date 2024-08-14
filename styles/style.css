@@ -884,20 +884,6 @@ img {
 }
 
 .version {
-  background-color: rgb(40, 40, 40);
-  opacity: 0.75;
-  padding-inline: 6px;
-  border-radius: 5px;
-  font-size: 12px;
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-}
-
-.version:hover {
-  color: white;
-  opacity: 0.75;
+  text-decoration: underline;
   cursor: pointer;
 }
