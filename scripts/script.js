@@ -448,16 +448,7 @@ function setOnNewsButtonClickListener(){
 			for (let neww in news) {
 				let newwItem = 
 				`
-				<div class="default-container" style="user-select: none; cursor: pointer;" onclick="
-				timelineDialog.showModal();
-				timelineDialog.addEventListener('click', function (event) {
-				   let rect = timelineDialog.getBoundingClientRect();
-				   let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-					 && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-				   if (!isInDialog) {
-					timelineDialog.close();
-				   }
-			   });">
+				<div class="default-container" style="user-select: none;">
 					<div class="default-container-content">
 						<div class="movie-item">
 							<div class="movie-main-info">
@@ -1016,7 +1007,19 @@ async function getLatestReleaseInfo() {
 	jsonReleaseInfo = await res.json();
 
 	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
-	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
+	spanReleaseVersion.innerHTML = 
+	`
+		Version: <span class="version" onclick="
+		timelineDialog.showModal();
+		timelineDialog.addEventListener('click', function (event) {
+		   let rect = timelineDialog.getBoundingClientRect();
+		   let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+			 && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		   if (!isInDialog) {
+			timelineDialog.close();
+		   }
+	   	});">${(jsonReleaseInfo.tag_name).slice(-3)}</span>
+	`;
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
 }
 
