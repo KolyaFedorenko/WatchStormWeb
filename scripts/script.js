@@ -448,7 +448,16 @@ function setOnNewsButtonClickListener(){
 			for (let neww in news) {
 				let newwItem = 
 				`
-				<div class="default-container" style="user-select: none;">
+				<div class="default-container" style="user-select: none; cursor: pointer;" onclick="
+				timelineDialog.showModal();
+				timelineDialog.addEventListener('click', function (event) {
+				   let rect = timelineDialog.getBoundingClientRect();
+				   let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+					 && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+				   if (!isInDialog) {
+					timelineDialog.close();
+				   }
+			   });">
 					<div class="default-container-content">
 						<div class="movie-item">
 							<div class="movie-main-info">
@@ -576,7 +585,9 @@ function setOnRecommendationsButtonClickListener(){
 				setTimeout(()=> replyToUserMessage(messageText), 500);
 			}
 
-			setTimeout(()=> document.getElementsByClassName("message")[0].classList.remove("message"), 500);
+			setTimeout(()=> {
+				if (typeof  document.getElementsByClassName("message")[0] != 'undefined') document.getElementsByClassName("message")[0].classList.remove("message")
+			}, 500);
 		}
 
 		function replyToUserMessage(userMessageText){
