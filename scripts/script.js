@@ -586,10 +586,10 @@ function setOnRecommendationsButtonClickListener(){
 				sendMessage("watchstorm",
 				 `List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
 				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
-				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
+				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
+				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
 				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'" class="command">/top</span>
-				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
-				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
+				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
 				 command is identical to the /commands command. <br>`, "block");
 			}
 			else if (userMessageText.includes("/recommendations")) {
