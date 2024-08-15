@@ -164,6 +164,7 @@ progress::-webkit-progress-value {
   height: 100%;
   background-color: rgb(20, 20, 20);
   transition: all 0.5s ease;
+  z-index: 1;
 }
 
 .sidebar header {
@@ -886,4 +887,53 @@ img {
 .version {
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .settings-container {
+    scale: 0.8;
+    margin-left: 22%;
+  }
+
+  .messages-container {
+    scale: 0.8;
+    margin-left: 22%;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar ul a {
+    line-height: 85px;
+    font-size: 14px;
+  }
+
+  #username {
+    font-size: 14px !important;
+  }
+
+  #appname {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (max-device-width: 768px) {
+  .settings-container {
+    scale: 0.85;
+    margin-left: 200px;
+  }
+
+  .messages-container {
+    scale: 0.85;
+    margin-left: 200px;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar ul a {
+    line-height: 100px;
+  }
 }
