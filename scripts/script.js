@@ -1035,7 +1035,7 @@ async function getLatestReleaseInfo() {
 		   if (!isInDialog) {
 			timelineDialog.close();
 		   }
-	   	});">${(jsonReleaseInfo.tag_name).slice(-3)}</span>
+	   	});">${(jsonReleaseInfo.tag_name).replace('v.', '')}</span>
 	`;
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
 }
