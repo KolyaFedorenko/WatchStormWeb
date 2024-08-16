@@ -33,7 +33,7 @@ function getUserMovies(username, favorite){
             `
             <div class="default-container movie" style="cursor:pointer;" 
 			onclick="
-			 selectedMovieImage.src='https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg';
+			 selectedMovieImage.src='images/movie_placeholder2.jpg';
 			 movieDialog.setAttribute('data-delete', '${movies[movie].title}');
 			 movieDialog.showModal();
 			 movieDialog.addEventListener('click', function (event) {
@@ -48,7 +48,7 @@ function getUserMovies(username, favorite){
 				<div class="default-container-content">
 					<div class="movie-item">
 						<div class="movie-main-info">
-							<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+							<img class="movie-image" src="images/movie_placeholder2.jpg">
 							<div class="movie-title-and-year">
 								<span class="movie-title">${movies[movie].title}</span>
 								<span class="movie-year">${movies[movie].year}</span>
@@ -166,6 +166,7 @@ function showAuthorizationDialog(){
                         <button id="buttonSignIn" class="button-login">Sign In</button>
                     </div>
 					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
+						<div class="indicator-negative"></div>
 						<span class="default-text notification negative">Incorrect login or password!</span>
 					</div>
                 </div>
@@ -278,11 +279,6 @@ function authorizeUser() {
 
 function updateUserDataInSidebar(username) {
 	let headersContainer = document.getElementById("headersContainer");
-	var userImageUrl = "https://i.ibb.co/YLMWZqz/director-placeholder.jpg";
-
-	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
-		userImageUrl = url;
-	});
 
 	headersContainer.innerHTML +=
 	`
@@ -298,9 +294,12 @@ function updateUserDataInSidebar(username) {
 		</div>
 	</div>
 	`;
-
+	
 	let userProfileImage = document.getElementById("userProfileImage");
-	setTimeout(()=> userProfileImage.src = userImageUrl, 1000);
+
+	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
+		userProfileImage.src = url;
+	});
 }
 
 function setOnFavoriteMoviesButtonClickListener(username){
@@ -344,7 +343,7 @@ function setOnAddNewMovieButtonClickListener(){
 			let url;
 			
 			if (movieTitleField.value != ""){
-				url = `https://api.themoviedb.org/3/search/multi?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=${movieTitleField.value}`;
+				url = `https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitleField.value}`;
 				searchMovieDialog.showModal();
 				fetch(url)
 				.then(jsonResponse => jsonResponse.json())
@@ -364,7 +363,7 @@ function setOnAddNewMovieButtonClickListener(){
 									searchMovieDialog.close();
 								 ">
 									<div>
-										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
 												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title.substring(0, 25)}</header>
@@ -390,7 +389,7 @@ function setOnAddNewMovieButtonClickListener(){
 									searchMovieDialog.close();
 								 ">
 									<div>
-										<img class="movie-image" src="https://i.ibb.co/Cmtbf8j/movie-placeholder2.jpg">
+										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
 												<header style="font-size: 14px; color: white;">${json.results[i].name.substring(0, 25)}</header>
@@ -453,7 +452,7 @@ function setOnNewsButtonClickListener(){
 					<div class="default-container-content">
 						<div class="movie-item">
 							<div class="movie-main-info">
-								<img class="movie-image" src="https://i.ibb.co/7tpcQH5/newlogo6.jpg">
+								<img class="movie-image" src="images/newlogo6.jpg">
 								<div class="movie-title-and-year">
 									<div style="display: inline-flex">
 										<span class="movie-title">WatchStorm</span>
@@ -491,6 +490,215 @@ function setOnSignOutButtonClickListener(){
 		deleteCookie("digitCode");
 		
 		showAuthorizationDialog();
+	}
+}
+
+function setOnRecommendationsButtonClickListener(){
+	let recommendationsButton = document.getElementById("recommendationsButton");
+	let TMDBisAvailable = false;
+
+	recommendationsButton.onclick = function(){
+		moviesList.innerHTML = '';
+		moviesList.innerHTML += 
+		`
+		<div class="messages-container" style="cursor:pointer;">
+			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
+				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
+					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;	">WatchStorm Assistant</span>
+					<div id="availableStatusContainer" class="availability-status-container">
+						<div class="availability-indicator"></div>
+						<span class="availability-status">available</span>
+					</div>
+					<div id="unavailableStatusContainer" class="availability-status-container" style="background-color: rgba(255, 83, 83, 0.1);">
+						<div class="availability-indicator" style="  background-color: rgb(255, 83, 83, 0.6);"></div>
+						<span class="availability-status" style="color: rgb(255, 83, 83, 0.6);">unavailable</span>
+					</div>
+				</div>
+			</div>
+			<div class="messages-container-content" id="messagesContainer"></div>
+			<div style="display: inline-flex; margin-top: 20px;">
+				<input id="inputUserMessage" autocomplete="off" class="input-field input-message">
+				<div id="buttonSendMessage" class="accent-container rounded-button">
+					<i class="fa-solid fa-arrow-up fa fa-fw"></i>
+				</div>
+			</div>
+		</div>
+		`;
+		setTimeout(()=> sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
+		checkTMDBAvailability();
+		
+		let messagesContainer = document.getElementById("messagesContainer");
+		let assistantContainer = document.getElementById("assistantContainer");
+		let availableStatusContainer = document.getElementById("availableStatusContainer");
+		let unavailableStatusContainer = document.getElementById("unavailableStatusContainer");
+		let inputUserMessage = document.getElementById("inputUserMessage");
+		let buttonSendMessage = document.getElementById("buttonSendMessage");
+
+		assistantContainer.onclick = function(){
+			if (availableStatusContainer.style.display != "flex" && unavailableStatusContainer.style.display != "flex") {
+				if (TMDBisAvailable) {
+					availableStatusContainer.style.display = "flex";
+				} else {
+					unavailableStatusContainer.style.display = "flex";
+				}
+			} else {
+				availableStatusContainer.style.display = "none";
+				unavailableStatusContainer.style.display = "none";
+			}
+		}
+
+		buttonSendMessage.onclick = function(){
+			sendMessage("user", inputUserMessage.value, "none");
+		}
+
+		inputUserMessage.addEventListener('keydown', (event) => {
+			if(event.key === 'Enter') {
+				event.preventDefault();
+				sendMessage("user", inputUserMessage.value, "none");
+			}
+		});
+
+		function sendMessage(messageSender, messageText, displayWatchStormIcon){
+			messagesContainer.innerHTML +=
+			`
+			<div class="message-from-${messageSender}-container message">
+				<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%; display: ${displayWatchStormIcon};">
+				<div class="message-from-${messageSender}">
+					<span class="default-text">${messageText}</span>
+				</div>
+			</div>
+			`
+			messagesContainer.scrollTop = messagesContainer.scrollHeight;
+			inputUserMessage.value = "";
+
+			if (messageSender == "user") {
+				setTimeout(()=> replyToUserMessage(messageText), 500);
+			}
+
+			setTimeout(()=> {
+				if (typeof  document.getElementsByClassName("message")[0] != 'undefined') document.getElementsByClassName("message")[0].classList.remove("message")
+			}, 500);
+		}
+
+		function replyToUserMessage(userMessageText){
+			if (userMessageText.includes("/commands") || userMessageText.includes("/help")) {
+				sendMessage("watchstorm",
+				 `List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
+				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
+				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
+				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
+				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'" class="command">/top</span>
+				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
+				 command is identical to the /commands command. <br>`, "block");
+			}
+			else if (userMessageText.includes("/recommendations")) {
+				if (userMessageText.split("/recommendations")[1] != "") {
+					searchForRecommendations(userMessageText.split("/recommendations ")[1]);
+				} else {
+					sendMessage("watchstorm", "Please enter the movie name after the command!", "block")
+				}
+			}
+			else if (userMessageText.includes("/trending")) {
+				searchForTrendingMovies();
+			}
+			else if (userMessageText.includes("/top")) {
+				searchForTopRatedMovies();
+			}
+			else if (userMessageText.includes("/upcoming")){
+				searchForUpcomingMovies();
+			}
+			else if ((userMessageText.includes("ello") || userMessageText.includes("ey") || userMessageText.includes("sup")) && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "Hello!", "block");
+			}
+			else if ((userMessageText.includes("hank you") || userMessageText.includes("anks")) && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "You're welcome!", "block");
+			}
+			else if (userMessageText.includes("ye") && !userMessageText.includes("\/")) {
+				sendMessage("watchstorm", "See you again!", "block");
+			}
+			else {
+				sendMessage("watchstorm", "Sorry, I can't recognize your message. Please see the list of supported commands by sending " +
+				"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'\" class=\"command\">\"\/commands\"</span>", "block");
+			}
+		}
+
+		function searchForRecommendations(movieTitle){
+			fetch(`https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitle}`)
+			.then(response => response.json())
+			.then(response => {
+				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=88323c284697a03104d20067cd85c910`)
+				.then(response => response.json())
+				.then(response => {
+					sendMessage("watchstorm", `If you liked the movie "${movieTitle}", I can recommend you movies like ${response.results[0].title} (${(response.results[0].release_date).substring(0, 4)}),
+					${response.results[1].title} (${(response.results[1].release_date).substring(0, 4)}) and ${response.results[2].title} (${(response.results[2].release_date).substring(0, 4)}).
+					You might also like ${response.results[3].title} (${(response.results[3].release_date).substring(0, 4)}), ${response.results[4].title} (${(response.results[4].release_date).substring(0, 4)}),
+					${response.results[5].title} (${(response.results[5].release_date).substring(0, 4)}), ${response.results[6].title} (${(response.results[6].release_date).substring(0, 4)})
+					and ${response.results[7].title} (${(response.results[7].release_date).substring(0, 4)}).`, "block");
+				})
+				.catch(err => console.error(err));
+			})
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function searchForTrendingMovies(){
+			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=88323c284697a03104d20067cd85c910")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `
+					The most popular for the week was "${response.results[0].title}" with an average user rating of ${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%.
+					The second most popular was "${response.results[1].title}" with an AAR of ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%.
+					"${response.results[2].title}" closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.`, "block");
+			})
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function searchForTopRatedMovies(){
+			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=88323c284697a03104d20067cd85c910")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `The first place of the most highly rated movies is deservedly occupied by "${response.results[0].title}" with an average rating of
+				${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[0].release_date).substring(0, 4)}.
+				<br>In second place is "${response.results[1].title}" with AAR ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[1].release_date).substring(0, 4)}.
+				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.
+				<br>Also, the list of the most highly rated movies includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
+			})
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function searchForUpcomingMovies() {
+			fetch("https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&region=US&api_key=88323c284697a03104d20067cd85c910")
+			.then(response => response.json())
+			.then(response => {
+				sendMessage("watchstorm", `The most anticipated upcoming movie is "${response.results[0].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[0].release_date)).toLocaleDateString("ru-RU")}.
+				The second most popular upcoming movie is "${response.results[1].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[1].release_date)).toLocaleDateString("ru-RU")}.
+				Closes the top three is "${response.results[2].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[2].release_date)).toLocaleDateString("ru-RU")}.
+				Also due out in the near future are movies such as "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
+			})
+			.catch(err => {
+				console.error(err);
+				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+			});
+		}
+
+		function checkTMDBAvailability(){
+			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=88323c284697a03104d20067cd85c910")
+			.then(response => response.json())
+			.then(TMDBisAvailable = true)
+			.catch(err => {
+				console.error(err);
+				TMDBisAvailable = false;
+			});
+		}
 	}
 }
 
@@ -777,6 +985,7 @@ function setListeners(userLogin){
 	setOnAddNewMovieButtonClickListener();
 	setOnButtonDeleteMovieClickListener();
 	setOnNewsButtonClickListener();
+	setOnRecommendationsButtonClickListener();
 	setOnSettingsButtonClickListener();
 	setOnSignOutButtonClickListener();
 }
@@ -815,7 +1024,19 @@ async function getLatestReleaseInfo() {
 	jsonReleaseInfo = await res.json();
 
 	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
-	spanReleaseVersion.innerHTML = `Version ${(jsonReleaseInfo.tag_name).slice(-3)}`;
+	spanReleaseVersion.innerHTML = 
+	`
+		Version: <span class="version" onclick="
+		timelineDialog.showModal();
+		timelineDialog.addEventListener('click', function (event) {
+		   let rect = timelineDialog.getBoundingClientRect();
+		   let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+			 && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		   if (!isInDialog) {
+			timelineDialog.close();
+		   }
+	   	});">${(jsonReleaseInfo.tag_name).slice(-3)}</span>
+	`;
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
 }
 
