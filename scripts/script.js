@@ -144,12 +144,12 @@ function showAuthorizationDialog(){
             </div>
             <div style="display: flex; justify-content: center;">
                 <div class="description accent-container">
-                    <span class="default-text">Welcome to the web version of Watch 
-                        Storm! To log in, enter your username and the 6-digit code
+                    <span class="default-text">Welcome to the web version of WatchStorm!
+						To log in, enter your username and the 6-digit code
                         that you specified in the mobile application to access the
                         web version of WatchStorm. If you haven't specified it yet,
-                        go to the settings of the Watch Storm mobile application
-                        and click the "Watch Storm Web" section, and then specify
+                        go to the settings of the WatchStorm mobile application
+                        and click the "WatchStormWeb" section, and then specify
                         and save a 6-digit code to access the web version of
                         WatchStorm, after which you can log in here.</span>
                 </div>
