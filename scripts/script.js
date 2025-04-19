@@ -229,7 +229,7 @@ function showAuthorizationDialog(){
 	let imageWatchStormLogoClickCounter = 0;
 
 	imageWatchStormLogo.onclick = function() {
-        imageWatchStormLogoClickCounter++;
+    	imageWatchStormLogoClickCounter++;
         if(imageWatchStormLogoClickCounter == 10) {
 			authorizationForm.classList.add("authorization-form-translated");
 			websiteInfo.classList.add("website-info-translated");
