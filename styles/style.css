@@ -68,6 +68,11 @@ h6 {
   }
 }
 
+.authorization-form {
+  margin-top: 0px;
+  transform: translateY(27px);
+}
+
 .movie, .news, .authorization-form {
   animation-duration: 1s;
   animation-name: show-container;
@@ -948,6 +953,60 @@ img {
 .version {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.watchstorm-logo {
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  transition: all 250ms ease;
+}
+
+.watchstorm-logo:active {
+  transform: scale(0.9);
+}
+
+.website-info {
+  width: 388px;
+  margin-top: 10px; 
+  padding: 10px 0px;
+  background-color: rgb(20, 20, 20);
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  opacity: 0;
+  transform: translateY(27px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.creator-info {
+  display: flex;
+  align-items: center; 
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-left: 5px;
+  padding: 4px;
+  font-size: 12px;
+  border-radius: 20px;
+  transition-duration: 500ms;
+}
+
+.creator-info:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.075);
+  transition-duration: 500ms;
+}
+
+.authorization-form-translated {
+  transform: translateY(0px);
+  transition-duration: 500ms;
+}
+
+.website-info-translated {
+  transform: translateY(0px);
+  opacity: 1;
+  transition-duration: 500ms;
 }
 
 @media screen and (max-width: 1024px) and (min-width: 769px) {

@@ -25,7 +25,7 @@ const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
 
-function getUserMovies(username, favorite){
+function getUserMovies(username, favorite) {
     get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
         let movies = snapshot.val();
         for (let movie in movies) {
@@ -137,7 +137,7 @@ function showAuthorizationDialog(){
     <div id="authorizationForm" class="default-container authorization-form">
         <div class="default-container-content" style="position: relative; overflow: hidden;">
             <div style="display: flex; justify-content: center; align-items: center;">
-                <img src="images/watchstorm-icon2.png" style="width: 116px; height: 116px;">
+                <img src="images/watchstorm-icon2.png" id="imageWatchStormLogo" class="watchstorm-logo">
             </div>
             <div style="display: flex; justify-content: center;">
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
@@ -172,7 +172,21 @@ function showAuthorizationDialog(){
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
+	<div id="websiteInfo" class="website-info">
+		<div style="display: flex; justify-content: center; align-items: center;">
+			<i class="fa-solid fa-code"></i>
+			<span style="margin-left: 5px;">
+				Created and designed by
+			</span>
+			<div class="creator-info" onclick="window.open('https:\/\/github.com/KolyaFedorenko')">
+				<img src="https://avatars.githubusercontent.com/u/79241854?v=4" style="width: 15px; height: 15px; border-radius: 50%; object-fit: cover; opacity: 0.75;">
+				<span style="margin-left: 5px;">
+					KolyaFedorenko
+				</span>
+			</div>
+		</div>
+	</div>
     `;
 
 	let loginField = document.getElementById("loginField");
@@ -208,11 +222,25 @@ function showAuthorizationDialog(){
 			}
 		});
 	}
+
+	let authorizationForm = document.getElementById("authorizationForm");
+	let websiteInfo = document.getElementById("websiteInfo");
+	let imageWatchStormLogo = document.getElementById("imageWatchStormLogo");
+	let imageWatchStormLogoClickCounter = 0;
+
+	imageWatchStormLogo.onclick = function() {
+        imageWatchStormLogoClickCounter++;
+        if(imageWatchStormLogoClickCounter == 10) {
+			authorizationForm.classList.add("authorization-form-translated");
+			websiteInfo.classList.add("website-info-translated");
+			websiteInfo.style.pointerEvents = "all";
+        }
+	}
 }
 
 function closeAuthorizationDialog() {
-	let authorizationForm = document.getElementById("authorizationForm");
 	authorizationForm.parentElement.removeChild(authorizationForm);
+	websiteInfo.parentElement.removeChild(websiteInfo);
 }
 
 function showSidebar() {
