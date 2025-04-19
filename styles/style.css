@@ -227,7 +227,7 @@ label #cancel {
 }
 
 .input-field {
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   width: 100%;
@@ -238,7 +238,7 @@ label #cancel {
 }
 
 .input-field:focus {
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 input::placeholder {
@@ -255,12 +255,12 @@ input::placeholder {
   text-transform: uppercase;
   cursor: pointer;
   transition-duration: 400ms;
-  background-color: rgb(50, 50, 50);
+  background-color: rgba(50, 50, 50, 0.5);
   user-select: none;
 }
 
 .button-login:hover {
-  background-color: rgb(60, 60, 60);
+  background-color: rgba(60, 60, 60, 0.5);
 }
 
 .button-login:active {

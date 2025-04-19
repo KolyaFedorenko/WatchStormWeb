@@ -143,7 +143,7 @@ function showAuthorizationDialog(){
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="description accent-container">
+                <div class="description accent-container" style="background-color: rgba(255, 255, 255, 0.025);">
                     <span class="default-text">Welcome to the web version of WatchStorm!
 						To log in, enter your username and the 6-digit code
                         that you specified in the mobile application to access the
@@ -155,15 +155,15 @@ function showAuthorizationDialog(){
                 </div>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
+                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px; background-color: rgba(255, 255, 255, 0.025);">
                     <div style="display: flex; justify-content: center;">
-                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username">
+                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username" style="background-color: rgba(255, 255, 255, 0.025);">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
+                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code" style="background-color: rgba(255, 255, 255, 0.025);">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <button id="buttonSignIn" class="button-login">Sign In</button>
+                        <button id="buttonSignIn" class="button-login" style="background-color: rgba(255, 255, 255, 0.05);">Sign In</button>
                     </div>
 					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
 						<div class="indicator-negative"></div>
