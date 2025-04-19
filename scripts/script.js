@@ -134,11 +134,10 @@ function showAuthorizationDialog(){
 
     moviesList.innerHTML += 
     `
-    <div id="authorizationForm" class="default-container movie">
+    <div id="authorizationForm" class="default-container authorization-form">
         <div class="default-container-content" style="position: relative; overflow: hidden;">
             <div style="display: flex; justify-content: center; align-items: center;">
                 <img src="images/watchstorm-icon2.png" style="width: 116px; height: 116px;">
-				<img src="images/watchstorm-icon2.png" style="width: 116px; height: 116px; position: absolute; filter: blur(50px); opacity: 0.5;">
             </div>
             <div style="display: flex; justify-content: center;">
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
