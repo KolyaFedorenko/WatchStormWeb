@@ -1,18 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-analytics.js";
-import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js";
+import { getDatabase, ref, get, set, child, update, remove } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js";
 import { getStorage, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-storage.js";
 import { ref as sRef } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-storage.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBq5ny6wmV1Mef-M3yS5tNL3Zf5CXYUtcY",
-    authDomain: "distribution-bc332.firebaseapp.com",
-    databaseURL: "https://distribution-bc332-default-rtdb.firebaseio.com",
-    projectId: "distribution-bc332",
-    storageBucket: "distribution-bc332.appspot.com",
-    messagingSenderId: "460016977857",
-    appId: "1:460016977857:web:0a96dba347f3d61f111140",
-    measurementId: "G-0Q6PE8G26E"
+	apiKey: "AIzaSyBq5ny6wmV1Mef-M3yS5tNL3Zf5CXYUtcY",
+	authDomain: "distribution-bc332.firebaseapp.com",
+	databaseURL: "https://distribution-bc332-default-rtdb.firebaseio.com",
+	projectId: "distribution-bc332",
+	storageBucket: "distribution-bc332.appspot.com",
+	messagingSenderId: "460016977857",
+	appId: "1:460016977857:web:0a96dba347f3d61f111140",
+	measurementId: "G-0Q6PE8G26E"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -26,11 +26,11 @@ const dbRef = ref(db);
 const moviesList = document.getElementById("moviesList");
 
 function getUserMovies(username, favorite) {
-    get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
-        let movies = snapshot.val();
-        for (let movie in movies) {
-            let movieItem = 
-            `
+	get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
+		let movies = snapshot.val();
+		for (let movie in movies) {
+			let movieItem =
+				`
             <div class="default-container movie" style="cursor:pointer;" 
 			onclick="
 			 selectedMovieImage.src='images/movie_placeholder2.jpg';
@@ -119,21 +119,21 @@ function getUserMovies(username, favorite) {
 			if (favorite) {
 				if (movies[movie].compositeRating == 100) {
 					moviesList.innerHTML += movieItem;
-					document.querySelectorAll('.movie').forEach(el=>el.classList.add('favorite-movie'));
+					document.querySelectorAll('.movie').forEach(el => el.classList.add('favorite-movie'));
 				}
 			}
 			else {
 				moviesList.innerHTML += movieItem;
 			}
-        }
-    });
+		}
+	});
 }
 
-function showAuthorizationDialog(){
+function showAuthorizationDialog() {
 	let moviesList = document.getElementById("moviesList");
 
-    moviesList.innerHTML += 
-    `
+	moviesList.innerHTML +=
+		`
     <div id="authorizationForm" class="default-container authorization-form">
         <div class="default-container-content" style="position: relative; overflow: hidden;">
             <div style="display: flex; justify-content: center; align-items: center;">
@@ -194,18 +194,18 @@ function showAuthorizationDialog(){
 	let buttonSignIn = document.getElementById("buttonSignIn");
 	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 
-	buttonSignIn.onclick = function() {
+	buttonSignIn.onclick = function () {
 		signIn();
 	}
 
 	digitCodeField.addEventListener('keydown', (event) => {
-		if(event.key === 'Enter') {
+		if (event.key === 'Enter') {
 			event.preventDefault();
 			signIn();
 		}
 	});
 
-	function signIn(){
+	function signIn() {
 		let userLogin = loginField.value;
 		let userDigitCode = digitCodeField.value;
 
@@ -216,7 +216,7 @@ function showAuthorizationDialog(){
 				setCookie('digitCode', userDigitCode, {});
 				closeAuthorizationDialog();
 				setListeners(userLogin);
-			} 
+			}
 			else {
 				showNotification(notificationIncorrectLoginOrPassword, "flex");
 			}
@@ -228,13 +228,13 @@ function showAuthorizationDialog(){
 	let imageWatchStormLogo = document.getElementById("imageWatchStormLogo");
 	let imageWatchStormLogoClickCounter = 0;
 
-	imageWatchStormLogo.onclick = function() {
-    	imageWatchStormLogoClickCounter++;
-        if(imageWatchStormLogoClickCounter == 10) {
+	imageWatchStormLogo.onclick = function () {
+		imageWatchStormLogoClickCounter++;
+		if (imageWatchStormLogoClickCounter == 10) {
 			authorizationForm.classList.add("authorization-form-translated");
 			websiteInfo.classList.add("website-info-translated");
 			websiteInfo.style.pointerEvents = "all";
-        }
+		}
 	}
 }
 
@@ -250,7 +250,7 @@ function showSidebar() {
 
 function getCookie(name) {
 	let matches = document.cookie.match(new RegExp(
-	  "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
 }
@@ -269,9 +269,9 @@ function setCookie(name, value, options = {}) {
 	let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
 
 	for (let optionKey in options) {
-			updatedCookie += "; " + optionKey;
-			let optionValue = options[optionKey];
-			if (optionValue !== true) {
+		updatedCookie += "; " + optionKey;
+		let optionValue = options[optionKey];
+		if (optionValue !== true) {
 			updatedCookie += "=" + optionValue;
 		}
 	}
@@ -281,26 +281,26 @@ function setCookie(name, value, options = {}) {
 
 function deleteCookie(name) {
 	setCookie(name, "", {
-	  'max-age': -1
+		'max-age': -1
 	});
-  }
+}
 
 function authorizeUser() {
 	let savedUsername = getCookie("username");
 	let savedDigitCode = getCookie("digitCode");
 
-	if(savedUsername != null) {
+	if (savedUsername != null) {
 		get(child(dbRef, `WatchStormWeb/WebCodes/${savedUsername}`)).then((snapshot) => {
 			let receivedDigitCode = snapshot.val();
 			if (savedDigitCode == receivedDigitCode) {
 				setListeners(savedUsername);
-			} 
+			}
 			else {
 				showAuthorizationDialog();
 			}
 		});
 	}
-	else{
+	else {
 		showAuthorizationDialog();
 	}
 }
@@ -309,7 +309,7 @@ function updateUserDataInSidebar(username) {
 	let headersContainer = document.getElementById("headersContainer");
 
 	headersContainer.innerHTML +=
-	`
+		`
 	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
@@ -322,7 +322,7 @@ function updateUserDataInSidebar(username) {
 		</div>
 	</div>
 	`;
-	
+
 	let userProfileImage = document.getElementById("userProfileImage");
 
 	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
@@ -330,23 +330,23 @@ function updateUserDataInSidebar(username) {
 	});
 }
 
-function setOnFavoriteMoviesButtonClickListener(username){
+function setOnFavoriteMoviesButtonClickListener(username) {
 	let favoriteMoviesButton = document.getElementById("favoriteMoviesButton");
-	favoriteMoviesButton.onclick = function() {
+	favoriteMoviesButton.onclick = function () {
 		moviesList.innerHTML = '';
 		getUserMovies(username, true);
 	}
 }
 
-function setOnMoviesButtonClickListener(username){
+function setOnMoviesButtonClickListener(username) {
 	let moviesButton = document.getElementById("moviesButton");
-	moviesButton.onclick = function() {
+	moviesButton.onclick = function () {
 		moviesList.innerHTML = '';
 		getUserMovies(username, false);
 	}
 }
 
-function setOnAddNewMovieButtonClickListener(){
+function setOnAddNewMovieButtonClickListener() {
 	let addNewMovieButton = document.getElementById("addNewMovieButton");
 	let buttonSearchMovie = document.getElementById("buttonSearchMovie");
 	let searchMovieDialog = document.getElementById("searchMovieDialog");
@@ -354,33 +354,33 @@ function setOnAddNewMovieButtonClickListener(){
 	let notificationPleaseFillInAllFields = document.getElementById("notificationPleaseFillInAllFields");
 	let notificationPleaseEnterMovieTitle = document.getElementById("notificationPleaseEnterMovieTitle");
 
-	addNewMovieButton.onclick = function() {
+	addNewMovieButton.onclick = function () {
 		let addMovieDialog = document.getElementById("addMovieDialog");
 		addMovieDialog.showModal();
 
-		setOnOutsideDialogClickListener(addMovieDialog, function(){
-			if (searchMovieDialog != null){
+		setOnOutsideDialogClickListener(addMovieDialog, function () {
+			if (searchMovieDialog != null) {
 				searchMovieDialog.innerHTML = '';
 				searchMovieDialog.close();
 			}
 		});
 
-		buttonSearchMovie.onclick = function(){
+		buttonSearchMovie.onclick = function () {
 			searchMovieDialog.innerHTML = '';
 			let movieTitleField = document.getElementById("movieTitleField");
 			let url;
-			
-			if (movieTitleField.value != ""){
+
+			if (movieTitleField.value != "") {
 				url = `https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitleField.value}`;
 				searchMovieDialog.showModal();
 				fetch(url)
-				.then(jsonResponse => jsonResponse.json())
-				.then(json => {
-					for (let i = 0; i < 20; i++) {
-						if (json.results[i].media_type == "movie"){
-							if(json.results[i].poster_path != null && json.results[i].title != null && json.results[i].release_date != null){
-								searchMovieDialog.innerHTML +=
-								`
+					.then(jsonResponse => jsonResponse.json())
+					.then(json => {
+						for (let i = 0; i < 20; i++) {
+							if (json.results[i].media_type == "movie") {
+								if (json.results[i].poster_path != null && json.results[i].title != null && json.results[i].release_date != null) {
+									searchMovieDialog.innerHTML +=
+										`
 								<div class="found-movie-item" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].title}+${(json.results[i].release_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
 								 onclick="
 									let movieData = (this.getAttribute('data-movie')).split('\+');
@@ -401,12 +401,12 @@ function setOnAddNewMovieButtonClickListener(){
 									</div>
 								</div>
 								`;
+								}
 							}
-						}
-						if (json.results[i].media_type == "tv"){
-							if(json.results[i].poster_path != null && json.results[i].name != null && json.results[i].first_air_date != null){
-								searchMovieDialog.innerHTML +=
-								`
+							if (json.results[i].media_type == "tv") {
+								if (json.results[i].poster_path != null && json.results[i].name != null && json.results[i].first_air_date != null) {
+									searchMovieDialog.innerHTML +=
+										`
 								<div class="found-movie-item" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].name}+${(json.results[i].first_air_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
 								 onclick="
 								 	let movieData = (this.getAttribute('data-movie')).split('\+');
@@ -427,22 +427,21 @@ function setOnAddNewMovieButtonClickListener(){
 									</div>
 								</div>
 								`;
+								}
 							}
 						}
-					}
-				});
+					});
 			}
-			else
-			{
+			else {
 				showNotification(notificationPleaseEnterMovieTitle, "flex");
 			}
 		}
 	}
 
-	buttonSaveRating.onclick = function(){
+	buttonSaveRating.onclick = function () {
 		if (movieTitleField.value != "" && movieYearField.value != "" &&
 			moviePosterPath.value != "" && movieDescription.value != "" &&
-			movieVisualRating.value != "" && movieCastRating.value != "" && moviePlotRating.value != ""){
+			movieVisualRating.value != "" && movieCastRating.value != "" && moviePlotRating.value != "") {
 			set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieTitleField.value}`), {
 				title: movieTitleField.value,
 				year: movieYearField.value,
@@ -451,31 +450,30 @@ function setOnAddNewMovieButtonClickListener(){
 				visualRating: parseInt(movieVisualRating.value),
 				castRating: parseInt(movieCastRating.value),
 				plotRating: parseInt(moviePlotRating.value),
-				usersAverageRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3),
-				compositeRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value))/3)
+				usersAverageRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value)) / 3),
+				compositeRating: Math.round((parseInt(movieVisualRating.value) + parseInt(movieCastRating.value) + parseInt(moviePlotRating.value)) / 3)
 			});
 			clearInputFields(addMovieDialog);
 			addMovieDialog.close();
 			moviesList.innerHTML = '';
 			getUserMovies(getCookie("username"), false);
 		}
-		else
-		{
+		else {
 			showNotification(notificationPleaseFillInAllFields, "flex");
 		}
 	}
 }
 
-function setOnNewsButtonClickListener(){
+function setOnNewsButtonClickListener() {
 	let newsButton = document.getElementById("newsButton");
-	newsButton.onclick = function() {
+	newsButton.onclick = function () {
 		moviesList.innerHTML = '';
 
 		get(child(dbRef, "WatchStormWeb/News/")).then((snapshot) => {
 			let news = snapshot.val();
 			for (let neww in news) {
-				let newwItem = 
-				`
+				let newwItem =
+					`
 				<div class="default-container news" style="user-select: none;">
 					<div class="default-container-content">
 						<div class="movie-item">
@@ -502,33 +500,33 @@ function setOnNewsButtonClickListener(){
 	}
 }
 
-function setOnSignOutButtonClickListener(){
+function setOnSignOutButtonClickListener() {
 	let signOutButton = document.getElementById("signOutButton");
 
-	signOutButton.onclick = function(){
+	signOutButton.onclick = function () {
 		let moviesList = document.getElementById("moviesList");
 		let sidebar = document.getElementById("sidebar");
 		let userInfoHeader = document.getElementById("userInfoHeader");
 
 		moviesList.innerHTML = '';
 		sidebar.style.transform = "translate(-300px, 0px)";
-		if(userInfoHeader != null) userInfoHeader.remove();
+		if (userInfoHeader != null) userInfoHeader.remove();
 
 		deleteCookie("username");
 		deleteCookie("digitCode");
-		
+
 		showAuthorizationDialog();
 	}
 }
 
-function setOnRecommendationsButtonClickListener(){
+function setOnRecommendationsButtonClickListener() {
 	let recommendationsButton = document.getElementById("recommendationsButton");
 	let TMDBisAvailable = false;
 
-	recommendationsButton.onclick = function(){
+	recommendationsButton.onclick = function () {
 		moviesList.innerHTML = '';
-		moviesList.innerHTML += 
-		`
+		moviesList.innerHTML +=
+			`
 		<div class="messages-container" style="cursor:pointer;">
 			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
 				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
@@ -553,9 +551,9 @@ function setOnRecommendationsButtonClickListener(){
 			</div>
 		</div>
 		`;
-		setTimeout(()=> sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
+		setTimeout(() => sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
 		checkTMDBAvailability();
-		
+
 		let messagesContainer = document.getElementById("messagesContainer");
 		let assistantContainer = document.getElementById("assistantContainer");
 		let availableStatusContainer = document.getElementById("availableStatusContainer");
@@ -563,7 +561,7 @@ function setOnRecommendationsButtonClickListener(){
 		let inputUserMessage = document.getElementById("inputUserMessage");
 		let buttonSendMessage = document.getElementById("buttonSendMessage");
 
-		assistantContainer.onclick = function(){
+		assistantContainer.onclick = function () {
 			if (availableStatusContainer.style.display != "flex" && unavailableStatusContainer.style.display != "flex") {
 				if (TMDBisAvailable) {
 					availableStatusContainer.style.display = "flex";
@@ -576,20 +574,20 @@ function setOnRecommendationsButtonClickListener(){
 			}
 		}
 
-		buttonSendMessage.onclick = function(){
+		buttonSendMessage.onclick = function () {
 			sendMessage("user", inputUserMessage.value, "none");
 		}
 
 		inputUserMessage.addEventListener('keydown', (event) => {
-			if(event.key === 'Enter') {
+			if (event.key === 'Enter') {
 				event.preventDefault();
 				sendMessage("user", inputUserMessage.value, "none");
 			}
 		});
 
-		function sendMessage(messageSender, messageText, displayWatchStormIcon){
+		function sendMessage(messageSender, messageText, displayWatchStormIcon) {
 			messagesContainer.innerHTML +=
-			`
+				`
 			<div class="message-from-${messageSender}-container message">
 				<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%; display: ${displayWatchStormIcon};">
 				<div class="message-from-${messageSender}">
@@ -601,18 +599,18 @@ function setOnRecommendationsButtonClickListener(){
 			inputUserMessage.value = "";
 
 			if (messageSender == "user") {
-				setTimeout(()=> replyToUserMessage(messageText), 500);
+				setTimeout(() => replyToUserMessage(messageText), 500);
 			}
 
-			setTimeout(()=> {
-				if (typeof  document.getElementsByClassName("message")[0] != 'undefined') document.getElementsByClassName("message")[0].classList.remove("message")
+			setTimeout(() => {
+				if (typeof document.getElementsByClassName("message")[0] != 'undefined') document.getElementsByClassName("message")[0].classList.remove("message")
 			}, 500);
 		}
 
-		function replyToUserMessage(userMessageText){
+		function replyToUserMessage(userMessageText) {
 			if (userMessageText.includes("/commands") || userMessageText.includes("/help")) {
 				sendMessage("watchstorm",
-				 `List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
+					`List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
 				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
 				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
 				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
@@ -633,7 +631,7 @@ function setOnRecommendationsButtonClickListener(){
 			else if (userMessageText.includes("/top")) {
 				searchForTopRatedMovies();
 			}
-			else if (userMessageText.includes("/upcoming")){
+			else if (userMessageText.includes("/upcoming")) {
 				searchForUpcomingMovies();
 			}
 			else if ((userMessageText.includes("ello") || userMessageText.includes("ey") || userMessageText.includes("sup")) && !userMessageText.includes("\/")) {
@@ -647,95 +645,95 @@ function setOnRecommendationsButtonClickListener(){
 			}
 			else {
 				sendMessage("watchstorm", "Sorry, I can't recognize your message. Please see the list of supported commands by sending " +
-				"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'\" class=\"command\">\"\/commands\"</span>", "block");
+					"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'\" class=\"command\">\"\/commands\"</span>", "block");
 			}
 		}
 
-		function searchForRecommendations(movieTitle){
+		function searchForRecommendations(movieTitle) {
 			fetch(`https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitle}`)
-			.then(response => response.json())
-			.then(response => {
-				fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=88323c284697a03104d20067cd85c910`)
 				.then(response => response.json())
 				.then(response => {
-					sendMessage("watchstorm", `If you liked the movie "${movieTitle}", I can recommend you movies like ${response.results[0].title} (${(response.results[0].release_date).substring(0, 4)}),
+					fetch(`https://api.themoviedb.org/3/movie/${response.results[0].id}/recommendations?api_key=88323c284697a03104d20067cd85c910`)
+						.then(response => response.json())
+						.then(response => {
+							sendMessage("watchstorm", `If you liked the movie "${movieTitle}", I can recommend you movies like ${response.results[0].title} (${(response.results[0].release_date).substring(0, 4)}),
 					${response.results[1].title} (${(response.results[1].release_date).substring(0, 4)}) and ${response.results[2].title} (${(response.results[2].release_date).substring(0, 4)}).
 					You might also like ${response.results[3].title} (${(response.results[3].release_date).substring(0, 4)}), ${response.results[4].title} (${(response.results[4].release_date).substring(0, 4)}),
 					${response.results[5].title} (${(response.results[5].release_date).substring(0, 4)}), ${response.results[6].title} (${(response.results[6].release_date).substring(0, 4)})
 					and ${response.results[7].title} (${(response.results[7].release_date).substring(0, 4)}).`, "block");
+						})
+						.catch(err => console.error(err));
 				})
-				.catch(err => console.error(err));
-			})
-			.catch(err => {
-				console.error(err);
-				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
-			});
+				.catch(err => {
+					console.error(err);
+					sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+				});
 		}
 
-		function searchForTrendingMovies(){
+		function searchForTrendingMovies() {
 			fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=88323c284697a03104d20067cd85c910")
-			.then(response => response.json())
-			.then(response => {
-				sendMessage("watchstorm", `
-					The most popular for the week was "${response.results[0].title}" with an average user rating of ${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%.
-					The second most popular was "${response.results[1].title}" with an AAR of ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%.
-					"${response.results[2].title}" closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.`, "block");
-			})
-			.catch(err => {
-				console.error(err);
-				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
-			});
+				.then(response => response.json())
+				.then(response => {
+					sendMessage("watchstorm", `
+					The most popular for the week was "${response.results[0].title}" with an average user rating of ${(parseFloat(response.results[0].vote_average) * 10).toString().substring(0, 2)}%.
+					The second most popular was "${response.results[1].title}" with an AAR of ${(parseFloat(response.results[1].vote_average) * 10).toString().substring(0, 2)}%.
+					"${response.results[2].title}" closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average) * 10).toString().substring(0, 2)}%.`, "block");
+				})
+				.catch(err => {
+					console.error(err);
+					sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+				});
 		}
 
-		function searchForTopRatedMovies(){
+		function searchForTopRatedMovies() {
 			fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=88323c284697a03104d20067cd85c910")
-			.then(response => response.json())
-			.then(response => {
-				sendMessage("watchstorm", `The first place of the most highly rated movies is deservedly occupied by "${response.results[0].title}" with an average rating of
-				${(parseFloat(response.results[0].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[0].release_date).substring(0, 4)}.
-				<br>In second place is "${response.results[1].title}" with AAR ${(parseFloat(response.results[1].vote_average)*10).toString().substring(0, 2)}%, released in ${(response.results[1].release_date).substring(0, 4)}.
-				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average)*10).toString().substring(0, 2)}%.
+				.then(response => response.json())
+				.then(response => {
+					sendMessage("watchstorm", `The first place of the most highly rated movies is deservedly occupied by "${response.results[0].title}" with an average rating of
+				${(parseFloat(response.results[0].vote_average) * 10).toString().substring(0, 2)}%, released in ${(response.results[0].release_date).substring(0, 4)}.
+				<br>In second place is "${response.results[1].title}" with AAR ${(parseFloat(response.results[1].vote_average) * 10).toString().substring(0, 2)}%, released in ${(response.results[1].release_date).substring(0, 4)}.
+				<br>"${response.results[2].title}", released in ${(response.results[3].release_date).substring(0, 4)}, closes the top three with an average rating of ${(parseFloat(response.results[2].vote_average) * 10).toString().substring(0, 2)}%.
 				<br>Also, the list of the most highly rated movies includes "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
-			})
-			.catch(err => {
-				console.error(err);
-				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
-			});
+				})
+				.catch(err => {
+					console.error(err);
+					sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+				});
 		}
 
 		function searchForUpcomingMovies() {
 			fetch("https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&region=US&api_key=88323c284697a03104d20067cd85c910")
-			.then(response => response.json())
-			.then(response => {
-				sendMessage("watchstorm", `The most anticipated upcoming movie is "${response.results[0].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[0].release_date)).toLocaleDateString("ru-RU")}.
+				.then(response => response.json())
+				.then(response => {
+					sendMessage("watchstorm", `The most anticipated upcoming movie is "${response.results[0].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[0].release_date)).toLocaleDateString("ru-RU")}.
 				The second most popular upcoming movie is "${response.results[1].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[1].release_date)).toLocaleDateString("ru-RU")}.
 				Closes the top three is "${response.results[2].title}", which is scheduled to be released on ${new Date(Date.parse(response.results[2].release_date)).toLocaleDateString("ru-RU")}.
 				Also due out in the near future are movies such as "${response.results[3].title}", "${response.results[4].title}", "${response.results[5].title}", "${response.results[6].title}" and "${response.results[7].title}".`, "block");
-			})
-			.catch(err => {
-				console.error(err);
-				sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
-			});
+				})
+				.catch(err => {
+					console.error(err);
+					sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
+				});
 		}
 
-		function checkTMDBAvailability(){
+		function checkTMDBAvailability() {
 			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=88323c284697a03104d20067cd85c910")
-			.then(response => response.json())
-			.then(TMDBisAvailable = true)
-			.catch(err => {
-				console.error(err);
-				TMDBisAvailable = false;
-			});
+				.then(response => response.json())
+				.then(TMDBisAvailable = true)
+				.catch(err => {
+					console.error(err);
+					TMDBisAvailable = false;
+				});
 		}
 	}
 }
 
-function setOnSettingsButtonClickListener(){
+function setOnSettingsButtonClickListener() {
 	let settingsButton = document.getElementById("settingsButton");
-	settingsButton.onclick = function() {
+	settingsButton.onclick = function () {
 		moviesList.innerHTML = '';
-		moviesList.innerHTML += 				
-		`
+		moviesList.innerHTML +=
+			`
 		<div class="settings-container" style="cursor:pointer;">
 			<div class="awardLine">
 				<div class="settings-item" id="buttonInformationDialog">
@@ -800,13 +798,13 @@ function setOnSettingsButtonClickListener(){
 	}
 }
 
-function setOnButtonInformationDialogClickListener(){
+function setOnButtonInformationDialogClickListener() {
 	let buttonInformationDialog = document.getElementById("buttonInformationDialog");
 	let informationDialog = document.getElementById("informationDialog");
 	let releaseNotesContainer = document.getElementById("releaseNotesContainer");
 	let spanShowReleaseNotes = document.getElementById("spanShowReleaseNotes");
 
-	buttonInformationDialog.onclick = function(){
+	buttonInformationDialog.onclick = function () {
 		informationDialog.showModal();
 		getLatestReleaseInfo();
 	}
@@ -815,7 +813,7 @@ function setOnButtonInformationDialogClickListener(){
 
 	spanShowReleaseNotes.addEventListener('click', function (event) {
 		event.stopPropagation();
-		if (releaseNotesContainer.style.display == 'none'){
+		if (releaseNotesContainer.style.display == 'none') {
 			releaseNotesContainer.style.display = 'block';
 		}
 		else {
@@ -824,7 +822,7 @@ function setOnButtonInformationDialogClickListener(){
 	});
 }
 
-function setOnButtonChangeDigitCodeDialogListener(){
+function setOnButtonChangeDigitCodeDialogListener() {
 	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
 	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
 	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
@@ -832,11 +830,11 @@ function setOnButtonChangeDigitCodeDialogListener(){
 	let notificationDigitCodeHasBeenChanged = document.getElementById("notificationDigitCodeHasBeenChanged");
 	let notificationEnterValidDigitCode = document.getElementById("notificationEnterValidDigitCode");
 
-	buttonChangeDigitCodeDialog.onclick = function(){
+	buttonChangeDigitCodeDialog.onclick = function () {
 		changeDigitCodeDialog.showModal();
 	}
 
-	inputNewDigitCode.addEventListener('input', function(event){
+	inputNewDigitCode.addEventListener('input', function (event) {
 		if (inputNewDigitCode.value.length == 6) {
 			buttonSaveDigitCode.disabled = false;
 		} else {
@@ -844,8 +842,8 @@ function setOnButtonChangeDigitCodeDialogListener(){
 		}
 	});
 
-	buttonSaveDigitCode.onclick = function(){
-		if (inputNewDigitCode.value.length == 6){
+	buttonSaveDigitCode.onclick = function () {
+		if (inputNewDigitCode.value.length == 6) {
 			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
 			setCookie('digitCode', inputNewDigitCode.value, {});
 			showNotification(notificationDigitCodeHasBeenChanged, "flex");
@@ -858,13 +856,13 @@ function setOnButtonChangeDigitCodeDialogListener(){
 	setOnOutsideDialogClickListener(changeDigitCodeDialog);
 }
 
-function setOnButtonExportMoviesClickListener(){
+function setOnButtonExportMoviesClickListener() {
 	let buttonExportMovies = document.getElementById("buttonExportMovies");
 
-	buttonExportMovies.onclick = function(){
+	buttonExportMovies.onclick = function () {
 		get(child(dbRef, `WatchStorm/${getCookie("username")}/Movies/`)).then((snapshot) => {
 			var a = document.createElement("a");
-			var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], {type: 'application/json'});
+			var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], { type: 'application/json' });
 			a.href = URL.createObjectURL(file);
 			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
 			a.click();
@@ -872,7 +870,7 @@ function setOnButtonExportMoviesClickListener(){
 	}
 }
 
-function setOnButtonImportMoviesDialogClickListener(){
+function setOnButtonImportMoviesDialogClickListener() {
 	let buttonImportMoviesDialog = document.getElementById("buttonImportMoviesDialog");
 	let importMoviesDialog = document.getElementById("importMoviesDialog");
 	let dropZone = document.getElementById("dropZone");
@@ -883,7 +881,7 @@ function setOnButtonImportMoviesDialogClickListener(){
 	let uploadedFileName = document.getElementById("uploadedFileName");
 	let userMoviesJson;
 
-	buttonImportMoviesDialog.onclick = function(){
+	buttonImportMoviesDialog.onclick = function () {
 		importMoviesDialog.showModal();
 	}
 
@@ -918,33 +916,33 @@ function setOnButtonImportMoviesDialogClickListener(){
 		} catch (e) {
 			showNotification(notificationUploadFileInJsonFormat, "flex");
 		}
-	
+
 		dropZone.classList.remove("drop-zone-over");
 	});
 
-	buttonSaveImportedMovies.onclick = function(){
+	buttonSaveImportedMovies.onclick = function () {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/`), JSON.parse(userMoviesJson));
 		importMoviesDialog.close();
 		moviesList.innerHTML = '';
 		getUserMovies(getCookie("username"), false);
 	}
 
-	setOnOutsideDialogClickListener(importMoviesDialog, function(){
+	setOnOutsideDialogClickListener(importMoviesDialog, function () {
 		uploadedItem.style.display = "none";
 		buttonSaveImportedMovies.style.display = "none";
 		dropZoneText.style.display = "flex";
 	});
 }
 
-function setOnButtonDownloadWatchStormAppClickListener(){
+function setOnButtonDownloadWatchStormAppClickListener() {
 	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
 
-	buttonDownloadWatchStormApp.onclick = function(){
+	buttonDownloadWatchStormApp.onclick = function () {
 		downloadWatchStormLatest();
 	}
 }
 
-function setOnButtonLeaveFeedbackDialogClickListener(){
+function setOnButtonLeaveFeedbackDialogClickListener() {
 	let buttonLeaveFeedbackDialog = document.getElementById("buttonLeaveFeedbackDialog");
 	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
 	let inputFeedbackText = document.getElementById("inputFeedbackText");
@@ -952,12 +950,12 @@ function setOnButtonLeaveFeedbackDialogClickListener(){
 	let notificationFeedbackHasBeenSent = document.getElementById("notificationFeedbackHasBeenSent");
 	let notificationPleaseFillFeedbackField = document.getElementById("notificationPleaseFillFeedbackField");
 
-	buttonLeaveFeedbackDialog.onclick = function(){
+	buttonLeaveFeedbackDialog.onclick = function () {
 		leaveFeedbackDialog.showModal();
 	}
 
-	buttonSendFeedback.onclick = function(){
-		if (inputFeedbackText.value.length > 0){
+	buttonSendFeedback.onclick = function () {
+		if (inputFeedbackText.value.length > 0) {
 			set(ref(db, `WatchStormWeb/Feedback/${getCookie("username")}`), inputFeedbackText.value);
 			inputFeedbackText.value = "";
 			showNotification(notificationFeedbackHasBeenSent, "flex");
@@ -969,8 +967,8 @@ function setOnButtonLeaveFeedbackDialogClickListener(){
 	setOnOutsideDialogClickListener(leaveFeedbackDialog);
 }
 
-function setOnButtonDeleteMovieClickListener(){
-	buttonDeleteMovie.onclick = function() {
+function setOnButtonDeleteMovieClickListener() {
+	buttonDeleteMovie.onclick = function () {
 		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
 		movieDialog.close();
 		moviesList.innerHTML = '';
@@ -978,25 +976,25 @@ function setOnButtonDeleteMovieClickListener(){
 	}
 }
 
-function setOnButtonWatchStormWebRepositoryClickListener(){
+function setOnButtonWatchStormWebRepositoryClickListener() {
 	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
 
-	buttonWatchStormWebRepository.onclick = function(){
+	buttonWatchStormWebRepository.onclick = function () {
 		window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
 	}
 }
 
-function setOnButtonContactTheDeveloperDialogClickListener(){
+function setOnButtonContactTheDeveloperDialogClickListener() {
 	let buttonContactTheDeveloperDialog = document.getElementById("buttonContactTheDeveloperDialog");
 	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
 	let buttonCopyEmail = document.getElementById("buttonCopyEmail");
 	let notificationEmailHasBeenCopied = document.getElementById("notificationEmailHasBeenCopied");
 
-	buttonContactTheDeveloperDialog.onclick = function(){
+	buttonContactTheDeveloperDialog.onclick = function () {
 		contactTheDeveloperDialog.showModal();
 	}
 
-	buttonCopyEmail.onclick = function(){
+	buttonCopyEmail.onclick = function () {
 		navigator.clipboard.writeText("administrator@watchstorm.ru");
 		showNotification(notificationEmailHasBeenCopied, "flex");
 	}
@@ -1004,7 +1002,7 @@ function setOnButtonContactTheDeveloperDialogClickListener(){
 	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
 }
 
-function setListeners(userLogin){
+function setListeners(userLogin) {
 	showSidebar();
 	updateUserDataInSidebar(userLogin);
 	getUserMovies(userLogin, false);
@@ -1018,26 +1016,26 @@ function setListeners(userLogin){
 	setOnSignOutButtonClickListener();
 }
 
-function setOnOutsideDialogClickListener(dialog, functionToExecute){
+function setOnOutsideDialogClickListener(dialog, functionToExecute) {
 	dialog.addEventListener('click', function (event) {
 		let rect = dialog.getBoundingClientRect();
 		let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-		  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+			&& rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
 		if (!isInDialog) {
 			dialog.close();
-			if(typeof functionToExecute != 'undefined') executeFunction(functionToExecute);
+			if (typeof functionToExecute != 'undefined') executeFunction(functionToExecute);
 		}
 	});
 }
 
-function showNotification(notificationElement, displayType){
+function showNotification(notificationElement, displayType) {
 	notificationElement.style.display = displayType;
-	setTimeout(()=> notificationElement.style.display = "none", 4000);
+	setTimeout(() => notificationElement.style.display = "none", 4000);
 }
 
-function clearInputFields(inputFieldsParentElement){
+function clearInputFields(inputFieldsParentElement) {
 	let inputFields = inputFieldsParentElement.getElementsByTagName("input");
-	for(let i=0; i<inputFields.length; i++){
+	for (let i = 0; i < inputFields.length; i++) {
 		inputFields[i].value = '';
 	}
 }
@@ -1047,13 +1045,13 @@ async function getLatestReleaseInfo() {
 	let spanReleaseDate = document.getElementById("spanReleaseDate");
 	let spanReleaseNotes = document.getElementById("spanReleaseNotes");
 	let jsonReleaseInfo;
-  
+
 	const res = await fetch('https://api.github.com/repositories/511941040/releases/latest');
 	jsonReleaseInfo = await res.json();
 
 	spanReleaseDate.innerHTML = `Released: ${new Date(Date.parse(jsonReleaseInfo.published_at)).toLocaleDateString("ru-RU")}`;
-	spanReleaseVersion.innerHTML = 
-	`
+	spanReleaseVersion.innerHTML =
+		`
 		Version: <span class="version" onclick="
 		timelineDialog.showModal();
 		timelineDialog.addEventListener('click', function (event) {
@@ -1068,7 +1066,7 @@ async function getLatestReleaseInfo() {
 	spanReleaseNotes.innerHTML = `${(jsonReleaseInfo.body).slice(30).replaceAll('\r\n', '<br>').replaceAll('*', '').replaceAll('-', '•')}`;
 }
 
-async function downloadWatchStormLatest(){
+async function downloadWatchStormLatest() {
 	const res = await fetch('https://api.github.com/repos/KolyaFedorenko/WatchStorm/releases/latest');
 	let jsonReleaseInfo = await res.json();
 	window.open(`${jsonReleaseInfo.assets[0].browser_download_url}`);
@@ -1078,6 +1076,6 @@ const executeFunction = (functionToExecute) => {
 	functionToExecute();
 }
 
-window.onload = function(){
+window.onload = function () {
 	authorizeUser();
 }

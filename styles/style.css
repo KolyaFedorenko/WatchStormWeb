@@ -73,12 +73,15 @@ h6 {
   transform: translateY(27px);
 }
 
-.movie, .news, .authorization-form {
+.movie,
+.news,
+.authorization-form {
   animation-duration: 1s;
   animation-name: show-container;
 }
 
-.movie:hover, .news:hover {
+.movie:hover,
+.news:hover {
   transform: scale(1.025);
   transition-duration: 500ms;
 }
@@ -325,10 +328,12 @@ input::placeholder {
   transition-duration: 1s;
 }
 
-[popover], dialog, ::backdrop {
-  transition: 
-    display 250ms allow-discrete, 
-    overlay 250ms allow-discrete, 
+[popover],
+dialog,
+::backdrop {
+  transition:
+    display 250ms allow-discrete,
+    overlay 250ms allow-discrete,
     opacity 250ms;
   opacity: 0;
 }
@@ -341,6 +346,7 @@ input::placeholder {
 }
 
 @starting-style {
+
   :popover-open,
   :popover-open::backdrop,
   [open],
@@ -353,7 +359,7 @@ input::placeholder {
   html {
     color-scheme: dark light;
   }
-  
+
   ::backdrop {
     background-color: #0005;
   }
@@ -363,6 +369,7 @@ input::placeholder {
   from {
     backdrop-filter: blur(0px);
   }
+
   to {
     backdrop-filter: blur(5px);
   }
@@ -750,6 +757,7 @@ img {
     opacity: 0;
     scale: 0.9;
   }
+
   to {
     opacity: 1;
     scale: 1;
@@ -968,7 +976,7 @@ img {
 
 .website-info {
   width: 388px;
-  margin-top: 10px; 
+  margin-top: 10px;
   padding: 10px 0px;
   background-color: rgb(20, 20, 20);
   color: rgba(255, 255, 255, 0.5);
@@ -983,7 +991,7 @@ img {
 
 .creator-info {
   display: flex;
-  align-items: center; 
+  align-items: center;
   background-color: rgba(255, 255, 255, 0.05);
   margin-left: 5px;
   padding: 4px;
