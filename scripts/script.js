@@ -134,10 +134,11 @@ function showAuthorizationDialog(){
 
     moviesList.innerHTML += 
     `
-    <div id="authorizationForm" class="default-container">
-        <div class="default-container-content">
-            <div style="display: flex; justify-content: center;">
-                <img src="images/watchstorm-icon2.png" style="width: 30%; height: 30%">
+    <div id="authorizationForm" class="default-container movie">
+        <div class="default-container-content" style="position: relative; overflow: hidden;">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img src="images/watchstorm-icon2.png" style="width: 116px; height: 116px;">
+				<img src="images/watchstorm-icon2.png" style="width: 116px; height: 116px; position: absolute; filter: blur(50px); opacity: 0.5;">
             </div>
             <div style="display: flex; justify-content: center;">
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
@@ -157,7 +158,7 @@ function showAuthorizationDialog(){
             <div style="display: flex; justify-content: center;">
                 <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
-                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your Username">
+                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
@@ -353,7 +354,7 @@ function setOnAddNewMovieButtonClickListener(){
 							if(json.results[i].poster_path != null && json.results[i].title != null && json.results[i].release_date != null){
 								searchMovieDialog.innerHTML +=
 								`
-								<div id="foundMovieItem" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].title}+${(json.results[i].release_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
+								<div class="found-movie-item" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].title}+${(json.results[i].release_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
 								 onclick="
 									let movieData = (this.getAttribute('data-movie')).split('\+');
 									movieTitleField.value = movieData[0];
@@ -379,7 +380,7 @@ function setOnAddNewMovieButtonClickListener(){
 							if(json.results[i].poster_path != null && json.results[i].name != null && json.results[i].first_air_date != null){
 								searchMovieDialog.innerHTML +=
 								`
-								<div id="foundMovieItem" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].name}+${(json.results[i].first_air_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
+								<div class="found-movie-item" style="display: flex; justify-content: left; margin-bottom: 10px;" data-movie="${json.results[i].name}+${(json.results[i].first_air_date).substring(0, 4)}+${json.results[i].poster_path}+${(json.results[i].overview).replaceAll('\"', '\'')}"
 								 onclick="
 								 	let movieData = (this.getAttribute('data-movie')).split('\+');
 									movieTitleField.value = movieData[0];
@@ -448,7 +449,7 @@ function setOnNewsButtonClickListener(){
 			for (let neww in news) {
 				let newwItem = 
 				`
-				<div class="default-container" style="user-select: none;">
+				<div class="default-container news" style="user-select: none;">
 					<div class="default-container-content">
 						<div class="movie-item">
 							<div class="movie-main-info">

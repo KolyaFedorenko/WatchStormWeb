@@ -55,21 +55,27 @@ h6 {
   overflow: hidden;
   margin-top: 15px;
   transition-duration: 500ms;
-  animation-duration: 1s;
-  animation-name: show-movies;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @keyframes show-movies {
   from {
-    filter: blur(10px);
-    transform: scale(1.5);
+    opacity: 0;
   }
 
   to {
-    filter: blur(0px);
-    transform: scale(1);
+    opacity: 1;
   }
+}
+
+.movie, .news {
+  animation-duration: 1s;
+  animation-name: show-movies;
+}
+
+.movie:hover, .news:hover {
+  transform: scale(1.025);
+  transition-duration: 500ms;
 }
 
 .movie-item {
@@ -114,11 +120,6 @@ h6 {
 .default-text {
   color: white;
   font-size: 14px;
-}
-
-.default-container:hover {
-  transform: scale(1.025);
-  transition-duration: 500ms;
 }
 
 .rating-name {
@@ -227,16 +228,21 @@ label #cancel {
 
 .input-field {
   background-color: rgb(40, 40, 40);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
   width: 100%;
   height: 40px;
   text-align: center;
   color: white;
+  transition-duration: 250ms;
+}
+
+.input-field:focus {
+  border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 input::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .button-login {
@@ -244,7 +250,7 @@ input::placeholder {
   height: 40px;
   border: none;
   color: white;
-  border-radius: 20px;
+  border-radius: 15px;
   text-align: center;
   text-transform: uppercase;
   cursor: pointer;
@@ -258,12 +264,12 @@ input::placeholder {
 }
 
 .button-login:active {
-  transform: scale(0.8);
+  transform: scale(0.9);
   transition-duration: 400ms;
 }
 
 .search-button:active {
-  transform: scale(0.7);
+  transform: scale(0.8);
   transition-duration: 400ms;
 }
 
@@ -314,16 +320,70 @@ input::placeholder {
   transition-duration: 1s;
 }
 
+[popover], dialog, ::backdrop {
+  transition: 
+    display 250ms allow-discrete, 
+    overlay 250ms allow-discrete, 
+    opacity 250ms;
+  opacity: 0;
+}
+
+:popover-open,
+:popover-open::backdrop,
+[open],
+[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  :popover-open,
+  :popover-open::backdrop,
+  [open],
+  [open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@layer demo.support {
+  html {
+    color-scheme: dark light;
+  }
+  
+  ::backdrop {
+    background-color: #0005;
+  }
+}
+
+@keyframes blur-in {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(5px);
+  }
+}
+
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
+  animation: blur-in 250ms forwards;
 }
 
 dialog {
   border: none;
+  background-color: rgba(20, 20, 20, 1) !important;
+  backdrop-filter: blur(10px);
 }
 
 .dialog-input {
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(40, 40, 40, 0.5);
+}
+
+dialog button {
+  background-color: rgb(50, 50, 50, 0.5) !important;
+}
+
+dialog .accent-container {
+  background-color: rgb(30, 30, 30, 0.5) !important;
 }
 
 ::-webkit-scrollbar {
@@ -342,14 +402,15 @@ dialog div.found_movie:hover {
   cursor: pointer;
 }
 
-#foundMovieItem {
+.found-movie-item {
   background-color: rgb(30, 30, 30);
-  border-radius: 30px;
-  padding: 5px 20px 1px 5px;
+  border-radius: 15px;
+  padding: 5px 20px 1px 10px;
   transition-duration: 500ms;
+  animation: show-movies 500ms;
 }
 
-#foundMovieItem:hover {
+.found-movie-item:hover {
   background-color: rgb(40, 40, 40);
   transition-duration: 500ms;
   cursor: pointer;
@@ -420,7 +481,7 @@ dialog div.found_movie:hover {
   transition-duration: 500ms;
   animation-duration: 1s;
   animation-name: show-movies;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   margin-left: 300px;
   padding: 30px;
   cursor: default !important;
@@ -508,10 +569,10 @@ button:disabled:active {
 }
 
 textarea {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.5);
   margin-top: 10px;
   padding: 10px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   width: 100%;
   height: 150px;
@@ -603,7 +664,7 @@ img {
   transition-duration: 500ms;
   animation-duration: 1s;
   animation-name: show-movies;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   margin-left: 300px;
   padding: 30px;
   cursor: default !important;
