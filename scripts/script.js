@@ -482,7 +482,7 @@ function setOnNewsButtonClickListener() {
 								<div class="movie-title-and-year">
 									<div style="display: inline-flex">
 										<span class="movie-title">WatchStorm</span>
-										<i class="fa-solid fa-circle-check fa-sm fa verified"></i>
+										<i class="fa-solid fa-circle-check fa-sm fa-fw fa verified"></i>
 									</div>
 									<span class="movie-year">${news[neww].date}</span>
 								</div>
