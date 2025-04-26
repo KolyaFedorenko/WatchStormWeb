@@ -296,12 +296,55 @@ function authorizeUser() {
 				setListeners(savedUsername);
 			}
 			else {
-				showAuthorizationDialog();
+				showStartPage();
 			}
 		});
 	}
 	else {
+		showStartPage();
+	}
+}
+
+function showStartPage() {
+	let moviesList = document.getElementById("moviesList");
+
+	moviesList.innerHTML +=
+		`
+		<div id="startPageContainer" class="start-page-container">
+			<div style="width: 1200px; display: flex; justify-content: center; flex-wrap: wrap;">
+				<span class="start-page-main-text">Rate your favorite movies</span>
+				<div style="display: inline-flex;">
+					<span class="start-page-main-text text-gradient">With WatchStorm</span>
+				</div>
+				<span class="start-page-main-text" style="font-size: 20px; margin-top: 30px; font-weight: 100;">
+					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched<br>WatchStorm is completely open source
+				</span>
+				<div style="display: inline-flex; margin-top: 40px;">
+					<div id="buttonStartPageDownloadWatchStorm" class="start-page-button">
+						<i class="fa-brands fa-android fa-xs" style="color: white;"></i>
+						<span style="color: white; font-size: 14px; margin-left: 5px;">Download APK</span>
+					</div>
+					<div id="buttonStartPageSignIn" class="start-page-button">
+						<i class="fa-solid fa-lock fa-2xs" style="color: white;"></i>
+						<span style="color: white; font-size: 14px; margin-left: 5px;">Sign In</span>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+    `;
+
+	let startPageContainer = document.getElementById("startPageContainer");
+	let buttonStartPageSignIn = document.getElementById("buttonStartPageSignIn");
+	let buttonStartPageDownloadWatchStorm = document.getElementById("buttonStartPageDownloadWatchStorm");
+
+	buttonStartPageSignIn.onclick = function() {
+		startPageContainer.parentElement.removeChild(startPageContainer);
 		showAuthorizationDialog();
+	}
+
+	buttonStartPageDownloadWatchStorm.onclick = function() {
+		downloadWatchStormLatest();
 	}
 }
 
@@ -515,7 +558,7 @@ function setOnSignOutButtonClickListener() {
 		deleteCookie("username");
 		deleteCookie("digitCode");
 
-		showAuthorizationDialog();
+		showStartPage();
 	}
 }
 
