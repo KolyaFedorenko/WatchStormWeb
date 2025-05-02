@@ -86,7 +86,8 @@ h6 {
   animation: show-authorization-form 1000ms;
 }
 
-.movie, .news {
+.movie,
+.news {
   animation-duration: 1s;
   animation-name: show-container;
 }
@@ -1062,7 +1063,8 @@ img {
   height: 40px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  margin-left: 10px; display: flex;
+  margin-left: 10px;
+  display: flex;
   justify-content: center;
   align-items: center;
   transition-duration: 500ms;
