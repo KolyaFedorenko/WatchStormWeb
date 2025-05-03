@@ -50,7 +50,13 @@ function getUserMovies(username, favorite) {
 						<div class="movie-main-info">
 							<img class="movie-image" src="images/movie_placeholder2.jpg">
 							<div class="movie-title-and-year">
-								<span class="movie-title">${movies[movie].title}</span>
+								<div style="display: inline-flex;">
+									<span class="movie-title">${movies[movie].title}</span>
+									<div class="favorite-movie-label">
+										<i class="fa-solid fa-heart fa-fw fa-xs" style="filter: grayscale(1);"></i>
+										<span style="margin-left: 3px;">Favorite</span>
+									</div>
+								</div>
 								<span class="movie-year">${movies[movie].year}</span>
 							</div>
 						</div>
@@ -437,7 +443,7 @@ function setOnAddNewMovieButtonClickListener() {
 										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header id="titleText" style="font-size: 14px; color: white;">${json.results[i].title.substring(0, 25)}</header>
+												<header id="titleText" style="font-size: 14px; color: white; white-space: nowrap; overflow: hidden; width: 150px; text-overflow: ellipsis;">${json.results[i].title}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">Movie, ${(json.results[i].release_date).substring(0, 4)}</header>
 											</div>
 										</div>
@@ -463,7 +469,7 @@ function setOnAddNewMovieButtonClickListener() {
 										<img class="movie-image" src="images/movie_placeholder2.jpg">
 										<div style="float: right; margin-left: 10px; height: 50px; display: flex; align-items: center;">
 											<div>
-												<header style="font-size: 14px; color: white;">${json.results[i].name.substring(0, 25)}</header>
+												<header style="font-size: 14px; color: white; white-space: nowrap; overflow: hidden; width: 150px; text-overflow: ellipsis;">${json.results[i].name}</header>
 												<header style="font-size: 14px; color: white; margin-top: 2px; filter: opacity(0.5);">TV, ${(json.results[i].first_air_date).substring(0, 4)}</header>
 											</div>
 										</div>
@@ -485,7 +491,7 @@ function setOnAddNewMovieButtonClickListener() {
 		if (movieTitleField.value != "" && movieYearField.value != "" &&
 			moviePosterPath.value != "" && movieDescription.value != "" &&
 			movieVisualRating.value != "" && movieCastRating.value != "" && moviePlotRating.value != "") {
-			set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieTitleField.value}`), {
+			set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieTitleField.value.replaceAll('.', ' ')}`), {
 				title: movieTitleField.value,
 				year: movieYearField.value,
 				imagePath: `https://image.tmdb.org/t/p/w500/${moviePosterPath.value}`,
@@ -1012,7 +1018,7 @@ function setOnButtonLeaveFeedbackDialogClickListener() {
 
 function setOnButtonDeleteMovieClickListener() {
 	buttonDeleteMovie.onclick = function () {
-		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete')}`), null);
+		set(ref(db, `WatchStorm/${getCookie("username")}/Movies/${movieDialog.getAttribute('data-delete').replaceAll('.', ' ')}`), null);
 		movieDialog.close();
 		moviesList.innerHTML = '';
 		getUserMovies(getCookie("username"), false);
