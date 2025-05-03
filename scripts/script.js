@@ -73,7 +73,7 @@ function getUserMovies(username, favorite) {
 								<div style="width: 100%; height: 100%;">
 									<progress value="${movies[movie].visualRating}" max="100" style="vertical-align: top; margin-top: 12px"></progress>
 									<progress value="${movies[movie].castRating}" max="100" style="margin-top: 15px;"></progress>
-									<progress value="${movies[movie].plotRating}" max="100" style="margin-top: 16px;"></progress>
+									<progress value="${movies[movie].plotRating}" max="100" style="margin-top: 15px;"></progress>
 								</div>
 							</div>
 							<div class="ratings-container" style="width: 10%; margin-left: 20px;">

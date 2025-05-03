@@ -709,7 +709,7 @@ img {
   align-items: center;
   margin-top: 0px;
   margin-left: 10px;
-  border-radius: 20px;
+  border-radius: 15px;
   filter: grayscale(1);
   transition-duration: 500ms;
   cursor: pointer;
