@@ -422,6 +422,7 @@ function setOnAddNewMovieButtonClickListener() {
 			if (movieTitleField.value != "") {
 				url = `https://api.themoviedb.org/3/search/multi?api_key=88323c284697a03104d20067cd85c910&query=${movieTitleField.value}`;
 				searchMovieDialog.showModal();
+				setOnOutsideDialogClickListener(searchMovieDialog);
 				fetch(url)
 					.then(jsonResponse => jsonResponse.json())
 					.then(json => {

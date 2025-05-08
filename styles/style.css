@@ -424,17 +424,6 @@ dialog .accent-container {
   background: transparent;
 }
 
-dialog div.found_movie {
-  border-radius: 10px;
-  padding: 2px;
-}
-
-dialog div.found_movie:hover {
-  filter: brightness(1.2);
-  transition-duration: 500ms;
-  cursor: pointer;
-}
-
 .found-movie-item {
   background-color: rgb(30, 30, 30);
   border-radius: 15px;
@@ -445,6 +434,7 @@ dialog div.found_movie:hover {
 
 .found-movie-item:hover {
   background-color: rgb(40, 40, 40);
+  transform: scale(1.025);
   transition-duration: 500ms;
   cursor: pointer;
 }

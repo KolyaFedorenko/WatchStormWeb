@@ -13,9 +13,6 @@
 
 <body>
 	<dialog id="addMovieDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto;">
-		<dialog id="searchMovieDialog" class="default-container"
-			style="position: fixed; z-index: 2; margin: auto; width: 25%; height: 25%; padding-top: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; overflow-y: scroll;">
-		</dialog>
 		<div class="default-container-content" style="padding-left: 20px; padding-right: 20px;">
 			<div style="display: flex; justify-content: center;">
 				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input"
@@ -56,6 +53,9 @@
 				<span class="default-text notification negative">Please fill in all fields!</span>
 			</div>
 		</div>
+	</dialog>
+	<dialog id="searchMovieDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; width: 360px; height: 240px; padding-top: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; overflow-y: scroll;">
 	</dialog>
 	<dialog id="movieDialog" class="default-container" data-delete=""
 		style="position: fixed; z-index: 2; margin: auto;">
