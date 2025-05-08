@@ -1,4 +1,4 @@
-![WatchStormWeb Image](https://i.ibb.co/QdrRvGs/Watch-Storm-Web.jpg)
+![WatchStormWeb Image](https://raw.githubusercontent.com/KolyaFedorenko/WatchStormWeb/d1d5fb27e6a825435e3f7287fb7ccfee239a60f2/images/WatchStormWebImage.png)
 # WatchStormWeb
 ![GitHub Created At](https://img.shields.io/github/created-at/KolyaFedorenko/WatchStormWeb)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KolyaFedorenko/WatchStormWeb?color=brighteen)
