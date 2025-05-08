@@ -1,8 +1,8 @@
 ![WatchStormWeb Image](https://i.ibb.co/QdrRvGs/Watch-Storm-Web.jpg)
 # WatchStormWeb
 ![GitHub Created At](https://img.shields.io/github/created-at/KolyaFedorenko/WatchStormWeb)
-[![Website](https://watchstorm.ru/)](https://img.shields.io/website?url=https%3A%2F%2Fwatchstorm.ru%2F)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KolyaFedorenko/WatchStormWeb?color=brighteen)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fwatchstorm.ru%2F)
 ![GitHub Release](https://img.shields.io/github/v/release/KolyaFedorenko/WatchStormWeb?color=brighteen)
 ![GitHub Release Date](https://img.shields.io/github/release-date/KolyaFedorenko/WatchStormWeb)
 
