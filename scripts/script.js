@@ -63,7 +63,7 @@ function getUserMovies(username, favorite) {
 						<div class="description accent-container">
 							<span class="default-text">${movies[movie].description}</span>
 						</div>
-						<div class="ratings accent-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
+						<div class="ratings accent-container" style="padding-top: 7px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
 							<div class="ratings-container" style="width: 30%;">
 								<span class="default-text rating-name">
 									Visual Rating:
@@ -94,7 +94,7 @@ function getUserMovies(username, favorite) {
 								</span>
 							</div>
 						</div>
-						<div class="average-ratings accent-container" style="padding-top: 10px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
+						<div class="average-ratings accent-container" style="padding-top: 5px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
 							<div class="ratings-container" style="width: 53%;">
 								<span class="default-text rating-name">
 									Your average rating:
