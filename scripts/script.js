@@ -365,7 +365,9 @@ function updateUserDataInSidebar(username) {
 				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
 			</div>
 			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
-				<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
+				<div id="usernameContainer" style="display: inline-flex;">
+					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
+				</div>
 				<header id="userLogin" style="transition-duration: 1000ms; font-weight: 400; font-size: 12px; filter: opacity(0.5);">@${username.toLowerCase()}</header>
 			</div>
 		</div>
@@ -373,6 +375,15 @@ function updateUserDataInSidebar(username) {
 	`;
 
 	let userProfileImage = document.getElementById("userProfileImage");
+	let usernameContainer = document.getElementById("usernameContainer");
+	
+	get(child(dbRef, `WatchStorm/${username}/Data/pathToImage`)).then((snapshot) => {
+		if (snapshot.val() == "verified") {
+			usernameContainer.innerHTML += `
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#505050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
+			`;
+		}
+	});
 
 	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
 		userProfileImage.src = url;
@@ -532,7 +543,7 @@ function setOnNewsButtonClickListener() {
 								<div class="movie-title-and-year">
 									<div style="display: inline-flex">
 										<span class="movie-title">WatchStorm</span>
-										<i class="fa-solid fa-circle-check fa-sm fa-fw fa verified"></i>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#505050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 									</div>
 									<span class="movie-year">${news[neww].date}</span>
 								</div>
