@@ -607,7 +607,7 @@ function setOnRecommendationsButtonClickListener() {
 			<div style="display: inline-flex; margin-top: 20px;">
 				<input id="inputUserMessage" autocomplete="off" class="input-field input-message">
 				<div id="buttonSendMessage" class="accent-container rounded-button">
-					<i class="fa-solid fa-arrow-up fa fa-fw"></i>
+					<i class="fa-solid fa-arrow-up fa-fw fa-xs"></i>
 				</div>
 			</div>
 		</div>

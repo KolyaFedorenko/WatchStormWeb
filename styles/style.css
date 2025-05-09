@@ -715,15 +715,16 @@ img {
   justify-content: center;
   align-items: center;
   margin-top: 0px;
-  margin-left: 10px;
-  border-radius: 15px;
-  filter: grayscale(1);
+  border-radius: 0px 15px 15px 0px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: none;
   transition-duration: 500ms;
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .rounded-button:hover {
-  filter: grayscale(0);
+  color: #ffffff;
   transition-duration: 500ms;
 }
 
@@ -733,6 +734,7 @@ img {
   background-color: rgba(30, 30, 30, 0.5);
   text-align: left;
   padding-left: 20px;
+  border-radius: 15px 0px 0px 15px;
 }
 
 .message-from-watchstorm-container {
@@ -741,7 +743,7 @@ img {
 }
 
 .message-from-watchstorm {
-  background-color: rgb(35, 35, 35);
+  background-color: rgb(30, 30, 30);
   max-width: 250px;
   width: fit-content;
   padding: 10px;
@@ -756,7 +758,7 @@ img {
 }
 
 .message-from-user {
-  background-color: rgb(35, 35, 35);
+  background-color: rgb(30, 30, 30);
   max-width: 250px;
   width: fit-content;
   padding: 10px;
