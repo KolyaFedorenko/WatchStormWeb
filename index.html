@@ -42,15 +42,13 @@
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
 				<button id="buttonSaveRating" class="button-login">Save Rating For This Movie</button>
 			</div>
-			<div id="notificationPleaseEnterMovieTitle"
-				style="display: none; align-items: center; justify-content: center;">
+			<div id="notificationPleaseEnterMovieTitle" class="notification">
 				<div class="indicator-negative"></div>
-				<span class="default-text notification negative">Please enter movie title to search!</span>
+				<span class="default-text negative">Please enter movie title to search!</span>
 			</div>
-			<div id="notificationPleaseFillInAllFields"
-				style="display: none; align-items: center; justify-content: center;">
+			<div id="notificationPleaseFillInAllFields" class="notification">
 				<div class="indicator-negative"></div>
-				<span class="default-text notification negative">Please fill in all fields!</span>
+				<span class="default-text negative">Please fill in all fields!</span>
 			</div>
 		</div>
 	</dialog>
@@ -282,14 +280,13 @@
 			placeholder="6-digit code" style="margin-top: 10px;">
 		<button id="buttonSaveDigitCode" disabled class="button-login" style="margin-top: 10px;">Save 6-digit
 			code</button>
-		<div id="notificationDigitCodeHasBeenChanged"
-			style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationDigitCodeHasBeenChanged" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
+			<span class="default-text positive">Your 6-digit code has been successfully changed!</span>
 		</div>
-		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationEnterValidDigitCode" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
+			<span class="default-text negative">Please enter the correct 6-digit code!</span>
 		</div>
 	</dialog>
 	<dialog id="importMoviesDialog" class="default-container"
@@ -323,10 +320,9 @@
 		</div>
 		<button id="buttonSaveImportedMovies" class="button-login" style="display: none; margin-top: 10px;">Import
 			movies</button>
-		<div id="notificationUploadFileInJsonFormat"
-			style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationUploadFileInJsonFormat" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please upload file in JSON format!</span>
+			<span class="default-text negative">Please upload file in JSON format!</span>
 		</div>
 	</dialog>
 	<dialog id="leaveFeedbackDialog" class="default-container"
@@ -343,14 +339,13 @@
 		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
 		<button id="buttonSendFeedback" class="button-login"
 			style="background-color: rgb(40, 40, 40); margin-top: 10px;">Send feedback</button>
-		<div id="notificationFeedbackHasBeenSent" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationFeedbackHasBeenSent" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Your feedback has been sent!</span>
+			<span class="default-text positive">Your feedback has been sent!</span>
 		</div>
-		<div id="notificationPleaseFillFeedbackField"
-			style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationPleaseFillFeedbackField" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please fill in the feedback field!</span>
+			<span class="default-text negative">Please fill in the feedback field!</span>
 		</div>
 	</dialog>
 	<dialog id="contactTheDeveloperDialog" class="default-container"
@@ -376,9 +371,9 @@
 				<i class="fa-solid fa-copy fa fa-fw"></i>
 			</div>
 		</div>
-		<div id="notificationEmailHasBeenCopied" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationEmailHasBeenCopied" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Email has been copied to clipboard!</span>
+			<span class="default-text positive">Email has been copied to clipboard!</span>
 		</div>
 	</dialog>
 	<div class="limiter">

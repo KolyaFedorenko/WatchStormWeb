@@ -171,9 +171,9 @@ function showAuthorizationDialog() {
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="button-login" style="background-color: rgba(255, 255, 255, 0.05);">Sign In</button>
                     </div>
-					<div id="notificationIncorrectLoginOrPassword" style="display: none; align-items: center; justify-content: center;">
+					<div id="notificationIncorrectLoginOrPassword" class="notification">
 						<div class="indicator-negative"></div>
-						<span class="default-text notification negative">Incorrect login or password!</span>
+						<span class="default-text negative">Incorrect login or password!</span>
 					</div>
                 </div>
             </div>
@@ -224,7 +224,7 @@ function showAuthorizationDialog() {
 				setListeners(userLogin);
 			}
 			else {
-				showNotification(notificationIncorrectLoginOrPassword, "flex");
+				showNotification(notificationIncorrectLoginOrPassword);
 			}
 		});
 	}
@@ -494,7 +494,7 @@ function setOnAddNewMovieButtonClickListener() {
 					});
 			}
 			else {
-				showNotification(notificationPleaseEnterMovieTitle, "flex");
+				showNotification(notificationPleaseEnterMovieTitle);
 			}
 		}
 	}
@@ -520,7 +520,7 @@ function setOnAddNewMovieButtonClickListener() {
 			getUserMovies(getCookie("username"), false);
 		}
 		else {
-			showNotification(notificationPleaseFillInAllFields, "flex");
+			showNotification(notificationPleaseFillInAllFields);
 		}
 	}
 }
@@ -907,10 +907,11 @@ function setOnButtonChangeDigitCodeDialogListener() {
 		if (inputNewDigitCode.value.length == 6) {
 			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
 			setCookie('digitCode', inputNewDigitCode.value, {});
-			showNotification(notificationDigitCodeHasBeenChanged, "flex");
+			showNotification(notificationDigitCodeHasBeenChanged);
 			inputNewDigitCode.value = "";
+			buttonSaveDigitCode.disabled = true;
 		} else {
-			showNotification(notificationEnterValidDigitCode, "flex");
+			showNotification(notificationEnterValidDigitCode);
 		}
 	}
 
@@ -975,7 +976,7 @@ function setOnButtonImportMoviesDialogClickListener() {
 				uploadedFileName.innerHTML = `${textFiles[0].name}`;
 			});
 		} catch (e) {
-			showNotification(notificationUploadFileInJsonFormat, "flex");
+			showNotification(notificationUploadFileInJsonFormat);
 		}
 
 		dropZone.classList.remove("drop-zone-over");
@@ -1019,9 +1020,9 @@ function setOnButtonLeaveFeedbackDialogClickListener() {
 		if (inputFeedbackText.value.length > 0) {
 			set(ref(db, `WatchStormWeb/Feedback/${getCookie("username")}`), inputFeedbackText.value);
 			inputFeedbackText.value = "";
-			showNotification(notificationFeedbackHasBeenSent, "flex");
+			showNotification(notificationFeedbackHasBeenSent);
 		} else {
-			showNotification(notificationPleaseFillFeedbackField, "flex");
+			showNotification(notificationPleaseFillFeedbackField);
 		}
 	}
 
@@ -1057,7 +1058,7 @@ function setOnButtonContactTheDeveloperDialogClickListener() {
 
 	buttonCopyEmail.onclick = function () {
 		navigator.clipboard.writeText("administrator@watchstorm.ru");
-		showNotification(notificationEmailHasBeenCopied, "flex");
+		showNotification(notificationEmailHasBeenCopied);
 	}
 
 	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
@@ -1089,9 +1090,9 @@ function setOnOutsideDialogClickListener(dialog, functionToExecute) {
 	});
 }
 
-function showNotification(notificationElement, displayType) {
-	notificationElement.style.display = displayType;
-	setTimeout(() => notificationElement.style.display = "none", 4000);
+function showNotification(notificationElement) {
+	notificationElement.classList.add("notification-open");
+	setTimeout(() => notificationElement.classList.remove("notification-open"), 2500);
 }
 
 function clearInputFields(inputFieldsParentElement) {

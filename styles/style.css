@@ -567,10 +567,24 @@ button:disabled:active {
 }
 
 .notification {
-  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0px;
+  opacity: 0;
+  transition: all 500ms allow-discrete;
+  interpolate-size: allow-keywords;
+}
+
+.notification-open {
+  height: auto;
+  opacity: 1;
   margin-top: 10px;
-  animation-duration: 4s;
-  animation-name: fade-in;
+  transition: all 500ms allow-discrete;
+}
+
+.notification span {
+  font-size: 12px;
 }
 
 .positive {
@@ -579,24 +593,6 @@ button:disabled:active {
 
 .negative {
   color: #ff5353;
-}
-
-@keyframes fade-in {
-  from {
-    filter: opacity(0);
-  }
-
-  25% {
-    filter: opacity(1);
-  }
-
-  75% {
-    filter: opacity(1);
-  }
-
-  to {
-    filter: opacity(0);
-  }
 }
 
 textarea {
@@ -800,13 +796,12 @@ img {
 .indicator-negative {
   background: rgb(255, 83, 83);
   border-radius: 50%;
-  margin-top: 10px;
   margin-right: 5px;
   height: 8px;
   width: 8px;
   box-shadow: 0 0 0 0 rgba(255, 83, 83, 1);
   transform: scale(1);
-  animation: fade-in 4s, pulse-negative 2s infinite;
+  animation: pulse-negative 2s infinite;
 }
 
 @keyframes pulse-negative {
@@ -829,14 +824,12 @@ img {
 .indicator-positive {
   background: rgb(82, 255, 174);
   border-radius: 50%;
-  margin-top: 10px;
   margin-right: 5px;
   height: 8px;
   width: 8px;
-
   box-shadow: 0 0 0 0 rgba(82, 255, 174, 1);
   transform: scale(1);
-  animation: fade-in 4s, pulse-positive 2s infinite;
+  animation: pulse-positive 2s infinite;
 }
 
 @keyframes pulse-positive {
