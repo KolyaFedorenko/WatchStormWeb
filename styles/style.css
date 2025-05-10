@@ -654,19 +654,39 @@ textarea::placeholder {
   display: none;
   width: 200px;
   height: 200px;
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.5);
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  animation: uploaded-item-animation 500ms;
+}
+
+@keyframes uploaded-item-animation {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+    scale: 1.025;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }
 
 .file-name-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 35px;
-  background-color: rgb(40, 40, 40);
+  margin-top: 30px;
+  background-color: rgba(40, 40, 40, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.025);
   width: 200px;
-  height: 25px;
-  border-radius: 0px 0px 20px 20px;
+  height: 30px;
 }
 
 .file-name {
@@ -674,6 +694,10 @@ textarea::placeholder {
   color: white;
   opacity: 0.75;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 160px;
+  text-overflow: ellipsis;
 }
 
 img {
