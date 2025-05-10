@@ -872,15 +872,14 @@ function setOnButtonInformationDialogClickListener() {
 
 	setOnOutsideDialogClickListener(informationDialog);
 
-	spanShowReleaseNotes.addEventListener('click', function (event) {
-		event.stopPropagation();
-		if (releaseNotesContainer.style.display == 'none') {
-			releaseNotesContainer.style.display = 'block';
+	spanShowReleaseNotes.onclick = function() {
+		if (releaseNotesContainer.classList.contains("release-notes-container-hidden")) {
+			releaseNotesContainer.classList.remove("release-notes-container-hidden");
 		}
 		else {
-			releaseNotesContainer.style.display = 'none';
+			releaseNotesContainer.classList.add("release-notes-container-hidden");
 		}
-	});
+	}
 }
 
 function setOnButtonChangeDigitCodeDialogListener() {
