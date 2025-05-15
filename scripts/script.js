@@ -149,7 +149,7 @@ function showAuthorizationDialog() {
                 <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="description accent-container" style="background-color: rgba(255, 255, 255, 0.025);">
+                <div class="description accent-container">
                     <span class="default-text">Welcome to the web version of WatchStorm!
 						To log in, enter your username and the 6-digit code
                         that you specified in the mobile application to access the
@@ -161,7 +161,7 @@ function showAuthorizationDialog() {
                 </div>
             </div>
             <div style="display: flex; justify-content: center;">
-                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px; background-color: rgba(255, 255, 255, 0.025);">
+                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
                         <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username" style="background-color: rgba(255, 255, 255, 0.025);">
                     </div>
@@ -359,7 +359,7 @@ function updateUserDataInSidebar(username) {
 
 	headersContainer.innerHTML +=
 		`
-	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30);">
+	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30, 0.75);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
 				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
@@ -380,7 +380,7 @@ function updateUserDataInSidebar(username) {
 	get(child(dbRef, `WatchStorm/${username}/Data/pathToImage`)).then((snapshot) => {
 		if (snapshot.val() == "verified") {
 			usernameContainer.innerHTML += `
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#505050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 			`;
 		}
 	});
@@ -543,7 +543,7 @@ function setOnNewsButtonClickListener() {
 								<div class="movie-title-and-year">
 									<div style="display: inline-flex">
 										<span class="movie-title">WatchStorm</span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#505050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:2px 0 0 2px"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 									</div>
 									<span class="movie-year">${news[neww].date}</span>
 								</div>

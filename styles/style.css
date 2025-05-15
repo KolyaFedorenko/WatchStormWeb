@@ -134,7 +134,7 @@ h6 {
 }
 
 .accent-container {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
   width: 350px;
   margin-top: 10px;
@@ -165,7 +165,7 @@ progress::-moz-progress-bar {
 }
 
 progress::-webkit-progress-bar {
-  background: rgb(50, 50, 50);
+  background: rgba(45, 45, 45);
 }
 
 progress::-webkit-progress-value {
@@ -215,7 +215,7 @@ progress::-webkit-progress-value {
 }
 
 ul li:hover a {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   filter: grayscale(0%);
 }
 
@@ -362,7 +362,6 @@ dialog,
 }
 
 @starting-style {
-
   :popover-open,
   :popover-open::backdrop,
   [open],
@@ -403,20 +402,20 @@ dialog {
 }
 
 .dialog-input {
-  background-color: rgb(40, 40, 40, 0.5);
+  background-color: rgba(40, 40, 40, 0.5);
   padding-inline: 10px;
 }
 
 dialog button {
-  background-color: rgb(50, 50, 50, 0.5) !important;
+  background-color: rgba(50, 50, 50, 0.5) !important;
 }
 
 dialog button:hover {
-  background-color: rgb(60, 60, 60, 0.5) !important;
+  background-color: rgba(60, 60, 60, 0.5) !important;
 }
 
 dialog .accent-container {
-  background-color: rgb(30, 30, 30, 0.5) !important;
+  background-color: rgba(30, 30, 30, 0.75) !important;
 }
 
 ::-webkit-scrollbar {
@@ -425,7 +424,7 @@ dialog .accent-container {
 }
 
 .found-movie-item {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
   padding: 5px 20px 1px 10px;
   transition-duration: 500ms;
@@ -433,7 +432,7 @@ dialog .accent-container {
 }
 
 .found-movie-item:hover {
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.75);
   transform: scale(1.025);
   transition-duration: 500ms;
   cursor: pointer;
@@ -442,7 +441,7 @@ dialog .accent-container {
 .button-delete-movie {
   width: 100%;
   height: 40px;
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.75);
   border: none;
   text-align: center;
   text-transform: uppercase;
@@ -452,7 +451,7 @@ dialog .accent-container {
 }
 
 .button-delete-movie:hover {
-  background-color: rgb(60, 60, 60);
+  background-color: rgba(60, 60, 60, 0.75);
   transition-duration: 500ms;
   cursor: pointer;
 }
@@ -465,7 +464,7 @@ dialog .accent-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.75);
   color: rgba(255, 255, 255, 0.5);
   padding: 0px 6px 0px 4px;
   margin-left: 5px;
@@ -475,7 +474,7 @@ dialog .accent-container {
 }
 
 .movie-main-info {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   border-radius: 20px;
   padding-left: 15px;
   width: 350px;
@@ -521,7 +520,7 @@ dialog .accent-container {
 .settings-item {
   width: 740px;
   height: 75px;
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   border-radius: 20px;
   padding-left: 30px;
   display: flex;
@@ -533,7 +532,7 @@ dialog .accent-container {
 }
 
 .settings-item:hover {
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.75);
   filter: grayscale(0%);
   transform: scale(1.025);
   transition-duration: 500ms;
@@ -642,13 +641,13 @@ textarea::placeholder {
   padding: 20px;
   width: 348px;
   height: 280px;
-  border: 2px dashed rgb(60, 60, 60);
+  border: 2px dashed rgba(60, 60, 60, 0.75);
   border-radius: 20px;
   margin-top: 10px;
 }
 
 .drop-zone-over {
-  border: 4px dashed rgb(60, 60, 60);
+  border: 4px dashed rgba(60, 60, 60, 0.75);
 }
 
 .drop-zone-text {
@@ -772,7 +771,7 @@ img {
 }
 
 .message-from-watchstorm {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   max-width: 250px;
   width: fit-content;
   padding: 10px;
@@ -787,7 +786,7 @@ img {
 }
 
 .message-from-user {
-  background-color: rgb(30, 30, 30);
+  background-color: rgba(30, 30, 30, 0.75);
   max-width: 250px;
   width: fit-content;
   padding: 10px;
@@ -815,7 +814,7 @@ img {
 }
 
 .command {
-  background-color: rgb(60, 60, 60);
+  background-color: rgba(50, 50, 50, 0.75);
   border-radius: 5px;
   padding-inline: 5px;
   color: white;
@@ -920,7 +919,7 @@ img {
 .timeline-vertical-line {
   width: 2px;
   height: 660px;
-  background-color: rgb(60, 60, 60);
+  background-color: rgba(60, 60, 60, 0.75);
 }
 
 .timeline-dots-container {
@@ -989,7 +988,7 @@ img {
 
 .label {
   opacity: 0.5;
-  background-color: rgb(40, 40, 40);
+  background-color: rgba(40, 40, 40, 0.75);
   padding-inline: 6px;
   border-radius: 10px;
   font-size: 12px;
@@ -1011,7 +1010,7 @@ img {
 }
 
 .release-notes-container {
-  background-color: rgb(30, 30, 30, 0.5);
+  background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
   width: 350px;
   margin-top: 10px;
