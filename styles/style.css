@@ -562,6 +562,10 @@ button:disabled {
   cursor: default;
 }
 
+button:disabled:hover {
+  background-color: rgba(50, 50, 50, 0.5) !important;
+}
+
 button:disabled:active {
   transform: scale(1);
 }
@@ -608,6 +612,11 @@ textarea {
   resize: none;
   font-family: Roboto, sans-serif;
   text-align: start;
+  transition-duration: 250ms;
+}
+
+textarea:focus {
+  border: 1px solid rgba(255, 255, 255, 0.075);
 }
 
 textarea::placeholder {
@@ -1002,11 +1011,12 @@ img {
 }
 
 .release-notes-container {
-  background-color: rgb(30, 30, 30);
+  background-color: rgb(30, 30, 30, 0.5);
   border-radius: 15px;
   width: 350px;
   margin-top: 10px;
   padding: 10px 20px;
+  overflow: hidden;
   transition: all 500ms allow-discrete;
   interpolate-size: allow-keywords;
 }
