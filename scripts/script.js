@@ -642,7 +642,9 @@ function setOnRecommendationsButtonClickListener() {
 		inputUserMessage.addEventListener('keydown', (event) => {
 			if (event.key === 'Enter') {
 				event.preventDefault();
-				sendMessage("user", inputUserMessage.value, "none");
+				if (inputUserMessage.value != "") {
+					sendMessage("user", inputUserMessage.value, "none");
+				}
 			}
 		});
 
