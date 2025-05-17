@@ -629,14 +629,34 @@ textarea::placeholder {
 }
 
 .copy-button {
-  filter: grayscale(1);
-  transition-duration: 500ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 65px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
+  transition-duration: 250ms;
 }
 
 .copy-button:hover {
-  filter: grayscale(0);
-  transition-duration: 500ms;
+  background-color: rgba(30, 30, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copy-button i {
+  transition-duration: 250ms;
+  opacity: 0.5;
+}
+
+.copy-button:hover i{
+  opacity: 1;
+}
+
+.copy-button:active {
+  transform: scale(0.85);
 }
 
 .drop-zone {

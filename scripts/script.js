@@ -636,7 +636,9 @@ function setOnRecommendationsButtonClickListener() {
 		}
 
 		buttonSendMessage.onclick = function () {
-			sendMessage("user", inputUserMessage.value, "none");
+			if (inputUserMessage.value != "") {
+				sendMessage("user", inputUserMessage.value, "none");
+			}
 		}
 
 		inputUserMessage.addEventListener('keydown', (event) => {
