@@ -163,13 +163,13 @@ function showAuthorizationDialog() {
             <div style="display: flex; justify-content: center;">
                 <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
                     <div style="display: flex; justify-content: center;">
-                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username" style="background-color: rgba(255, 255, 255, 0.025);">
+                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code" style="background-color: rgba(255, 255, 255, 0.025);">
+                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <button id="buttonSignIn" class="button-login" style="background-color: rgba(255, 255, 255, 0.05);">Sign In</button>
+                        <button id="buttonSignIn" class="button-login">Sign In</button>
                     </div>
 					<div id="notificationIncorrectLoginOrPassword" class="notification">
 						<div class="indicator-negative"></div>
@@ -359,7 +359,7 @@ function updateUserDataInSidebar(username) {
 
 	headersContainer.innerHTML +=
 		`
-	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgb(30, 30, 30, 0.75);">
+	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgba(30, 30, 30, 0.75);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
 				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">

@@ -136,6 +136,7 @@ h6 {
 .accent-container {
   background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
   width: 350px;
   margin-top: 10px;
   padding: 10px 20px;
@@ -188,6 +189,7 @@ progress::-webkit-progress-value {
   width: 300px;
   height: 100%;
   background-color: rgb(20, 20, 20);
+  border: 1px solid rgba(255, 255, 255, 0.025);
   transition: all 0.5s ease;
   z-index: 1;
 }
@@ -426,6 +428,7 @@ dialog .accent-container {
 .found-movie-item {
   background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
   padding: 5px 20px 1px 10px;
   transition-duration: 500ms;
   animation: show-container 500ms;
@@ -476,6 +479,7 @@ dialog .accent-container {
 .movie-main-info {
   background-color: rgba(30, 30, 30, 0.75);
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
   padding-left: 15px;
   width: 350px;
   height: 70px;
@@ -522,6 +526,7 @@ dialog .accent-container {
   height: 75px;
   background-color: rgba(30, 30, 30, 0.75);
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
   padding-left: 30px;
   display: flex;
   align-items: center;
@@ -778,6 +783,7 @@ img {
   padding-inline: 15px;
   margin-left: 5px;
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
 }
 
 .message-from-user-container {
@@ -794,6 +800,7 @@ img {
   margin-left: auto;
   margin-right: 0;
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
 }
 
 .message {
@@ -988,7 +995,7 @@ img {
 
 .label {
   opacity: 0.5;
-  background-color: rgba(40, 40, 40, 0.75);
+  background-color: rgba(50, 50, 50, 0.75);
   padding-inline: 6px;
   border-radius: 10px;
   font-size: 12px;
@@ -1012,8 +1019,9 @@ img {
 .release-notes-container {
   background-color: rgba(30, 30, 30, 0.75);
   border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.025);
   width: 350px;
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 10px 20px;
   overflow: hidden;
   transition: all 500ms allow-discrete;
