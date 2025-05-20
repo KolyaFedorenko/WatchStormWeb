@@ -21,8 +21,8 @@
 					style="width: 40px; margin-left: 10px;">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
-				<input autocomplete="off" id="movieYearField" class="input-field dialog-input" placeholder="Movie Year"
-					style="width: 145px; margin-left: 10px;">
+				<input type="number" autocomplete="off" id="movieYearField" class="input-field dialog-input" placeholder="Movie Year"
+					style="width: 145px; margin-left: 10px;" oninput="if (this.value.length > 4) this.value = this.value.slice(0, 4); if (this.value > 2099) this.value = 2099;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
 				<input autocomplete="off" id="moviePosterPath" class="input-field dialog-input"
@@ -33,11 +33,9 @@
 					placeholder="Movie Description" style="padding-left: 10px; padding-right: 10px;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<input autocomplete="off" id="movieVisualRating" class="input-field dialog-input" placeholder="Visual">
-				<input autocomplete="off" id="movieCastRating" class="input-field dialog-input" placeholder="Cast"
-					style="margin-left: 10px;">
-				<input autocomplete="off" id="moviePlotRating" class="input-field dialog-input" placeholder="Plot"
-					style="margin-left: 10px;">
+				<input type="number" autocomplete="off" id="movieVisualRating" class="input-field dialog-input" placeholder="Visual" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
+				<input type="number" autocomplete="off" id="movieCastRating" class="input-field dialog-input" placeholder="Cast" style="margin-left: 10px;" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
+				<input type="number" autocomplete="off" id="moviePlotRating" class="input-field dialog-input" placeholder="Plot" style="margin-left: 10px;" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
 				<button id="buttonSaveRating" class="button-login">Save Rating For This Movie</button>

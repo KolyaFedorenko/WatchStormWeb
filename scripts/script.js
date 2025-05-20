@@ -359,7 +359,7 @@ function updateUserDataInSidebar(username) {
 
 	headersContainer.innerHTML +=
 		`
-	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgba(30, 30, 30, 0.75);">
+	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgba(30, 30, 30, 1);">
 		<div class="user-info-container">
 			<div style="display:flex-inline; align-items:center; justify-content:center;">
 				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
@@ -592,13 +592,13 @@ function setOnRecommendationsButtonClickListener() {
 			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
 				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
-					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;	">WatchStorm Assistant</span>
+					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;">WatchStorm Assistant</span>
 					<div id="availableStatusContainer" class="availability-status-container">
 						<div class="availability-indicator"></div>
 						<span class="availability-status">available</span>
 					</div>
 					<div id="unavailableStatusContainer" class="availability-status-container" style="background-color: rgba(255, 83, 83, 0.1);">
-						<div class="availability-indicator" style="  background-color: rgb(255, 83, 83, 0.6);"></div>
+						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
 						<span class="availability-status" style="color: rgb(255, 83, 83, 0.6);">unavailable</span>
 					</div>
 				</div>
