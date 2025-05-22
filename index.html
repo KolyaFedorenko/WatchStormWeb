@@ -17,7 +17,7 @@
 			<div style="display: flex; justify-content: center;">
 				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input"
 					placeholder="Movie Title" style="width: 145px;">
-				<button id="buttonSearchMovie" class="button-login search-button"
+				<button id="buttonSearchMovie" class="default-button search-button"
 					style="width: 40px; margin-left: 10px;">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
@@ -38,7 +38,7 @@
 				<input type="number" autocomplete="off" id="moviePlotRating" class="input-field dialog-input" placeholder="Plot" style="margin-left: 10px;" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<button id="buttonSaveRating" class="button-login">Save Rating For This Movie</button>
+				<button id="buttonSaveRating" class="default-button">Save Rating For This Movie</button>
 			</div>
 			<div id="notificationPleaseEnterMovieTitle" class="notification">
 				<div class="indicator-negative"></div>
@@ -276,7 +276,7 @@
 		</div>
 		<input autocomplete="off" id="inputNewDigitCode" type="number" class="input-field dialog-input"
 			placeholder="6-digit code" style="margin-top: 10px;">
-		<button id="buttonSaveDigitCode" disabled class="button-login" style="margin-top: 10px;">Save 6-digit
+		<button id="buttonSaveDigitCode" disabled class="default-button" style="margin-top: 10px;">Save 6-digit
 			code</button>
 		<div id="notificationDigitCodeHasBeenChanged" class="notification">
 			<div class="indicator-positive"></div>
@@ -316,7 +316,7 @@
 				</div>
 			</div>
 		</div>
-		<button id="buttonSaveImportedMovies" class="button-login" style="display: none; margin-top: 10px;">Import
+		<button id="buttonSaveImportedMovies" class="default-button" style="display: none; margin-top: 10px;">Import
 			movies</button>
 		<div id="notificationUploadFileInJsonFormat" class="notification">
 			<div class="indicator-negative"></div>
@@ -335,7 +335,7 @@
 			</span>
 		</div>
 		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
-		<button id="buttonSendFeedback" class="button-login"
+		<button id="buttonSendFeedback" class="default-button"
 			style="background-color: rgba(40, 40, 40, 0.75); margin-top: 10px;">Send feedback</button>
 		<div id="notificationFeedbackHasBeenSent" class="notification">
 			<div class="indicator-positive"></div>

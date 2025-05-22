@@ -169,7 +169,7 @@ function showAuthorizationDialog() {
                         <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <button id="buttonSignIn" class="button-login">Sign In</button>
+                        <button id="buttonSignIn" class="default-button">Sign In</button>
                     </div>
 					<div id="notificationIncorrectLoginOrPassword" class="notification">
 						<div class="indicator-negative"></div>
