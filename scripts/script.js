@@ -582,7 +582,6 @@ function setOnSignOutButtonClickListener() {
 
 function setOnRecommendationsButtonClickListener() {
 	let recommendationsButton = document.getElementById("recommendationsButton");
-	let TMDBisAvailable = false;
 
 	recommendationsButton.onclick = function () {
 		moviesList.innerHTML = '';
@@ -590,17 +589,10 @@ function setOnRecommendationsButtonClickListener() {
 			`
 		<div class="messages-container" style="cursor:pointer;">
 			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
-				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; cursor: pointer;">
+				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
 					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;">WatchStorm Assistant</span>
-					<div id="availableStatusContainer" class="availability-status-container">
-						<div class="availability-indicator"></div>
-						<span class="availability-status">available</span>
-					</div>
-					<div id="unavailableStatusContainer" class="availability-status-container" style="background-color: rgba(255, 83, 83, 0.1);">
-						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="availability-status" style="color: rgb(255, 83, 83, 0.6);">unavailable</span>
-					</div>
+					<svg onclick="async function getSHA256Hash(stringToHash) {const buffer = new TextEncoder().encode(stringToHash);const digest = await crypto.subtle.digest('SHA-256', buffer);return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');}spanVerifedUserUsername.textContent = 'WatchStorm Assistant';getSHA256Hash('WatchStormAssistant').then((result) => {spanWatchStormId.textContent = result.slice(0, 20).toUpperCase();});verifiedAccountDialog.showModal();verifiedAccountDialog.addEventListener('click', function (event) {let rect = verifiedAccountDialog.getBoundingClientRect();let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);if (!isInDialog) {verifiedAccountDialog.close();}});" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px; cursor: pointer;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 				</div>
 			</div>
 			<div class="messages-container-content" id="messagesContainer"></div>
@@ -613,27 +605,10 @@ function setOnRecommendationsButtonClickListener() {
 		</div>
 		`;
 		setTimeout(() => sendMessage("watchstorm", "Hello, how i can help?", "block"), 1000);
-		checkTMDBAvailability();
 
 		let messagesContainer = document.getElementById("messagesContainer");
-		let assistantContainer = document.getElementById("assistantContainer");
-		let availableStatusContainer = document.getElementById("availableStatusContainer");
-		let unavailableStatusContainer = document.getElementById("unavailableStatusContainer");
 		let inputUserMessage = document.getElementById("inputUserMessage");
 		let buttonSendMessage = document.getElementById("buttonSendMessage");
-
-		assistantContainer.onclick = function () {
-			if (availableStatusContainer.style.display != "flex" && unavailableStatusContainer.style.display != "flex") {
-				if (TMDBisAvailable) {
-					availableStatusContainer.style.display = "flex";
-				} else {
-					unavailableStatusContainer.style.display = "flex";
-				}
-			} else {
-				availableStatusContainer.style.display = "none";
-				unavailableStatusContainer.style.display = "none";
-			}
-		}
 
 		buttonSendMessage.onclick = function () {
 			if (inputUserMessage.value != "") {
