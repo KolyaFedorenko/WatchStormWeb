@@ -374,6 +374,27 @@
 			<span class="default-text positive">Email has been copied to clipboard!</span>
 		</div>
 	</dialog>
+	<dialog id="verifiedAccountDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Verified Account</span>
+		</div>
+		<div class="accent-container">
+			<span class="default-text">
+				<span id="spanVerifedUserUsername" class="default-text" style="opacity: 0.75;">User</span><span class="default-text" style="opacity: 0.75;">'s</span>
+				account is marked with a verification badge
+				as it has been verified through the 
+				<span class="default-text" style="opacity: 0.75;">WatchStorm Verification Program.</span>
+			</span>
+		</div>
+		<div class="accent-container" style="padding-left: 16px;">
+			<div style="display: inline-flex; align-items: center; width: 100%; height: 25px;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.75;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
+				<span class="default-text" style="opacity: 0.75; margin-left: 2px;">WatchStorm ID:</span>
+				<span id="spanWatchStormId" class="default-text" style="opacity: 0.5; margin-left: 5px;">86U406J32A86U406J32A</span>
+			</div>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">

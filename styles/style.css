@@ -1171,6 +1171,11 @@ img {
   color: transparent;
 }
 
+.verified-badge {
+  margin: 2px 0 0 2px;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) and (min-width: 769px) {
   .settings-container {
     scale: 0.8;
