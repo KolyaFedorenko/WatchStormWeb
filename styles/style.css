@@ -146,6 +146,11 @@ h6 {
   font-size: 14px;
 }
 
+.accent-text {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+}
+
 .rating-name {
   display: block;
   margin-top: 5px;
@@ -761,8 +766,8 @@ img {
 
 .messages-container-content {
   width: 740px;
-  height: 610px;
-  margin-top: 30px;
+  height: 600px;
+  margin-top: 20px;
   overflow-y: auto;
 }
 
@@ -787,7 +792,6 @@ img {
 }
 
 .input-message {
-  width: 690px;
   margin-bottom: 30px;
   background-color: rgba(30, 30, 30, 0.5);
   text-align: left;

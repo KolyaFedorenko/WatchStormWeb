@@ -588,15 +588,15 @@ function setOnRecommendationsButtonClickListener() {
 		moviesList.innerHTML +=
 			`
 		<div class="messages-container" style="cursor:pointer;">
-			<div style="width: 760px; height: 40px; display: flex; justify-content: center; align-items: center;">
-				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content;">
+			<div style="width: 760px; display: flex; justify-content: center; align-items: center;">
+				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; margin-top: 0px;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
 					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;">WatchStorm Assistant</span>
 					<svg onclick="async function getSHA256Hash(stringToHash) {const buffer = new TextEncoder().encode(stringToHash);const digest = await crypto.subtle.digest('SHA-256', buffer);return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');}spanVerifedUserUsername.textContent = 'WatchStorm Assistant';getSHA256Hash('WatchStormAssistant').then((result) => {spanWatchStormId.textContent = result.slice(0, 20).toUpperCase();});verifiedAccountDialog.showModal();verifiedAccountDialog.addEventListener('click', function (event) {let rect = verifiedAccountDialog.getBoundingClientRect();let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);if (!isInDialog) {verifiedAccountDialog.close();}});" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px; cursor: pointer;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 				</div>
 			</div>
 			<div class="messages-container-content" id="messagesContainer"></div>
-			<div style="display: inline-flex; margin-top: 20px;">
+			<div style="display: inline-flex; margin-top: 20px; width: 100%">
 				<input id="inputUserMessage" autocomplete="off" class="input-field input-message">
 				<div id="buttonSendMessage" class="accent-container rounded-button">
 					<i class="fa-solid fa-arrow-up fa-fw fa-xs"></i>
@@ -755,16 +755,6 @@ function setOnRecommendationsButtonClickListener() {
 					sendMessage("watchstorm", `Sorry, it looks like WatchStorm Assistant is not available at the moment`, "block");
 				});
 		}
-
-		function checkTMDBAvailability() {
-			fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=88323c284697a03104d20067cd85c910")
-				.then(response => response.json())
-				.then(TMDBisAvailable = true)
-				.catch(err => {
-					console.error(err);
-					TMDBisAvailable = false;
-				});
-		}
 	}
 }
 
@@ -788,7 +778,22 @@ function setOnSettingsButtonClickListener() {
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
 					</div>
 				</div>
-				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;" onclick="
+					spanActionDescription.textContent = 'export movies to JSON';
+					confirmationDialog.showModal();
+					buttonConfirmAction.setAttribute('data-action', 'exportMovies');
+					buttonCancelConfirmationDialog.onclick = function() {
+						confirmationDialog.close();
+					}
+					confirmationDialog.addEventListener('click', function (event) {
+						let rect = confirmationDialog.getBoundingClientRect();
+						let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+						  && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+						if (!isInDialog) {
+							confirmationDialog.close();
+						}
+					});
+				">
 					<div>
 						<i class="fa-solid fa-file-arrow-down fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Export Movies to JSON</span>
@@ -800,13 +805,43 @@ function setOnSettingsButtonClickListener() {
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Import Movies from JSON</span>
 					</div>
 		   		</div>
-				<div class="settings-item" id="buttonDownloadWatchStormApp" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonDownloadWatchStormApp" style="margin-top: 20px;" onclick="
+					spanActionDescription.textContent = 'download WatchStorm';
+					confirmationDialog.showModal();
+					buttonConfirmAction.setAttribute('data-action', 'downloadWatchStorm');
+					buttonCancelConfirmationDialog.onclick = function() {
+						confirmationDialog.close();
+					}
+					confirmationDialog.addEventListener('click', function (event) {
+						let rect = confirmationDialog.getBoundingClientRect();
+						let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+						&& rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+						if (!isInDialog) {
+							confirmationDialog.close();
+						}
+					});
+				">
 					<div>
 						<i class="fa-solid fa-file fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
-				<div class="settings-item" id="buttonWatchStormWebRepository" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonWatchStormWebRepository" style="margin-top: 20px;" onclick="
+					spanActionDescription.textContent = 'open external link';
+					confirmationDialog.showModal();
+					buttonConfirmAction.setAttribute('data-action', 'openRepository');
+					buttonCancelConfirmationDialog.onclick = function() {
+						confirmationDialog.close();
+					}
+					confirmationDialog.addEventListener('click', function (event) {
+						let rect = confirmationDialog.getBoundingClientRect();
+						let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+						&& rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+						if (!isInDialog) {
+							confirmationDialog.close();
+						}
+					});
+				">
 					<div>
 						<i class="fa-brands fa-github fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
@@ -830,11 +865,9 @@ function setOnSettingsButtonClickListener() {
 		setOnButtonInformationDialogClickListener();
 		setOnButtonChangeDigitCodeDialogListener();
 		setOnButtonImportMoviesDialogClickListener();
-		setOnButtonExportMoviesClickListener();
-		setOnButtonDownloadWatchStormAppClickListener();
-		setOnButtonWatchStormWebRepositoryClickListener();
 		setOnButtonLeaveFeedbackDialogClickListener();
 		setOnButtonContactTheDeveloperDialogClickListener();
+		setOnButtonConfirmActionClickListener();
 	}
 }
 
@@ -894,20 +927,6 @@ function setOnButtonChangeDigitCodeDialogListener() {
 	}
 
 	setOnOutsideDialogClickListener(changeDigitCodeDialog);
-}
-
-function setOnButtonExportMoviesClickListener() {
-	let buttonExportMovies = document.getElementById("buttonExportMovies");
-
-	buttonExportMovies.onclick = function () {
-		get(child(dbRef, `WatchStorm/${getCookie("username")}/Movies/`)).then((snapshot) => {
-			var a = document.createElement("a");
-			var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], { type: 'application/json' });
-			a.href = URL.createObjectURL(file);
-			a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
-			a.click();
-		});
-	}
 }
 
 function setOnButtonImportMoviesDialogClickListener() {
@@ -974,14 +993,6 @@ function setOnButtonImportMoviesDialogClickListener() {
 	});
 }
 
-function setOnButtonDownloadWatchStormAppClickListener() {
-	let buttonDownloadWatchStormApp = document.getElementById("buttonDownloadWatchStormApp");
-
-	buttonDownloadWatchStormApp.onclick = function () {
-		downloadWatchStormLatest();
-	}
-}
-
 function setOnButtonLeaveFeedbackDialogClickListener() {
 	let buttonLeaveFeedbackDialog = document.getElementById("buttonLeaveFeedbackDialog");
 	let leaveFeedbackDialog = document.getElementById("leaveFeedbackDialog");
@@ -1016,14 +1027,6 @@ function setOnButtonDeleteMovieClickListener() {
 	}
 }
 
-function setOnButtonWatchStormWebRepositoryClickListener() {
-	let buttonWatchStormWebRepository = document.getElementById("buttonWatchStormWebRepository");
-
-	buttonWatchStormWebRepository.onclick = function () {
-		window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
-	}
-}
-
 function setOnButtonContactTheDeveloperDialogClickListener() {
 	let buttonContactTheDeveloperDialog = document.getElementById("buttonContactTheDeveloperDialog");
 	let contactTheDeveloperDialog = document.getElementById("contactTheDeveloperDialog");
@@ -1040,6 +1043,31 @@ function setOnButtonContactTheDeveloperDialogClickListener() {
 	}
 
 	setOnOutsideDialogClickListener(contactTheDeveloperDialog);
+}
+
+function setOnButtonConfirmActionClickListener() {
+	let buttonConfirmAction = document.getElementById("buttonConfirmAction");
+
+	buttonConfirmAction.onclick = function() {
+		if (buttonConfirmAction.getAttribute("data-action") === "exportMovies") {
+			get(child(dbRef, `WatchStorm/${getCookie("username")}/Movies/`)).then((snapshot) => {
+				var a = document.createElement("a");
+				var file = new Blob([JSON.stringify(snapshot.val(), null, 4)], {type: 'application/json'});
+				a.href = URL.createObjectURL(file);
+				a.download = `movies-${(getCookie("username")).toLowerCase()}.json`;
+				a.click();
+				confirmationDialog.close();
+			});
+		}
+		else if (buttonConfirmAction.getAttribute("data-action") === "downloadWatchStorm") {
+			downloadWatchStormLatest();
+			confirmationDialog.close();
+		}
+		else if (buttonConfirmAction.getAttribute("data-action") === "openRepository") {
+			window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
+			confirmationDialog.close();
+		}
+	}
 }
 
 function setListeners(userLogin) {

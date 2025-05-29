@@ -395,6 +395,22 @@
 			</div>
 		</div>
 	</dialog>
+	<dialog id="confirmationDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Confirmation</span>
+		</div>
+		<div class="accent-container">
+			<span class="default-text">
+				Are you sure you want to <span id="spanActionDescription" class="default-text">continue</span>? Please click <span class="accent-text">Confirm</span>
+				if you are ready to confirm this action, or <span class="accent-text">Cancel</span> to close this dialog.
+			</span>
+		</div>
+		<div style="display: inline-flex; width: 100%; margin-top: 10px;">
+			<button id="buttonCancelConfirmationDialog" class="default-button">Cancel</button>
+			<button id="buttonConfirmAction" data-action="none" class="default-button" style="margin-left: 10px;">Confirm</button>
+		</div>
+	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">
