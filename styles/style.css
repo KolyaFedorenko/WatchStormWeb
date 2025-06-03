@@ -189,12 +189,16 @@ progress::-webkit-progress-value {
 
 .sidebar {
   position: fixed;
-  transform: translate(-300px, 0px);
+  transform: translateX(-300px);
   width: 300px;
   height: 100%;
   background-color: rgb(20, 20, 20);
   transition: all 0.5s ease;
   z-index: 1;
+}
+
+.sidebar-visible {
+  transform: translateX(0px) !important;
 }
 
 .sidebar header {
@@ -226,33 +230,6 @@ ul li:hover a {
 
 .sidebar ul a i {
   margin-right: 16px;
-}
-
-label #btn,
-label #cancel {
-  position: absolute;
-  background: #042331;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-label #btn {
-  left: 40px;
-  top: 25px;
-  font-size: 35px;
-  color: white;
-  padding: 6px 12px;
-  transition: all 0.5s;
-}
-
-label #cancel {
-  z-index: 1111;
-  left: -195px;
-  top: 17px;
-  font-size: 30px;
-  color: #0a5275;
-  padding: 4px 9px;
-  transition: all 0.5s ease;
 }
 
 .input-field {
@@ -1181,7 +1158,7 @@ img {
 }
 
 .unavailable-content-overlay {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -1190,58 +1167,309 @@ img {
   background-color: rgb(20, 20, 20);
   filter: grayscale(1);
   z-index: 3;
-  display: none;
-}
-
-@media screen and (max-width: 1024px) and (min-width: 769px) {
-  .settings-container {
-    scale: 0.8;
-    margin-left: 22%;
-  }
-
-  .messages-container {
-    scale: 0.8;
-    margin-left: 22%;
-  }
-
-  .sidebar {
-    width: 220px;
-  }
-
-  .sidebar ul a {
-    line-height: 85px;
-    font-size: 14px;
-  }
-
-  #username {
-    font-size: 14px !important;
-  }
-
-  #appname {
-    font-size: 14px !important;
-  }
 }
 
 @media screen and (max-device-width: 768px) {
+  .default-container {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .accent-container {
+    width: 100%;
+  }
+
+  .movie-main-info {
+    width: 100%;
+  }
+  
+  .movie-item {
+    padding-right: 20px;
+  }
+
+  .movie-title {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+  }
+  
+  .movies-list {
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
+
+  progress {
+    position: relative;
+    display: inline-block;
+    height: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    background: linear-gradient(90deg, #fff553 0%, #ff7553 100%);
+    width: 90%;
+  }
+
+  progress::-moz-progress-bar {
+    background: linear-gradient(90deg, #fff553 0%, #ff7553 100%);
+  }
+
+  progress::-webkit-progress-bar {
+    background: rgba(45, 45, 45);
+  }
+
+  progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #fff553 0%, #ff7553 100%);
+    border-radius: 5px;
+  }
+
+  .movie-title-field, .movie-year-field {
+    width: 100% !important;
+  }
+  
+  .search-button {
+    width: 110px !important;
+  }
+
+  dialog .accent-container {
+    width: 100%;
+  }
+
   .settings-container {
-    scale: 0.85;
-    margin-left: 200px;
+    margin-top: 0;
+    margin-left: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 0;
+    background-color: rgba(14, 14, 14, 1);
+  }
+
+  .settings-item {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: rgba(20, 20, 20, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 8px !important;
+    padding-left: 20px;
+  }
+
+  .settings-item:hover {
+    background-color: rgba(30, 30, 30, 1);
+  }
+
+  .settings-item span {
+    display: inline-flex;
+    margin-left: 5px !important;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .drop-zone {
+    width: 100%;
   }
 
   .messages-container {
-    scale: 0.85;
-    margin-left: 200px;
+    margin-top: 10px;
+    margin-left: 0px;
+    width: 90%;
+    height: 700px !important;
+    padding: 20px;
+  }
+
+  .watchstorm-assistant {
+    width: 100% !important;
+  }
+
+  .assistant-container {
+    margin-top: 15px;
+    padding: 20px 15px;
+    height: 510px !important;
+  }
+
+  .watchstorm-assistant-container {
+    width: 100% !important;
+  }
+
+  .messages-container-content {
+    width: 100%;
+    height: 330px;
+  }
+
+  .message-from-watchstorm {
+    max-width: 260px;
+  }
+
+  .input-user-message-container {
+    width: 100%;
+  }
+
+  .rounded-button {
+    width: 20px !important;
   }
 
   .sidebar {
-    width: 220px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s ease;
+    z-index: 1;
+    background-color: transparent;
+    pointer-events: none;
+    transform: translate(-800px);
+  }
+
+  .sidebar ul {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(20, 20, 20, 1);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    pointer-events: all;
+  }
+
+  .sidebar ul li{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 13.35%;
   }
 
   .sidebar ul a {
-    line-height: 100px;
+    text-align: center;
+    line-height: 50px;
+    padding: 0px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .sidebar ul a i {
+    margin: 0;
+  }
+
+  .sidebar ul a span{
+    display: none;
+  }
+
+  ul li:hover a {
+    background-color: transparent;
+    filter: grayscale(0%);
+  }
+
+  .menu-header {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(20, 20, 20, 1);
+  }
+
+  .user-info-header {
+    display: none;
+  }
+
+  .release-notes-container {
+    width: 100%;
+  }
+
+  .description {
+    overflow: hidden;
+  }
+
+  .description span {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news .description span, .authorization-form .description span {
+    display: inline;
+  }
+
+  .ratings-names span {
+    white-space: nowrap;
+  }
+
+  .rating-name {
+    white-space: nowrap !important;
+  }
+
+  .ratings-values-container {
+    margin-left: 20px !important;
+  }
+
+  .ratings-values {
+    margin-left: 0px !important;
+  }
+
+  .search-button {
+    width: 120px;
+  }
+
+  .bottom-progress-container {
+    width: 74% !important;
+    margin-left: 5px;
+  }
+
+  .start-page-container {
+    width: 100%;
+  }
+  
+  .start-page-main-text {
+    font-size: 25px !important;
+  }
+
+  .start-page-description-text {
+    font-size: 16px !important;
+  }
+
+  .start-page-button {
+    width: 140px;
+    font-size: 14px !important;
+  }
+
+  .authorization-form .default-container-content {
+    padding: 20px;
+  }
+
+  .selected-movie-image {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .copy-button {
+    margin-left: 13px;
+  }
+
+  .watchstorm-id {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 130px;
+    text-overflow: ellipsis;
+  }
+
+  .timeline-dialog {
+    width: 70% !important;
+    height: 40% !important;
   }
 
   .unavailable-content-overlay {
     display: flex;
+  }
+}
+
+@media screen and (min-device-height: 812px) and (pointer: coarse) {
+  .assistant-container {
+    height: 680px !important;
+  }
+  
+  .messages-container-content {
+    height: 500px;
   }
 }

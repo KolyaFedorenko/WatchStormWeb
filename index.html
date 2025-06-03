@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 	<meta name="description" content="WatchStorm is a service for adding ratings to movies and TV shows that you've watched.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
@@ -15,13 +16,13 @@
 	<dialog id="addMovieDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto;">
 		<div class="default-container-content" style="padding-left: 20px; padding-right: 20px;">
 			<div style="display: flex; justify-content: center;">
-				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input"
+				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input movie-title-field"
 					placeholder="Movie Title" style="width: 145px;">
 				<button id="buttonSearchMovie" class="default-button search-button"
 					style="width: 40px; margin-left: 10px;">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
-				<input type="number" autocomplete="off" id="movieYearField" class="input-field dialog-input" placeholder="Movie Year"
+				<input type="number" autocomplete="off" id="movieYearField" class="input-field dialog-input movie-year-field" placeholder="Movie Year"
 					style="width: 145px; margin-left: 10px;" oninput="if (this.value.length > 4) this.value = this.value.slice(0, 4); if (this.value > 2099) this.value = 2099;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
@@ -55,7 +56,7 @@
 	</dialog>
 	<dialog id="movieDialog" class="default-container" data-delete=""
 		style="position: fixed; z-index: 2; margin: auto;">
-		<img id="selectedMovieImage" style="width: 390px; height: 390px; object-fit: cover; display: block;">
+		<img class="selected-movie-image" id="selectedMovieImage" style="width: 390px; height: 390px; object-fit: cover; display: block;">
 		<div style="display: flex; justify-content: center;">
 			<button id="buttonDeleteMovie" class="button-delete-movie">
 				<i class="fa-regular fa-circle-xmark" style="padding-right: 5px;"></i>
@@ -63,7 +64,7 @@
 			</button>
 		</div>
 	</dialog>
-	<dialog id="timelineDialog" class="default-container"
+	<dialog id="timelineDialog" class="default-container timeline-dialog"
 		style="position: fixed; z-index: 2; margin: auto; width: 750px; height: 782px;">
 		<div class="unavailable-content-overlay">
 			<div style="display: block;">
@@ -397,7 +398,7 @@
 			<div style="display: inline-flex; align-items: center; width: 100%; height: 25px;">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.75;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 				<span class="default-text" style="opacity: 0.75; margin-left: 2px;">WatchStorm ID:</span>
-				<span id="spanWatchStormId" class="default-text" style="opacity: 0.5; margin-left: 5px;">86U406J32A86U406J32A</span>
+				<span id="spanWatchStormId" class="default-text watchstorm-id" style="opacity: 0.5; margin-left: 5px;">86U406J32A86U406J32A</span>
 			</div>
 		</div>
 	</dialog>
@@ -429,14 +430,13 @@
 				</div>
 			</div>
 			<ul>
-				<li><a id="moviesButton"><i class="fa-solid fa-film fa fa-fw"></i>My Movies</a></li>
-				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i>My Favorite Movies</a></li>
-				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i>Add New Movie</a></li>
-				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i>WatchStorm News</a></li>
-				<li><a id="recommendationsButton"><i class="fa-solid fa-floppy-disk fa fa-fw"></i>WatchStorm
-						Assistant</a></li>
-				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i>Settings</a></li>
-				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i>Sign Out</a></li>
+				<li><a id="moviesButton"><i class="fa-solid fa-film fa fa-fw"></i><span class="default-text" style="font-size: 16px;">My Movies</span></a></li>
+				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i><span class="default-text" style="font-size: 16px;">My Favorite Movies</span></a></li>
+				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Add New Movie</span></a></li>
+				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i><span class="default-text" style="font-size: 16px;">WatchStorm News</span></a></li>
+				<li><a id="recommendationsButton"><i class="fa-solid fa-floppy-disk fa fa-fw"></i><span class="default-text" style="font-size: 16px;">WatchStorm Assistant</span></a></li>
+				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Settings</span></a></li>
+				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Sign Out</span></a></li>
 			</ul>
 		</div>
 		<div id="moviesList" class="movies-list"></div>

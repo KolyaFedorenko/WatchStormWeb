@@ -64,7 +64,7 @@ function getUserMovies(username, favorite) {
 							<span class="default-text">${movies[movie].description}</span>
 						</div>
 						<div class="ratings accent-container" style="padding-top: 7px; padding-bottom: 10px; display: inline-flex; justify-content: center;">
-							<div class="ratings-container" style="width: 30%;">
+							<div class="ratings-container ratings-names" style="width: 30%;">
 								<span class="default-text rating-name">
 									Visual Rating:
 								</span>
@@ -82,7 +82,7 @@ function getUserMovies(username, favorite) {
 									<progress value="${movies[movie].plotRating}" max="100" style="margin-top: 15px;"></progress>
 								</div>
 							</div>
-							<div class="ratings-container" style="width: 10%; margin-left: 20px;">
+							<div class="ratings-container ratings-values" style="width: 10%; margin-left: 20px;">
 								<span class="default-text rating-name">
 									${movies[movie].visualRating}%
 								</span>
@@ -104,12 +104,12 @@ function getUserMovies(username, favorite) {
 								</span>
 							</div>
 							<div class="ratings-values-container" style="width: 30%; margin-left: 10px;">
-								<div style="width: 100%; height: 100%;">
+								<div class="bottom-progress-container" style="width: 100%; height: 100%;">
 									<progress value="${movies[movie].compositeRating}" max="100" style="vertical-align: top; margin-top: 12px; width: 100%;"></progress>
 									<progress value="${movies[movie].usersAverageRating}" max="100" style="margin-top: 15px; width: 100%;"></progress>
 								</div>
 							</div>
-							<div class="ratings-container" style="width: 10%; margin-left: 20px;">
+							<div class="ratings-container ratings-values" style="width: 10%; margin-left: 20px;">
 								<span class="default-text rating-name">
 									${movies[movie].compositeRating}%
 								</span>
@@ -250,7 +250,7 @@ function closeAuthorizationDialog() {
 
 function showSidebar() {
 	let sidebar = document.getElementById("sidebar");
-	sidebar.style.transform = "translate(0px, 0px)";
+	sidebar.classList.add("sidebar-visible");
 }
 
 function getCookie(name) {
@@ -321,7 +321,7 @@ function showStartPage() {
 				<div style="display: inline-flex;">
 					<span class="start-page-main-text text-gradient">With WatchStorm</span>
 				</div>
-				<span class="start-page-main-text" style="font-size: 20px; margin-top: 30px; font-weight: 100;">
+				<span class="start-page-main-text start-page-description-text" style="font-size: 20px; margin-top: 30px; font-weight: 100;">
 					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched<br>WatchStorm is completely open source
 				</span>
 				<div style="display: inline-flex; margin-top: 40px;">
@@ -569,7 +569,7 @@ function setOnSignOutButtonClickListener() {
 		let userInfoHeader = document.getElementById("userInfoHeader");
 
 		moviesList.innerHTML = '';
-		sidebar.style.transform = "translate(-300px, 0px)";
+		sidebar.classList.remove("sidebar-visible");
 		if (userInfoHeader != null) userInfoHeader.remove();
 
 		deleteCookie("username");
@@ -586,16 +586,16 @@ function setOnRecommendationsButtonClickListener() {
 		moviesList.innerHTML = '';
 		moviesList.innerHTML +=
 			`
-		<div class="messages-container" style="cursor:pointer;">
-			<div style="width: 760px; display: flex; justify-content: center; align-items: center;">
-				<div id="assistantContainer" class="accent-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; margin-top: 0px;">
+		<div class="messages-container assistant-container" style="cursor:pointer;">
+			<div class="watchstorm-assistant" style="width: 760px; display: flex; justify-content: center; align-items: center;">
+				<div id="assistantContainer" class="accent-container watchstorm-assistant-container" style="display: flex; justify-content: center; align-items: center; width: fit-content; margin-top: 0px;">
 					<img src="images/newlogo6.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
 					<span style="font-size: 16px; color: white; margin-left: 5px; user-select: none;">WatchStorm Assistant</span>
 					<svg onclick="async function getSHA256Hash(stringToHash) {const buffer = new TextEncoder().encode(stringToHash);const digest = await crypto.subtle.digest('SHA-256', buffer);return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');}spanVerifedUserUsername.textContent = 'WatchStorm Assistant';getSHA256Hash('WatchStormAssistant').then((result) => {spanWatchStormId.textContent = result.slice(0, 20).toUpperCase();});verifiedAccountDialog.showModal();verifiedAccountDialog.addEventListener('click', function (event) {let rect = verifiedAccountDialog.getBoundingClientRect();let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);if (!isInDialog) {verifiedAccountDialog.close();}});" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px; cursor: pointer;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
 				</div>
 			</div>
 			<div class="messages-container-content" id="messagesContainer"></div>
-			<div style="display: inline-flex; margin-top: 20px; width: 100%">
+			<div class="input-user-message-container" style="display: inline-flex; margin-top: 20px; width: 100%">
 				<input id="inputUserMessage" autocomplete="off" class="input-field input-message">
 				<div id="buttonSendMessage" class="accent-container rounded-button">
 					<i class="fa-solid fa-arrow-up fa-fw fa-xs"></i>
@@ -764,8 +764,8 @@ function setOnSettingsButtonClickListener() {
 		moviesList.innerHTML +=
 			`
 		<div class="settings-container" style="cursor:pointer;">
-			<div class="awardLine">
-				<div class="settings-item" id="buttonInformationDialog">
+			<div class="settings-container-content">
+				<div class="settings-item first-settings-item" id="buttonInformationDialog">
 					<div>
 						<i class="fa-solid fa-circle-info fa fa-fw"></i>
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
