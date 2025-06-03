@@ -150,14 +150,11 @@ function showAuthorizationDialog() {
             </div>
             <div style="display: flex; justify-content: center;">
                 <div class="description accent-container">
-                    <span class="default-text">Welcome to the web version of WatchStorm!
-						To log in, enter your username and the 6-digit code
-                        that you specified in the mobile application to access the
-                        web version of WatchStorm. If you haven't specified it yet,
-                        go to the settings of the WatchStorm mobile application
-                        and click the "WatchStormWeb" section, and then specify
-                        and save a 6-digit code to access the web version of
-                        WatchStorm, after which you can log in here.</span>
+                    <span class="default-text">
+						Welcome to WatchStormWeb! To sign in, enter your username and password in the fields below
+						and click the "Sign In" button. If you don't have an account yet, please register first
+						using the WatchStorm mobile app or WatchStormWeb, then you can sign in to your account here.
+					</span>
                 </div>
             </div>
             <div style="display: flex; justify-content: center;">
@@ -166,7 +163,7 @@ function showAuthorizationDialog() {
                         <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input autocomplete="off" type="password" maxlength="6" id="digitCodeField" class="input-field" placeholder="6-digit code">
+                        <input autocomplete="off" type="password" id="passwordField" class="input-field" placeholder="Your password">
                     </div>
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="default-button">Sign In</button>
@@ -196,7 +193,7 @@ function showAuthorizationDialog() {
     `;
 
 	let loginField = document.getElementById("loginField");
-	let digitCodeField = document.getElementById("digitCodeField");
+	let passwordField = document.getElementById("passwordField");
 	let buttonSignIn = document.getElementById("buttonSignIn");
 	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 
@@ -204,7 +201,7 @@ function showAuthorizationDialog() {
 		signIn();
 	}
 
-	digitCodeField.addEventListener('keydown', (event) => {
+	passwordField.addEventListener('keydown', (event) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
 			signIn();
@@ -213,19 +210,21 @@ function showAuthorizationDialog() {
 
 	function signIn() {
 		let userLogin = loginField.value;
-		let userDigitCode = digitCodeField.value;
+		let userPassword = passwordField.value;
 
-		get(child(dbRef, `WatchStormWeb/WebCodes/${userLogin}`)).then((snapshot) => {
-			let receivedDigitCode = snapshot.val();
-			if (userDigitCode == receivedDigitCode) {
-				setCookie('username', userLogin, {});
-				setCookie('digitCode', userDigitCode, {});
-				closeAuthorizationDialog();
-				setListeners(userLogin);
-			}
-			else {
-				showNotification(notificationIncorrectLoginOrPassword);
-			}
+		get(child(dbRef, `WatchStorm/${userLogin}/Data/password`)).then((snapshot) => {
+			let receivedPassword = snapshot.val();
+			PasswordHasher.validatePassword(userPassword, receivedPassword).then((passwordsIsEqual) => {
+				if (passwordsIsEqual) {
+					setCookie('username', userLogin, {});
+					setCookie('password', receivedPassword, {});
+					closeAuthorizationDialog();
+					setListeners(userLogin);
+				}
+				else {
+					showNotification(notificationIncorrectLoginOrPassword);
+				}
+			});
 		});
 	}
 
@@ -293,12 +292,12 @@ function deleteCookie(name) {
 
 function authorizeUser() {
 	let savedUsername = getCookie("username");
-	let savedDigitCode = getCookie("digitCode");
+	let savedPassword = getCookie("password");
 
 	if (savedUsername != null) {
-		get(child(dbRef, `WatchStormWeb/WebCodes/${savedUsername}`)).then((snapshot) => {
-			let receivedDigitCode = snapshot.val();
-			if (savedDigitCode == receivedDigitCode) {
+		get(child(dbRef, `WatchStorm/${savedUsername}/Data/password`)).then((snapshot) => {
+			let receivedPassword = snapshot.val();
+			if (savedPassword === receivedPassword) {
 				setListeners(savedUsername);
 			}
 			else {
@@ -574,7 +573,7 @@ function setOnSignOutButtonClickListener() {
 		if (userInfoHeader != null) userInfoHeader.remove();
 
 		deleteCookie("username");
-		deleteCookie("digitCode");
+		deleteCookie("password");
 
 		showStartPage();
 	}
@@ -1144,6 +1143,71 @@ const executeFunction = (functionToExecute) => {
 	functionToExecute();
 }
 
-window.onload = function () {
+class PasswordHasher {
+    static async generatePasswordHash(password, saltValue) {
+		if (password != "" && saltValue != "" && password != null && saltValue != null) {
+			const chars = password.split();
+			const salt = this.fromHex(saltValue);
+	
+			const hash = await this.pbkdf2(chars, salt, 10, 64);
+			return this.toHex(salt) + this.toHex(hash);
+		}
+    }
+
+	static async validatePassword(passwordToCheck, passwordFromDB) {
+		if (passwordToCheck != "" && passwordFromDB != ""  && passwordToCheck != null && passwordFromDB != null) {
+			let passwordToCheckHash = await this.generatePasswordHash(passwordToCheck, passwordFromDB.slice(0, 32));
+			return passwordToCheckHash === passwordFromDB;
+		}
+	}
+
+    static async getSalt() {
+        const array = new Uint8Array(16);
+        window.crypto.getRandomValues(array);
+        return array;
+    }
+
+    static toHex(array) {
+        return Array.from(array).map(byte => {
+            const hex = byte.toString(16).padStart(2, '0');
+            return hex;
+        }).join('');
+    }
+
+	static fromHex(hex) {
+        const bytes = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < bytes.length; i++) {
+            bytes[i] = parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+        }
+        return bytes;
+    }
+
+    static async pbkdf2(password, salt, iterations, keyLength) {
+        return new Promise((resolve, reject) => {
+            window.crypto.subtle.importKey(
+                "raw",
+                new TextEncoder().encode(password),
+                { name: "PBKDF2" },
+                false,
+                ["deriveBits"]
+            ).then(key => {
+                return window.crypto.subtle.deriveBits(
+                    {
+                        name: "PBKDF2",
+                        salt: salt,
+                        iterations: iterations,
+                        hash: "SHA-1"
+                    },
+                    key,
+                    keyLength * 8
+                );
+            }).then(derivedBits => {
+                resolve(new Uint8Array(derivedBits));
+            }).catch(reject);
+        });
+    }
+}
+
+window.onload = async function () {
 	authorizeUser();
 }
