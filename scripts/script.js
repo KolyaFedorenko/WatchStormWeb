@@ -832,10 +832,10 @@ function setOnSettingsButtonClickListener() {
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Information</span>
 					</div>
 				</div>
-				<div class="settings-item" id="buttonChangeDigitCodeDialog" style="margin-top: 20px;">
+				<div class="settings-item" id="buttonChangePasswordDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">Change 6-digit Code</span>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Change Password</span>
 					</div>
 				</div>
 				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;" onclick="
@@ -923,7 +923,7 @@ function setOnSettingsButtonClickListener() {
 		</div>
 		`;
 		setOnButtonInformationDialogClickListener();
-		setOnButtonChangeDigitCodeDialogListener();
+		setOnButtonChangePasswordDialogClickListener();
 		setOnButtonImportMoviesDialogClickListener();
 		setOnButtonLeaveFeedbackDialogClickListener();
 		setOnButtonContactTheDeveloperDialogClickListener();
@@ -954,39 +954,34 @@ function setOnButtonInformationDialogClickListener() {
 	}
 }
 
-function setOnButtonChangeDigitCodeDialogListener() {
-	let buttonChangeDigitCodeDialog = document.getElementById("buttonChangeDigitCodeDialog");
-	let changeDigitCodeDialog = document.getElementById("changeDigitCodeDialog");
-	let inputNewDigitCode = document.getElementById("inputNewDigitCode");
-	let buttonSaveDigitCode = document.getElementById("buttonSaveDigitCode");
-	let notificationDigitCodeHasBeenChanged = document.getElementById("notificationDigitCodeHasBeenChanged");
-	let notificationEnterValidDigitCode = document.getElementById("notificationEnterValidDigitCode");
+function setOnButtonChangePasswordDialogClickListener() {
+	let buttonChangePasswordDialog = document.getElementById("buttonChangePasswordDialog");
+	let changePasswordDialog = document.getElementById("changePasswordDialog");
+	let inputNewPassword = document.getElementById("inputNewPassword");
+	let inputСonfirmNewPassword = document.getElementById("inputСonfirmNewPassword");
+	let buttonChangePassword = document.getElementById("buttonChangePassword");
+	let notificationPasswordHasBeenChanged = document.getElementById("notificationPasswordHasBeenChanged");
+	let notificationEnterValidPassword = document.getElementById("notificationEnterValidPassword");
 
-	buttonChangeDigitCodeDialog.onclick = function () {
-		changeDigitCodeDialog.showModal();
+	buttonChangePasswordDialog.onclick = function () {
+		changePasswordDialog.showModal();
 	}
 
-	inputNewDigitCode.addEventListener('input', function (event) {
-		if (inputNewDigitCode.value.length == 6) {
-			buttonSaveDigitCode.disabled = false;
+	buttonChangePassword.onclick = async function () {
+		if (inputNewPassword.value !== "" && inputСonfirmNewPassword !== "" && inputNewPassword.value === inputСonfirmNewPassword.value) {
+			let newPassword = await PasswordHasher.generatePasswordHash(inputNewPassword.value, await PasswordHasher.toHex(await PasswordHasher.getSalt()));
+			set(ref(db, `WatchStorm/${getCookie("username")}/Data/password`), newPassword);
+			setCookie('password', newPassword, {});
+			showNotification(notificationPasswordHasBeenChanged);
+			inputNewPassword.value = "";
+			inputСonfirmNewPassword.value = "";
+			buttonChangePassword.disabled = true;
 		} else {
-			buttonSaveDigitCode.disabled = true;
-		}
-	});
-
-	buttonSaveDigitCode.onclick = function () {
-		if (inputNewDigitCode.value.length == 6) {
-			set(ref(db, `WatchStormWeb/WebCodes/${getCookie("username")}`), inputNewDigitCode.value);
-			setCookie('digitCode', inputNewDigitCode.value, {});
-			showNotification(notificationDigitCodeHasBeenChanged);
-			inputNewDigitCode.value = "";
-			buttonSaveDigitCode.disabled = true;
-		} else {
-			showNotification(notificationEnterValidDigitCode);
+			showNotification(notificationEnterValidPassword);
 		}
 	}
 
-	setOnOutsideDialogClickListener(changeDigitCodeDialog);
+	setOnOutsideDialogClickListener(changePasswordDialog);
 }
 
 function setOnButtonImportMoviesDialogClickListener() {
