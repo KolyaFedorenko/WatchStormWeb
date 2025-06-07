@@ -1132,7 +1132,6 @@ img {
   justify-content: center;
   align-items: center;
   transition-duration: 500ms;
-  animation: start-page-animation 1000ms;
   user-select: none;
 }
 
@@ -1150,6 +1149,55 @@ img {
   background: linear-gradient(90deg, #fff553 0%, #ff7553 100%);
   background-clip: text;
   color: transparent;
+}
+
+.ticker-container {
+  width: 470px;
+  margin-top: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-ticker {
+  display: flex;
+  animation: ticker-animation 50s linear infinite;
+}
+
+@keyframes ticker-animation {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50rem);
+  }
+}
+
+.ticker-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,rgb(14, 14, 14) 0%, transparent 20%, transparent 80%, rgb(14, 14, 14) 100%);
+  z-index: 2;
+}
+
+.ticker-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  flex: none;
+  margin: 0 1rem 0 1rem;
+  opacity: 0.5;
+}
+
+.ticker-item i {
+  color: white;
+  font-size: 16px;
+}
+
+.ticker-item span {
+  margin-left: 2px;
 }
 
 .verified-badge {
@@ -1461,6 +1509,10 @@ img {
 
   .unavailable-content-overlay {
     display: flex;
+  }
+
+  .ticker-container {
+    width: 270px;
   }
 }
 

@@ -322,9 +322,9 @@ function showStartPage() {
 					<span class="start-page-main-text text-gradient">With WatchStorm</span>
 				</div>
 				<span class="start-page-main-text start-page-description-text" style="font-size: 20px; margin-top: 30px; font-weight: 100;">
-					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched<br>WatchStorm is completely open source
+					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched.<br>WatchStorm is completely open source.
 				</span>
-				<div style="display: inline-flex; margin-top: 40px;">
+				<div style="display: inline-flex; margin-top: 40px; width: 100%; justify-content: center;">
 					<div id="buttonStartPageDownloadWatchStorm" class="start-page-button">
 						<i class="fa-brands fa-android fa-xs" style="color: white;"></i>
 						<span style="color: white; font-size: 14px; margin-left: 5px;">Download APK</span>
@@ -334,6 +334,9 @@ function showStartPage() {
 						<span style="color: white; font-size: 14px; margin-left: 5px;">Sign In</span>
 					</div>
 				</div>
+				<div class="ticker-container"><div class="ticker-overlay"></div><div class="img-ticker"><div class="ticker-item"><i class="fa-brands fa-windows fa-fw"></i><span class="default-text">Windows</span></div><div class="ticker-item"><i class="fa-brands fa-android fa-fw"></i><span class="default-text" style="margin-left: 5px;">Android</span></div><div class="ticker-item"><i class="fa-brands fa-app-store-ios fa-fw"></i><span class="default-text">iOS</span></div><div class="ticker-item"><i class="fa-brands fa-apple fa-fw"></i><span class="default-text">macOS</span></div><div class="ticker-item"><i class="fa-brands fa-linux fa-fw"></i><span class="default-text">Linux</span></div><div class="ticker-item"><i class="fa-brands fa-windows fa-fw"></i><span class="default-text">Windows</span></div><div class="ticker-item"><i class="fa-brands fa-android fa-fw"></i><span class="default-text" style="margin-left: 5px;">Android</span></div><div class="ticker-item"><i class="fa-brands fa-app-store-ios fa-fw"></i><span class="default-text">iOS</span></div><div class="ticker-item"><i class="fa-brands fa-apple fa-fw"></i><span class="default-text">macOS</span></div><div class="ticker-item"><i class="fa-brands fa-linux fa-fw"></i><span class="default-text">Linux</span></div><div class="ticker-item"><i class="fa-brands fa-windows fa-fw"></i><span class="default-text">Windows</span></div><div class="ticker-item"><i class="fa-brands fa-android fa-fw"></i><span class="default-text" style="margin-left: 5px;">Android</span></div><div class="ticker-item"><i class="fa-brands fa-app-store-ios fa-fw"></i><span class="default-text">iOS</span></div><div class="ticker-item"><i class="fa-brands fa-apple fa-fw"></i><span class="default-text">macOS</span></div><div class="ticker-item"><i class="fa-brands fa-linux fa-fw"></i><span class="default-text">Linux</span></div></div></div>
+				<div style="display: inline-flex; justify-content: center; width: 100%; margin-top: 20px; opacity: 0.25;">
+					<span class="default-text" style="font-size: 14px">WatchStorm is available on any platform</span>
 				</div>
 			</div>
 		</div>
