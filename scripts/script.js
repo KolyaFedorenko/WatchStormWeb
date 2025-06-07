@@ -135,7 +135,7 @@ function getUserMovies(username, favorite) {
 	});
 }
 
-function showAuthorizationDialog() {
+function showAuthorizationDialog(userAlreadyRegistered) {
 	let moviesList = document.getElementById("moviesList");
 
 	moviesList.innerHTML +=
@@ -168,9 +168,17 @@ function showAuthorizationDialog() {
                     <div style="display: flex; justify-content: center; margin-top: 10px;">
                         <button id="buttonSignIn" class="default-button">Sign In</button>
                     </div>
+					<div id="notificationAuthorizationPleaseFillInAllFields" class="notification">
+						<div class="indicator-negative"></div>
+						<span class="default-text negative">Please fill in all fields!</span>
+					</div>
 					<div id="notificationIncorrectLoginOrPassword" class="notification">
 						<div class="indicator-negative"></div>
 						<span class="default-text negative">Incorrect login or password!</span>
+					</div>
+					<div id="notificationThisUsernameIsTaken" class="notification">
+						<div class="indicator-negative"></div>
+						<span class="default-text negative">Sorry, but this username is already taken!</span>
 					</div>
                 </div>
             </div>
@@ -195,37 +203,86 @@ function showAuthorizationDialog() {
 	let loginField = document.getElementById("loginField");
 	let passwordField = document.getElementById("passwordField");
 	let buttonSignIn = document.getElementById("buttonSignIn");
+	let notificationAuthorizationPleaseFillInAllFields = document.getElementById("notificationAuthorizationPleaseFillInAllFields");
 	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
+	let notificationThisUsernameIsTaken = document.getElementById("notificationThisUsernameIsTaken");
+
+	if (!userAlreadyRegistered) {
+		buttonSignIn.textContent = "Sign Up";
+	}
 
 	buttonSignIn.onclick = function () {
-		signIn();
+		if (userAlreadyRegistered) {
+			signIn();
+		}
+		else {
+			signUp();
+		}
 	}
 
 	passwordField.addEventListener('keydown', (event) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
-			signIn();
+			if (userAlreadyRegistered) {
+				signIn();
+			}
+			else {
+				signUp();
+			}
 		}
 	});
 
 	function signIn() {
-		let userLogin = loginField.value;
-		let userPassword = passwordField.value;
+		if (loginField.value !== "" && passwordField.value !== "") {
+			get(child(dbRef, `WatchStorm/${loginField.value}/Data/password`)).then((snapshot) => {
+				let receivedPassword = snapshot.val();
+				PasswordHasher.validatePassword(passwordField.value, receivedPassword).then((passwordsIsEqual) => {
+					if (passwordsIsEqual) {
+						setListnersAndCloseAuthorizationDialog(loginField.value, receivedPassword);
+					}
+					else {
+						showNotification(notificationIncorrectLoginOrPassword);
+					}
+				});
+			});
+		}
+		else {
+			showNotification(notificationAuthorizationPleaseFillInAllFields);
+		}
+	}
 
-		get(child(dbRef, `WatchStorm/${userLogin}/Data/password`)).then((snapshot) => {
-			let receivedPassword = snapshot.val();
-			PasswordHasher.validatePassword(userPassword, receivedPassword).then((passwordsIsEqual) => {
-				if (passwordsIsEqual) {
-					setCookie('username', userLogin, {});
-					setCookie('password', receivedPassword, {});
-					closeAuthorizationDialog();
-					setListeners(userLogin);
-				}
-				else {
-					showNotification(notificationIncorrectLoginOrPassword);
+	async function signUp() {
+		if (loginField.value !== "" && passwordField.value !== "") {
+			let userAlreadyExists = false;
+			await get(child(dbRef, `WatchStorm/${loginField.value}`)).then((snapshot) => {
+				if (snapshot.val() !== null) {
+					userAlreadyExists = true;
 				}
 			});
-		});
+			
+			if (!userAlreadyExists) {
+				let passwordHash = await PasswordHasher.generatePasswordHash(passwordField.value, await PasswordHasher.toHex(await PasswordHasher.getSalt()));
+				set(ref(db, `WatchStorm/${loginField.value}/Data`), {
+					login: loginField.value,
+					password: passwordHash,
+					pathToImage: "unverified"
+				});
+				setListnersAndCloseAuthorizationDialog(loginField.value, passwordHash);
+			}
+			else {
+				showNotification(notificationThisUsernameIsTaken);
+			}
+		}
+		else {
+			showNotification(notificationAuthorizationPleaseFillInAllFields);
+		}
+	}
+
+	function setListnersAndCloseAuthorizationDialog(login, password) {
+		setCookie('username', login, {});
+		setCookie('password', password, {});
+		closeAuthorizationDialog();
+		setListeners(login);
 	}
 
 	let authorizationForm = document.getElementById("authorizationForm");
@@ -325,9 +382,9 @@ function showStartPage() {
 					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched.<br>WatchStorm is completely open source.
 				</span>
 				<div style="display: inline-flex; margin-top: 40px; width: 100%; justify-content: center;">
-					<div id="buttonStartPageDownloadWatchStorm" class="start-page-button">
-						<i class="fa-brands fa-android fa-xs" style="color: white;"></i>
-						<span style="color: white; font-size: 14px; margin-left: 5px;">Download APK</span>
+					<div id="buttonStartPageSignUp" class="start-page-button">
+						<i class="fa-solid fa-lock fa-2xs" style="color: white;"></i>
+						<span style="color: white; font-size: 14px; margin-left: 5px;">Sign Up</span>
 					</div>
 					<div id="buttonStartPageSignIn" class="start-page-button">
 						<i class="fa-solid fa-lock fa-2xs" style="color: white;"></i>
@@ -344,15 +401,16 @@ function showStartPage() {
 
 	let startPageContainer = document.getElementById("startPageContainer");
 	let buttonStartPageSignIn = document.getElementById("buttonStartPageSignIn");
-	let buttonStartPageDownloadWatchStorm = document.getElementById("buttonStartPageDownloadWatchStorm");
+	let buttonStartPageSignUp = document.getElementById("buttonStartPageSignUp");
 
 	buttonStartPageSignIn.onclick = function() {
 		startPageContainer.parentElement.removeChild(startPageContainer);
-		showAuthorizationDialog();
+		showAuthorizationDialog(true);
 	}
 
-	buttonStartPageDownloadWatchStorm.onclick = function() {
-		downloadWatchStormLatest();
+	buttonStartPageSignUp.onclick = function() {
+		startPageContainer.parentElement.removeChild(startPageContainer);
+		showAuthorizationDialog(false);
 	}
 }
 
