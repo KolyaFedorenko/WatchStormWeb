@@ -5,6 +5,9 @@
 	<title>WatchStormWeb</title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@^12.0.0/buffer.js"></script>
+	<script src="https://unpkg.com/@otplib/preset-browser@^12.0.0/index.js"></script>
 	<meta name="description" content="WatchStorm is a service for adding ratings to movies and TV shows that you've watched.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
@@ -413,6 +416,54 @@
 		<div style="display: inline-flex; width: 100%; margin-top: 10px;">
 			<button id="buttonCancelConfirmationDialog" class="default-button">Cancel</button>
 			<button id="buttonConfirmAction" data-action="none" class="default-button" style="margin-left: 10px;">Confirm</button>
+		</div>
+	</dialog>
+	<dialog id="configureTwoFactorAuthenticationDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Configure 2FA</span>
+		</div>
+		<div class="accent-container">
+			<span id="spanConfigureTwoFactorAuthenticationDescription" class="default-text">
+				Here you can enable <span class="accent-text">two-factor authentication</span> to protect your account. 
+				Scan the QR code below with any <span class="accent-text">authenticator app</span> 
+				(e.g. Google Authenticator, Microsoft Authenticator, etc.) or enter the <span class="accent-text">setup key</span>
+				(TOTP secret) in the authenticator app, then enter the 6-digit code from the authenticator app in the field below.
+			</span>
+		</div>
+		<div id="qrCodeContainerContent" class="qrcode-container accent-container" style="display: inline-flex; padding: 20px;">
+			<div id="qrcodeContainer" class="qrcode-container-content">
+				<img src="/images/qr-code-placeholder.png" style="display: block;">
+			</div>
+			<div class="qrcode-container-inner">
+				<div class="scan-this-qr-code-container" style="padding: 10px; background-color: rgba(40, 40, 40, 1); border-radius: 10px; display: inline-flex; align-items: center; width: 100%; opacity: 0.75;">
+					<i class="fa-solid fa-arrow-left fa-2xs fa-fw" style="color: white;"></i>
+					<span class="default-text" style="margin-left: 2px;">Scan this QR code</span>
+				</div>
+				<div class="setup-key-container" style="padding: 10px; background-color: rgba(40, 40, 40, 1); border-radius: 10px; display: block; width: 100%; margin-top: 10px;">
+					<div style="display: flex; align-items: center;">
+						<i class="fa-solid fa-2xs fa-fw fa-lock" style="color: white; opacity: 0.75;"></i>
+						<span class="default-text" style="opacity: 0.75; margin-left: 2px;">Setup Key:</span>
+					</div>
+					<span id="spanSetupKeyValue" class="default-text setup-key-value" style="opacity: 0.5; overflow-wrap: anywhere; font-size: 12px;">MXR5XLKADY63ZHZX</span>
+				</div>
+				<input id="inputTwoFactorAuthenticationDigitCode" autocomplete="off" type="number" class="input-field dialog-input totp-input" placeholder="6-digit code" style="margin-top: 10px; height: 33px; border-radius: 10px;" oninput="if (this.value.length > 6) this.value = this.value.slice(0, 6); if (this.value.length === 6) buttonSetupTwoFactorAuthentication.disabled = false; else buttonSetupTwoFactorAuthentication.disabled = true;">
+			</div>
+		</div>
+		<div style="display: inline-flex; width: 100%; margin-top: 10px;">
+			<button id="buttonSetupTwoFactorAuthentication" class="default-button" disabled>Configure 2FA</button>
+		</div>
+		<div id="notificationTwoFactorAuthenticationHasBeenConfigured" class="notification">
+			<div class="indicator-positive"></div>
+			<span class="default-text positive">2FA has been successfully configured!</span>
+		</div>
+		<div id="notificationTwoFactorAuthenticationHasBeenDisabled" class="notification">
+			<div class="indicator-positive"></div>
+			<span class="default-text positive">2FA has been successfully disabled!</span>
+		</div>
+		<div id="notificationEnterValidDigitCode" class="notification">
+			<div class="indicator-negative"></div>
+			<span class="default-text negative">Please enter the correct 6-digit code!</span>
 		</div>
 	</dialog>
 	<div class="limiter">

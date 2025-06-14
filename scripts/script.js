@@ -142,32 +142,52 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 		`
     <div id="authorizationForm" class="default-container authorization-form">
         <div class="default-container-content" style="position: relative; overflow: hidden;">
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <img src="images/watchstorm-icon2.png" id="imageWatchStormLogo" class="watchstorm-logo">
-            </div>
+			<div id="authorizationFormHeaderContainer">
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img src="images/watchstorm-icon2.png" id="imageWatchStormLogo" class="watchstorm-logo">
+				</div>
+				<div style="display: flex; justify-content: center;">
+					<header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
+				</div>
+				<div style="display: flex; justify-content: center;">
+					<div class="description accent-container">
+						<span class="default-text">
+							Welcome to WatchStormWeb! To sign in, enter your username and password in the fields below
+							and click the "Sign In" button. If you don't have an account yet, please register first
+							using the WatchStorm mobile app or WatchStormWeb, then you can sign in to your account here.
+						</span>
+					</div>
+				</div>
+			</div>
             <div style="display: flex; justify-content: center;">
-                <header style="color: white; font-weight: 500; font-size: 20px ;margin-top: 10px;">WatchStormWeb</header>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <div class="description accent-container">
-                    <span class="default-text">
-						Welcome to WatchStormWeb! To sign in, enter your username and password in the fields below
-						and click the "Sign In" button. If you don't have an account yet, please register first
-						using the WatchStorm mobile app or WatchStormWeb, then you can sign in to your account here.
-					</span>
-                </div>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <div class="input-fields-container accent-container" style="margin-top: 10px; padding: 20px;">
-                    <div style="display: flex; justify-content: center;">
-                        <input autocomplete="off" id="loginField" class="input-field" placeholder="Your username">
-                    </div>
-                    <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <input autocomplete="off" type="password" id="passwordField" class="input-field" placeholder="Your password">
-                    </div>
-                    <div style="display: flex; justify-content: center; margin-top: 10px;">
-                        <button id="buttonSignIn" class="default-button">Sign In</button>
-                    </div>
+                <div id="authorizationFormMainContentContainer" class="accent-container" style="padding: 20px;">
+					<div id="authorizationFormInputsContainer">
+						<div style="display: flex; justify-content: center;">
+							<input autocomplete="off" id="inputLogin" class="input-field" placeholder="Your username">
+						</div>
+						<div style="display: flex; justify-content: center; margin-top: 10px;">
+							<input autocomplete="off" type="password" id="inputPassword" class="input-field" placeholder="Your password">
+						</div>
+						<div style="display: flex; justify-content: center; margin-top: 10px;">
+							<button id="buttonSignIn" class="default-button">Sign In</button>
+						</div>
+					</div>
+					<div id="digitCodeContainer" class="totp-digit-code-container">
+						<div style="display: inline-flex; align-items: center; justify-content: center; width: 100%;">
+							<i class="fa-solid fa-lock fa-2xs fa-fw" style="color: white;"></i>
+							<span class="default-text" style="margin-left: 2px;">Two-factor authentication</header>
+						</div>
+						<div style="margin-top: 10px; padding: 10px 20px; background-color: rgba(40, 40, 40, 1); border-radius: 15px;">
+							<span class="default-text" style="opacity: 0.75;">
+								Your account is protected by 2FA. Please enter the 6-digit code from the authenticator app
+								in the field below and click the "Verify" button to continue.
+							</span>
+						</div>
+						<input id="inputDigitCode" autocomplete="off" type="number" class="input-field" placeholder="6-digit code" style="margin-top: 10px;" oninput="if (this.value.length > 6) this.value = this.value.slice(0, 6); if (this.value.length === 6) buttonVerifyDigitCode.disabled = false; else buttonVerifyDigitCode.disabled = true;">
+						<div style="display: flex; justify-content: center; margin-top: 10px;">
+							<button id="buttonVerifyDigitCode" class="default-button" disabled>Verify</button>
+						</div>
+					</div>
 					<div id="notificationAuthorizationPleaseFillInAllFields" class="notification">
 						<div class="indicator-negative"></div>
 						<span class="default-text negative">Please fill in all fields!</span>
@@ -179,6 +199,10 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 					<div id="notificationThisUsernameIsTaken" class="notification">
 						<div class="indicator-negative"></div>
 						<span class="default-text negative">Sorry, but this username is already taken!</span>
+					</div>
+					<div id="notificationIncorrectDigitCode" class="notification">
+						<div class="indicator-negative"></div>
+						<span class="default-text negative">Please enter the correct 6-digit code!</span>
 					</div>
                 </div>
             </div>
@@ -200,16 +224,28 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 	</div>
     `;
 
-	let loginField = document.getElementById("loginField");
-	let passwordField = document.getElementById("passwordField");
+	let authorizationFormHeaderContainer = document.getElementById("authorizationFormHeaderContainer");
+	let authorizationFormMainContentContainer = document.getElementById("authorizationFormMainContentContainer");
+	let authorizationFormInputsContainer = document.getElementById("authorizationFormInputsContainer");
+
+	let inputLogin = document.getElementById("inputLogin");
+	let inputPassword = document.getElementById("inputPassword");
 	let buttonSignIn = document.getElementById("buttonSignIn");
+
+	let digitCodeContainer = document.getElementById("digitCodeContainer");
+	let inputDigitCode = document.getElementById("inputDigitCode");
+	let buttonVerifyDigitCode = document.getElementById("buttonVerifyDigitCode");
+
 	let notificationAuthorizationPleaseFillInAllFields = document.getElementById("notificationAuthorizationPleaseFillInAllFields");
 	let notificationIncorrectLoginOrPassword = document.getElementById("notificationIncorrectLoginOrPassword");
 	let notificationThisUsernameIsTaken = document.getElementById("notificationThisUsernameIsTaken");
+	let notificationIncorrectDigitCode = document.getElementById("notificationIncorrectDigitCode");
 
 	if (!userAlreadyRegistered) {
 		buttonSignIn.textContent = "Sign Up";
 	}
+
+	inputLogin.focus();
 
 	buttonSignIn.onclick = function () {
 		if (userAlreadyRegistered) {
@@ -220,7 +256,7 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 		}
 	}
 
-	passwordField.addEventListener('keydown', (event) => {
+	document.getElementById("authorizationForm").addEventListener('keydown', (event) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
 			if (userAlreadyRegistered) {
@@ -233,12 +269,38 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 	});
 
 	function signIn() {
-		if (loginField.value !== "" && passwordField.value !== "") {
-			get(child(dbRef, `WatchStorm/${loginField.value}/Data/password`)).then((snapshot) => {
+		if (inputLogin.value !== "" && inputPassword.value !== "") {
+			get(child(dbRef, `WatchStorm/${inputLogin.value}/Data/password`)).then((snapshot) => {
 				let receivedPassword = snapshot.val();
-				PasswordHasher.validatePassword(passwordField.value, receivedPassword).then((passwordsIsEqual) => {
+				PasswordHasher.validatePassword(inputPassword.value, receivedPassword).then((passwordsIsEqual) => {
 					if (passwordsIsEqual) {
-						setListnersAndCloseAuthorizationDialog(loginField.value, receivedPassword);
+						get(child(dbRef, `WatchStormWeb/2FA/${inputLogin.value}`)).then((snapshot) => {
+							if (snapshot.val() !== null) {
+								inputDigitCode.focus();
+								hideAuthorizationFormDefaultContainers();
+								buttonVerifyDigitCode.onclick = function() {
+									verifyDigitCode();
+								}
+								inputDigitCode.addEventListener("keydown", (event) => {
+									if (event.key === 'Enter') {
+										verifyDigitCode();
+									}
+								});
+								function verifyDigitCode() {
+									WatchStormCrypto.decryptSecret(snapshot.val()).then((decryptedSecret) => {
+										if (inputDigitCode.value === otplib.authenticator.generate(decryptedSecret)) {
+											setListenersAndCloseAuthorizationDialog(inputLogin.value, receivedPassword);
+										}
+										else {
+											showNotification(notificationIncorrectDigitCode);
+										}
+									});
+								}
+							}
+							else {
+								setListenersAndCloseAuthorizationDialog(inputLogin.value, receivedPassword);
+							}
+						});
 					}
 					else {
 						showNotification(notificationIncorrectLoginOrPassword);
@@ -249,25 +311,32 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 		else {
 			showNotification(notificationAuthorizationPleaseFillInAllFields);
 		}
+
+		function hideAuthorizationFormDefaultContainers() {
+			authorizationFormMainContentContainer.classList.add("input-fields-container-without-margin")
+			authorizationFormHeaderContainer.classList.add("authorization-form-description-hidden");
+			authorizationFormInputsContainer.classList.add("authorization-form-inputs-container-hidden");
+			digitCodeContainer.classList.add("totp-digit-code-container-visible");
+		}
 	}
 
 	async function signUp() {
-		if (loginField.value !== "" && passwordField.value !== "") {
+		if (inputLogin.value !== "" && inputPassword.value !== "") {
 			let userAlreadyExists = false;
-			await get(child(dbRef, `WatchStorm/${loginField.value}`)).then((snapshot) => {
+			await get(child(dbRef, `WatchStorm/${inputLogin.value}`)).then((snapshot) => {
 				if (snapshot.val() !== null) {
 					userAlreadyExists = true;
 				}
 			});
 			
 			if (!userAlreadyExists) {
-				let passwordHash = await PasswordHasher.generatePasswordHash(passwordField.value, await PasswordHasher.toHex(await PasswordHasher.getSalt()));
-				set(ref(db, `WatchStorm/${loginField.value}/Data`), {
-					login: loginField.value,
+				let passwordHash = await PasswordHasher.generatePasswordHash(inputPassword.value, await PasswordHasher.toHex(await PasswordHasher.getSalt()));
+				set(ref(db, `WatchStorm/${inputLogin.value}/Data`), {
+					login: inputLogin.value,
 					password: passwordHash,
 					pathToImage: "unverified"
 				});
-				setListnersAndCloseAuthorizationDialog(loginField.value, passwordHash);
+				setListenersAndCloseAuthorizationDialog(inputLogin.value, passwordHash);
 			}
 			else {
 				showNotification(notificationThisUsernameIsTaken);
@@ -278,9 +347,9 @@ function showAuthorizationDialog(userAlreadyRegistered) {
 		}
 	}
 
-	function setListnersAndCloseAuthorizationDialog(login, password) {
+	async function setListenersAndCloseAuthorizationDialog(login, password) {
 		setCookie('username', login, {});
-		setCookie('password', password, {});
+		setCookie('password', await PasswordHasher.generatePasswordHash(password, password.slice(0, 32)), {});
 		closeAuthorizationDialog();
 		setListeners(login);
 	}
@@ -353,9 +422,15 @@ function authorizeUser() {
 
 	if (savedUsername != null) {
 		get(child(dbRef, `WatchStorm/${savedUsername}/Data/password`)).then((snapshot) => {
-			let receivedPassword = snapshot.val();
-			if (savedPassword === receivedPassword) {
-				setListeners(savedUsername);
+			if (snapshot.val() !== null) {
+				PasswordHasher.generatePasswordHash(snapshot.val(), snapshot.val().slice(0, 32)).then((receivedPasswordHash) => {
+					if (savedPassword === receivedPasswordHash) {
+						setListeners(savedUsername);
+					}
+					else {
+						showStartPage();
+					}
+				})
 			}
 			else {
 				showStartPage();
@@ -835,7 +910,13 @@ function setOnSettingsButtonClickListener() {
 				<div class="settings-item" id="buttonChangePasswordDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-lock fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">Change Password</span>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Change My Password</span>
+					</div>
+				</div>
+				<div class="settings-item" id="buttonConfigureTwoFactorAuthentication" style="margin-top: 20px;">
+					<div>
+						<i class="fa-solid fa-shield fa fa-fw"></i>
+						<span style="font-size: 16px; margin-left: 10px; color: white;">Configure 2FA</span>
 					</div>
 				</div>
 				<div class="settings-item" id="buttonExportMovies" style="margin-top: 20px;" onclick="
@@ -886,27 +967,6 @@ function setOnSettingsButtonClickListener() {
 						<span style="font-size: 16px; margin-left: 10px; color: white;">Download WatchStorm</span>
 					</div>
 				</div>
-				<div class="settings-item" id="buttonWatchStormWebRepository" style="margin-top: 20px;" onclick="
-					spanActionDescription.textContent = 'open external link';
-					confirmationDialog.showModal();
-					buttonConfirmAction.setAttribute('data-action', 'openRepository');
-					buttonCancelConfirmationDialog.onclick = function() {
-						confirmationDialog.close();
-					}
-					confirmationDialog.addEventListener('click', function (event) {
-						let rect = confirmationDialog.getBoundingClientRect();
-						let isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-						&& rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-						if (!isInDialog) {
-							confirmationDialog.close();
-						}
-					});
-				">
-					<div>
-						<i class="fa-brands fa-github fa fa-fw"></i>
-						<span style="font-size: 16px; margin-left: 10px; color: white;">WatchStormWeb GitHub Repository</span>
-					</div>
-				</div>
 				<div class="settings-item" id="buttonLeaveFeedbackDialog" style="margin-top: 20px;">
 					<div>
 						<i class="fa-solid fa-star fa fa-fw"></i>
@@ -924,6 +984,7 @@ function setOnSettingsButtonClickListener() {
 		`;
 		setOnButtonInformationDialogClickListener();
 		setOnButtonChangePasswordDialogClickListener();
+		setOnButtonConfigureTwoFactorAuthenticationListener();
 		setOnButtonImportMoviesDialogClickListener();
 		setOnButtonLeaveFeedbackDialogClickListener();
 		setOnButtonContactTheDeveloperDialogClickListener();
@@ -971,7 +1032,7 @@ function setOnButtonChangePasswordDialogClickListener() {
 		if (inputNewPassword.value !== "" && inputСonfirmNewPassword !== "" && inputNewPassword.value === inputСonfirmNewPassword.value) {
 			let newPassword = await PasswordHasher.generatePasswordHash(inputNewPassword.value, await PasswordHasher.toHex(await PasswordHasher.getSalt()));
 			set(ref(db, `WatchStorm/${getCookie("username")}/Data/password`), newPassword);
-			setCookie('password', newPassword, {});
+			setCookie('password', await PasswordHasher.generatePasswordHash(newPassword, newPassword.slice(0, 32)), {});
 			showNotification(notificationPasswordHasBeenChanged);
 			inputNewPassword.value = "";
 			inputСonfirmNewPassword.value = "";
@@ -982,6 +1043,92 @@ function setOnButtonChangePasswordDialogClickListener() {
 	}
 
 	setOnOutsideDialogClickListener(changePasswordDialog);
+}
+
+function setOnButtonConfigureTwoFactorAuthenticationListener() {
+	let buttonConfigureTwoFactorAuthentication = document.getElementById("buttonConfigureTwoFactorAuthentication");
+	let configureTwoFactorAuthenticationDialog = document.getElementById("configureTwoFactorAuthenticationDialog");
+	let spanConfigureTwoFactorAuthenticationDescription = document.getElementById("spanConfigureTwoFactorAuthenticationDescription");
+	let buttonSetupTwoFactorAuthentication = document.getElementById("buttonSetupTwoFactorAuthentication");
+	let notificationTwoFactorAuthenticationHasBeenConfigured = document.getElementById("notificationTwoFactorAuthenticationHasBeenConfigured");
+	let notificationTwoFactorAuthenticationHasBeenDisabled = document.getElementById("notificationTwoFactorAuthenticationHasBeenDisabled");
+	let notificationEnterValidDigitCode = document.getElementById("notificationEnterValidDigitCode");
+
+	let qrCodeContainer = document.getElementById("qrcodeContainer");
+	let qrCodeContainerContent = document.getElementById("qrCodeContainerContent");
+	let inputTwoFactorAuthenticationDigitCode = document.getElementById("inputTwoFactorAuthenticationDigitCode");
+
+	let secret = "MXR5XLKADY63ZHZX";
+	let twoFactorAuthenticationIsAlreadyConfigured = false;
+
+	get(child(dbRef, `WatchStormWeb/2FA/${getCookie("username")}`)).then((snapshot) => {
+		if (snapshot.val() !== null) {
+			twoFactorAuthenticationIsAlreadyConfigured = true;
+		}
+	});
+
+	buttonConfigureTwoFactorAuthentication.onclick = function() {
+		if (twoFactorAuthenticationIsAlreadyConfigured) {
+			spanConfigureTwoFactorAuthenticationDescription.textContent = `
+				Your account is protected by 2FA. If you no longer need to protect your account with 2FA,
+				you can disable it by clicking on the "Disable 2FA" button. Later, if you need to, you can turn it back on.
+			`;
+			qrCodeContainerContent.style.display = "none";
+			buttonSetupTwoFactorAuthentication.textContent = "Disable 2FA";
+			buttonSetupTwoFactorAuthentication.disabled = false;
+		}
+		else {
+			spanConfigureTwoFactorAuthenticationDescription.textContent = `
+				Here you can enable two-factor authentication to protect your account. 
+				Scan the QR code below with any authenticator app (e.g. Google Authenticator, Microsoft Authenticator, etc.)
+				or enter the setup key (TOTP secret) in the authenticator app, then enter the 6-digit code
+				from the authenticator app in the field below.
+			`;
+			qrCodeContainerContent.style.display = "inline-flex";
+			buttonSetupTwoFactorAuthentication.textContent = "Configure 2FA";
+			generateQrCode();
+		}
+		configureTwoFactorAuthenticationDialog.showModal();
+	}
+
+	buttonSetupTwoFactorAuthentication.onclick = async function() {
+		if (buttonSetupTwoFactorAuthentication.textContent === "Configure 2FA") {
+			if (otplib.authenticator.generate(secret) === inputTwoFactorAuthenticationDigitCode.value) {
+				set(ref(db, `WatchStormWeb/2FA/${getCookie("username")}`), await WatchStormCrypto.encryptSecret(secret));
+				inputTwoFactorAuthenticationDigitCode.value = "";
+				showNotification(notificationTwoFactorAuthenticationHasBeenConfigured);
+				twoFactorAuthenticationIsAlreadyConfigured = true;
+			}
+			else {
+				showNotification(notificationEnterValidDigitCode);
+			}
+		}
+		else {
+			set(ref(db, `WatchStormWeb/2FA/${getCookie("username")}`), null);
+			twoFactorAuthenticationIsAlreadyConfigured = false;
+			showNotification(notificationTwoFactorAuthenticationHasBeenDisabled);
+		}
+	}
+
+	function generateQrCode() {
+		secret = otplib.authenticator.generateSecret();
+		let otpauth = otplib.authenticator.keyuri(getCookie('username'), "WatchStormWeb", secret);
+
+		setTimeout(() => {
+			qrCodeContainer.innerHTML = "";
+			new QRCode(qrCodeContainer, {
+				text: otpauth,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
+			spanSetupKeyValue.textContent = secret;
+		}, 500);
+	}
+
+	setOnOutsideDialogClickListener(configureTwoFactorAuthenticationDialog);
 }
 
 function setOnButtonImportMoviesDialogClickListener() {
@@ -1116,10 +1263,6 @@ function setOnButtonConfirmActionClickListener() {
 		}
 		else if (buttonConfirmAction.getAttribute("data-action") === "downloadWatchStorm") {
 			downloadWatchStormLatest();
-			confirmationDialog.close();
-		}
-		else if (buttonConfirmAction.getAttribute("data-action") === "openRepository") {
-			window.open("https://github.com/KolyaFedorenko/WatchStormWeb");
 			confirmationDialog.close();
 		}
 	}
@@ -1262,6 +1405,81 @@ class PasswordHasher {
             }).catch(reject);
         });
     }
+}
+
+class WatchStormCrypto {
+	static async encryptSecret(secret) {
+		const encoder = new TextEncoder();
+		const salt = crypto.getRandomValues(new Uint8Array(16));
+		const iv = crypto.getRandomValues(new Uint8Array(12));
+		const key = await WatchStormCrypto.deriveKey("watchstormweb", salt);
+
+		const encrypted = await crypto.subtle.encrypt(
+			{ name: 'AES-GCM', iv: iv },
+			key,
+			encoder.encode(secret)
+		);
+
+		return WatchStormCrypto.arrayBufferToHex(iv) + WatchStormCrypto.arrayBufferToHex(salt) + WatchStormCrypto.arrayBufferToHex(encrypted);
+	}
+
+	static async decryptSecret(encryptedSecret) {
+		const iv = encryptedSecret.slice(0, 24);
+		const salt = encryptedSecret.slice(24, 56);
+		const cipherText = encryptedSecret.slice(56);
+		const key = await WatchStormCrypto.deriveKey("watchstormweb", WatchStormCrypto.hexToArrayBuffer(salt));
+
+		const decrypted = await crypto.subtle.decrypt(
+			{ name: 'AES-GCM', iv: WatchStormCrypto.hexToArrayBuffer(iv) },
+			key,
+			WatchStormCrypto.hexToArrayBuffer(cipherText)
+		);
+
+		const decoder = new TextDecoder();
+		return decoder.decode(decrypted);
+	}
+	
+	static arrayBufferToHex(buffer) {
+	return [...new Uint8Array(buffer)]
+		.map(byte => byte.toString(16).padStart(2, '0'))
+		.join('');
+	}
+
+	static hexToArrayBuffer(hex) {
+		const bytes = new Uint8Array(hex.length / 2);
+		for (let i = 0; i < hex.length; i += 2) {
+			bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+		}
+		return bytes.buffer;
+	}
+
+		static async getCryptoKey(password) {
+		const encoder = new TextEncoder();
+		const keyMaterial = encoder.encode(password);
+		return crypto.subtle.importKey(
+			'raw',
+			keyMaterial,
+			{ name: 'PBKDF2' },
+			false,
+			['deriveKey']
+		);
+	}
+
+	static async deriveKey(password, salt) {
+		const keyMaterial = await WatchStormCrypto.getCryptoKey(password);
+		return crypto.subtle.deriveKey(
+			{
+				name: 'PBKDF2',
+				salt: salt,
+				iterations: 100000,
+				hash: 'SHA-256'
+			},
+			keyMaterial,
+			{ name: 'AES-GCM', length: 256 },
+			false,
+			['encrypt', 'decrypt']
+		);
+	}
 }
 
 window.onload = async function () {

@@ -10,6 +10,10 @@
   outline: none;
 }
 
+:root {
+  interpolate-size: allow-keywords;
+}
+
 body {
   height: 100%;
   font-family: Roboto, sans-serif;
@@ -230,6 +234,12 @@ ul li:hover a {
 
 .sidebar ul a i {
   margin-right: 16px;
+}
+
+.input-fields-container-without-margin {
+  margin: 0;
+  padding: 10px 20px 20px 20px !important;
+  transition-duration: 1000ms;
 }
 
 .input-field {
@@ -568,7 +578,6 @@ button:disabled:active {
   height: 0px;
   opacity: 0;
   transition: all 500ms allow-discrete;
-  interpolate-size: allow-keywords;
 }
 
 .notification-open {
@@ -587,7 +596,7 @@ button:disabled:active {
 }
 
 .negative {
-  color: #ff5353;
+  color: rgb(255, 83, 83);
 }
 
 textarea {
@@ -1028,7 +1037,6 @@ img {
   padding: 10px 20px;
   overflow: hidden;
   transition: all 500ms allow-discrete;
-  interpolate-size: allow-keywords;
 }
 
 .release-notes-container-hidden {
@@ -1215,6 +1223,55 @@ img {
   background-color: rgb(20, 20, 20);
   filter: grayscale(1);
   z-index: 3;
+}
+
+.qrcode-container-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.qrcode-container-inner {
+  margin-left: 10px;
+}
+
+.totp-digit-code-container {
+  display: block;
+  justify-content: center;
+  margin-top: 0;
+  height: 0;
+  opacity: 0;
+  transform: scale(0);
+  overflow: hidden;
+  transition-duration: 1000ms;
+}
+
+.totp-digit-code-container-visible {
+  height: fit-content;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.authorization-form-description-hidden {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  transform: scale(0);
+  overflow: hidden;
+  transition-duration: 1000ms;
+}
+
+.authorization-form-inputs-container-hidden {
+  opacity: 0;
+  height: 0;
+  scale: 0;
+  transform: scale(0);
+  overflow: hidden;
+  transition-duration: 1000ms;
 }
 
 @media screen and (max-device-width: 768px) {
@@ -1513,6 +1570,35 @@ img {
 
   .ticker-container {
     width: 270px;
+  }
+
+  .scan-this-qr-code-container {
+    display: none !important;
+  }
+
+  .setup-key-container {
+    margin-top: 0 !important;
+    height: 98px !important;
+  }
+  
+  .setup-key-container i {
+    display: none;
+  }
+
+  .setup-key-container span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .setup-key-value {
+    margin-top: 5px !important;
+  }
+
+  .totp-input {
+    height: 40px !important;
+    margin-top: 10px !important;
   }
 }
 
