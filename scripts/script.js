@@ -806,12 +806,12 @@ function setOnRecommendationsButtonClickListener() {
 		function replyToUserMessage(userMessageText) {
 			if (userMessageText.includes("/commands") || userMessageText.includes("/help")) {
 				sendMessage("watchstorm",
-					`List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'" class="command">/recommendations</span>
+					`List of supported commands: <br> <span onclick="document.getElementById('inputUserMessage').value='/recommendations'; inputUserMessage.focus();" class="command">/recommendations</span>
 				 command is used to get recommendations. Enter the title of the movie or series you liked after the command, and WatchStorm Assistant will recommend movies
-				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'" class="command">/upcoming</span>
-				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'" class="command">/trending</span>
-				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'" class="command">/top</span>
-				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'" class="command">/help</span>
+				 that you should like! <br> <span onclick="document.getElementById('inputUserMessage').value='/upcoming'; inputUserMessage.focus();" class="command">/upcoming</span>
+				 command is used to get the list of upcoming movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/trending'; inputUserMessage.focus();" class="command">/trending</span>
+				 command is used to get movies that are currently trending. <br> <span onclick="document.getElementById('inputUserMessage').value='/top'; inputUserMessage.focus();" class="command">/top</span>
+				 command is used to get a list of the highest rated movies. <br> <span onclick="document.getElementById('inputUserMessage').value='/help'; inputUserMessage.focus();" class="command">/help</span>
 				 command is identical to the /commands command. <br>`, "block");
 			}
 			else if (userMessageText.includes("/recommendations")) {
@@ -841,7 +841,7 @@ function setOnRecommendationsButtonClickListener() {
 			}
 			else {
 				sendMessage("watchstorm", "Sorry, I can't recognize your message. Please see the list of supported commands by sending " +
-					"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'\" class=\"command\">\"\/commands\"</span>", "block");
+					"<span onclick=\"document.getElementById(\'inputUserMessage\').value='\/commands'; inputUserMessage.focus();\" class=\"command\">\"\/commands\"</span>", "block");
 			}
 		}
 
