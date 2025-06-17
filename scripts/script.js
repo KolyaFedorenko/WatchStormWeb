@@ -474,7 +474,7 @@ function showStartPage() {
 					WatchStorm is a service for adding ratings<br>to movies and TV shows that you have watched.<br>WatchStorm is completely open source.
 				</span>
 				<div style="display: inline-flex; margin-top: 40px; width: 100%; justify-content: center;">
-					<div id="buttonStartPageSignUp" class="start-page-button">
+					<div id="buttonStartPageSignUp" class="start-page-button" style="margin-left: 0px;">
 						<i class="fa-solid fa-lock fa-2xs" style="color: white;"></i>
 						<span style="color: white; font-size: 14px; margin-left: 5px;">Sign Up</span>
 					</div>
