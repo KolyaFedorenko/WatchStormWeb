@@ -3,87 +3,130 @@
 
 <head>
 	<title>WatchStormWeb</title>
-	<link rel="icon" type="image/x-icon" href="images/watchstorm-icon2.png">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@^12.0.0/buffer.js"></script>
+	<script src="https://unpkg.com/@otplib/preset-browser@^12.0.0/index.js"></script>
+	<meta name="description" content="WatchStorm is a service for adding ratings to movies and TV shows that you've watched.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="images/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="images/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="images/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="images/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="images/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+	<link rel="manifest" href="images/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#141414">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#141414">
 </head>
 
 <body>
 	<dialog id="addMovieDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto;">
-		<dialog id="searchMovieDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; width: 25%; height: 25%; padding-top: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; overflow-y: scroll;">
-		</dialog>
 		<div class="default-container-content" style="padding-left: 20px; padding-right: 20px;">
 			<div style="display: flex; justify-content: center;">
-				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input" placeholder="Movie Title" style="width: 145px;">
-				<button id="buttonSearchMovie" class="button-login search-button" style="width: 40px; margin-left: 10px;">
+				<input autocomplete="off" id="movieTitleField" class="input-field dialog-input movie-title-field"
+					placeholder="Movie Title" style="width: 145px;">
+				<button id="buttonSearchMovie" class="default-button search-button"
+					style="width: 40px; margin-left: 10px;">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
-				<input autocomplete="off" id="movieYearField" class="input-field dialog-input" placeholder="Movie Year" style="width: 145px; margin-left: 10px;">
+				<input type="number" autocomplete="off" id="movieYearField" class="input-field dialog-input movie-year-field" placeholder="Movie Year"
+					style="width: 145px; margin-left: 10px;" oninput="if (this.value.length > 4) this.value = this.value.slice(0, 4); if (this.value > 2099) this.value = 2099;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<input autocomplete="off" id="moviePosterPath" class="input-field dialog-input" placeholder="Movie Image">
+				<input autocomplete="off" id="moviePosterPath" class="input-field dialog-input"
+					placeholder="Movie Image">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<input autocomplete="off" id="movieDescription" class="input-field dialog-input" placeholder="Movie Description" style="padding-left: 10px; padding-right: 10px;">
+				<input autocomplete="off" id="movieDescription" class="input-field dialog-input"
+					placeholder="Movie Description" style="padding-left: 10px; padding-right: 10px;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<input autocomplete="off" id="movieVisualRating" class="input-field dialog-input" placeholder="Visual">
-				<input autocomplete="off" id="movieCastRating" class="input-field dialog-input" placeholder="Cast" style="margin-left: 10px;">
-				<input autocomplete="off" id="moviePlotRating" class="input-field dialog-input" placeholder="Plot" style="margin-left: 10px;">
+				<input type="number" autocomplete="off" id="movieVisualRating" class="input-field dialog-input" placeholder="Visual" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
+				<input type="number" autocomplete="off" id="movieCastRating" class="input-field dialog-input" placeholder="Cast" style="margin-left: 10px;" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
+				<input type="number" autocomplete="off" id="moviePlotRating" class="input-field dialog-input" placeholder="Plot" style="margin-left: 10px;" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3); if (this.value > 100) this.value = 100;">
 			</div>
 			<div style="display: flex; justify-content: center; margin-top: 10px;">
-				<button id="buttonSaveRating" class="button-login">Save Rating For This Movie</button>
+				<button id="buttonSaveRating" class="default-button">Save Rating For This Movie</button>
 			</div>
-			<div id="notificationPleaseEnterMovieTitle" style="display: none; align-items: center; justify-content: center;">
+			<div id="notificationPleaseEnterMovieTitle" class="notification">
 				<div class="indicator-negative"></div>
-				<span class="default-text notification negative">Please enter movie title to search!</span>
+				<span class="default-text negative">Please enter movie title to search!</span>
 			</div>
-			<div id="notificationPleaseFillInAllFields" style="display: none; align-items: center; justify-content: center;">
+			<div id="notificationPleaseFillInAllFields" class="notification">
 				<div class="indicator-negative"></div>
-				<span class="default-text notification negative">Please fill in all fields!</span>
+				<span class="default-text negative">Please fill in all fields!</span>
 			</div>
 		</div>
 	</dialog>
-	<dialog id="movieDialog" class="default-container" data-delete="" style="position: fixed; z-index: 2; margin: auto;">
-		<img id="selectedMovieImage" style="width: 390px; height: 390px; object-fit: cover; display: block;">
+	<dialog id="searchMovieDialog" class="default-container search-movie-dialog"
+		style="position: fixed; z-index: 2; margin: auto; width: 360px; height: 240px; padding-top: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; overflow-y: scroll;">
+	</dialog>
+	<dialog id="movieDialog" class="default-container" data-delete=""
+		style="position: fixed; z-index: 2; margin: auto;">
+		<img class="selected-movie-image" id="selectedMovieImage" style="width: 390px; height: 390px; object-fit: cover; display: block;">
 		<div style="display: flex; justify-content: center;">
 			<button id="buttonDeleteMovie" class="button-delete-movie">
-				<i class="fa-regular fa-circle-xmark" style="padding-right: 5px;"></i>
+				<i class="fa-regular fa-circle-xmark fa-fw"></i>
 				Delete This Movie
 			</button>
 		</div>
 	</dialog>
-	<dialog id="timelineDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; width: 750px; height: 782px;">
+	<dialog id="timelineDialog" class="default-container timeline-dialog"
+		style="position: fixed; z-index: 2; margin: auto; width: 750px; height: 782px;">
+		<div class="unavailable-content-overlay">
+			<div style="display: block;">
+				<i class="fa-solid fa fa-3x fa-fw fa-circle-exclamation" style="width: 100%;"></i>
+				<span class="default-text" style="font-size: 20px; opacity: 0.75; margin-top: 10px; text-align: center; display: block;">Sorry, but this content<br>cannot be displayed on<br>a screen of this size</span>
+			</div>
+		</div>
 		<div style="height: 785px;">
 			<div>
 				<div class="timeline-dates-container">
 					<div class="timeline-date">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jun, 2022</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul,
+							2022</span>
 					</div>
 					<div class="timeline-date" style="margin-top: 90px;">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul, 2022</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Apr,
+							2024</span>
 					</div>
 					<div class="timeline-date" style="margin-top: 90px;">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Apr, 2024</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Apr,
+							2024</span>
 					</div>
 					<div class="timeline-date" style="margin-top: 90px;">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Apr, 2024</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul,
+							2024</span>
 					</div>
 					<div class="timeline-date" style="margin-top: 90px;">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul, 2024</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul,
+							2024</span>
 					</div>
 					<div class="timeline-date" style="margin-top: 90px;">
 						<div class="availability-indicator" style="background-color: rgb(255, 83, 83, 0.6);"></div>
-						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Jul, 2024</span>
+						<span class="default-text" style="color: rgb(255, 83, 83, 0.6); margin-left: 5px;">Aug,
+							2024</span>
 					</div>
-					<div class="timeline-date" style="background-color: rgb(82, 255, 174, 0.1); margin-top: 90px; filter: grayscale(0);">
+					<div class="timeline-date"
+						style="background-color: rgb(82, 255, 174, 0.1); margin-top: 90px; filter: grayscale(0);">
 						<div class="availability-indicator" style="background-color: rgb(82, 255, 174, 0.6);"></div>
-						<span class="default-text" style="color: rgb(82, 255, 174, 0.6); margin-left: 5px;">Aug, 2024</span>
+						<span class="default-text" style="color: rgb(82, 255, 174, 0.6); margin-left: 5px;">Jun,
+							2025</span>
 					</div>
 				</div>
 			</div>
@@ -96,27 +139,14 @@
 					<div class="timeline-dot"></div>
 					<div class="timeline-dot"></div>
 					<div class="timeline-dot"></div>
-					<div class="timeline-dot" style="background-color: rgb(59, 171, 118); filter: grayscale(0); box-shadow: 0 0 0px 6px rgba(59, 171, 118, 0.1);"></div>
+					<div class="timeline-dot"
+						style="background-color: rgb(59, 171, 118); filter: grayscale(0); box-shadow: 0 0 0px 6px rgba(59, 171, 118, 0.1);">
+					</div>
 				</div>
 			</div>
 			<div>
 				<div class="timeline-events-container" style="left: 140px; padding-left: 0px;">
 					<div class="timeline-event-title-and-description">
-						<div style="display: inline-flex;">						
-							<span class="default-text">WatchStorm 1.4</span>
-							<div class="label">
-								<i class="fa-brands fa-android" style="color: white;"></i>
-								<span class="default-text">Mobile</span>
-							</div>
-						</div>
-						<div>
-							<span class="default-text" style="opacity: 0.5;">
-								First official release of the WatchStorm alpha version. The functions of adding and deleting movies and TV series,
-								searching for them, as well as the application and profile settings section are available.
-							</span>
-						</div>
-					</div>
-					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
 						<div style="display: inline-flex;">
 							<span class="default-text">WatchStormWeb 1.2</span>
 							<div class="label">
@@ -126,8 +156,10 @@
 						</div>
 						<div>
 							<span class="default-text" style="opacity: 0.5;">
-								WatchStormWeb has officially launched. The functions of adding and deleting movies and TV series,
-								searching for them, as well as a list of favorite movies are available. The website design is aligned
+								WatchStormWeb has officially launched. The functions of adding and deleting movies and
+								TV series,
+								searching for them, as well as a list of favorite movies are available. The website
+								design is aligned
 								with the mobile application design.
 							</span>
 						</div>
@@ -142,12 +174,13 @@
 						</div>
 						<div>
 							<span class="default-text" style="opacity: 0.5;">
-								Redesign of over 90% of the website. The "WatchStorm News" section has been added, movie and TV series
+								Redesign of over 90% of the website. The "WatchStorm News" section has been added, movie
+								and TV series
 								posters have been replaced with placeholders, and many minor bugs have been fixed.
 							</span>
 						</div>
 					</div>
-					<div class="timeline-event-title-and-description" style="margin-top: 32px;">
+					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
 						<div style="display: inline-flex;">
 							<span class="default-text">WatchStorm 1.6</span>
 							<div class="label">
@@ -157,13 +190,14 @@
 						</div>
 						<div>
 							<span class="default-text" style="opacity: 0.5;">
-								Redesign of most of the application. Added the ability to specify a 6-digit code to access WatchStormWeb,
+								Redesign of most of the application. Added the ability to specify a 6-digit code to
+								access WatchStormWeb,
 								updated authorization dialog. Added placeholders for movie and TV series posters.
 								The application is now digitally signed with a certificate. Minor bugs fixed.
 							</span>
 						</div>
 					</div>
-					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
+					<div class="timeline-event-title-and-description" style="margin-top: 32px;">
 						<div style="display: inline-flex;">
 							<span class="default-text">WatchStormWeb 1.6</span>
 							<div class="label">
@@ -173,12 +207,14 @@
 						</div>
 						<div>
 							<span class="default-text" style="opacity: 0.5;">
-								Minor website redesign and many technical changes. Many bugs have been fixed, from minor to critical.
-								Added a settings section, the ability to import and export a list of movies and TV series and many other useful features.
+								Minor website redesign and many technical changes. Many bugs have been fixed, from minor
+								to critical.
+								Added a settings section, the ability to import and export a list of movies and TV
+								series and many other useful features.
 							</span>
 						</div>
 					</div>
-					<div class="timeline-event-title-and-description" style="margin-top: 32px;">
+					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
 						<div style="display: inline-flex;">
 							<span class="default-text">WatchStorm 1.6.2</span>
 							<div class="label">
@@ -188,12 +224,14 @@
 						</div>
 						<div>
 							<span class="default-text" style="opacity: 0.5;">
-								Minor app redesign. Renamed application package, added display of notification when password is changed,
-								Added display of notification when setting a 6-digit code. The application is digitally signed with a certificate.
+								Minor application redesign. Renamed application package, added display of notification when
+								password is changed,
+								added display of notification when setting a 6-digit code. The application is digitally
+								signed with a certificate.
 							</span>
 						</div>
 					</div>
-					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
+					<div class="timeline-event-title-and-description" style="margin-top: 32px;">
 						<div style="display: inline-flex;">
 							<span class="default-text">WatchStormWeb 1.6.2</span>
 							<div class="label">
@@ -201,10 +239,28 @@
 								<span class="default-text">Web</span>
 							</div>
 						</div>
+						<div>
+							<span class="default-text" style="opacity: 0.5;">
+								Added WatchStorm Assistant and timeline of WatchStorm versions, as well as indicators in
+								notifications.
+								Changed how the website receives images. Minor website redesign. Minor bugs fixed.
+							</span>
+						</div>
+					</div>
+					<div class="timeline-event-title-and-description" style="margin-top: 30px;">
+						<div style="display: inline-flex;">
+							<span class="default-text">WatchStormWeb 1.6.4</span>
+							<div class="label">
+								<i class="fa-solid fa-code" style="color: white;"></i>
+								<span class="default-text">Web</span>
+							</div>
+						</div>
 						<div style="display: inline-flex;">
 							<span class="default-text" style="opacity: 0.5;">
-								Added WatchStorm Assistant and timeline of WatchStorm versions, as well as indicators in notifications.
-								Changed how the website receives images. Minor website redesign. Minor bugs fixed.
+								Minor website redesign and complete animations rework. Minor dialogs rework.
+								Many bugs fixed, from minor to critical. Fixed many critical security issues.
+								Added 2FA. Full adaptation of the website for mobile devices.
+								Many minor innovations and fixes.
 							</span>
 						</div>
 					</div>
@@ -212,51 +268,58 @@
 			</div>
 		</div>
 	</dialog>
-	<dialog id="informationDialog" class="default-container" data-delete="" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+	<dialog id="informationDialog" class="default-container" data-delete=""
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center;">
-			<img src="images/watchstorm-icon2.png" style="width: 100px; height: 100px; object-fit: cover; display: block;">
+			<img src="images/watchstorm-icon2.png"
+				style="width: 100px; height: 100px; object-fit: cover; display: block;">
 			<span class="vertical-line"></span>
-			<div style="margin-left: 20px; color: white;">
+			<div class="watchstormweb-info" style="margin-left: 20px; color: white;">
 				<span>WatchStormWeb</span>
 				<span id="spanReleaseVersion" class="movie-year">Version: <span class="version">1.2</span></span>
 				<span id="spanReleaseDate" class="movie-year">Released: 18.07.2022</span>
-				<span id="spanShowReleaseNotes" class="movie-year" style="text-decoration: underline; cursor: pointer;">Release Notes</span>
+				<span id="spanShowReleaseNotes" class="movie-year"
+					style="text-decoration: underline; cursor: pointer; width: fit-content;">Release Notes</span>
 			</div>
 		</div>
-		<div id="releaseNotesContainer" class="accent-container" style="display: none; margin-top: 20px;">
+		<div id="releaseNotesContainer" class="release-notes-container release-notes-container-hidden">
 			<span id="spanReleaseNotes" class="default-text">Release Notes</span>
 		</div>
 	</dialog>
-	<dialog id="changeDigitCodeDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+	<dialog id="changePasswordDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center; justify-content: center;">
-			<span class="default-text">Change 6-digit code</span>
+			<span class="default-text">Change password</span>
 		</div>
 		<div class="accent-container" style="margin-top: 10px;">
 			<span class="default-text">
-				Please enter a new 6-digit code to access WatchStormWeb and click the "Save 6-digit code" button.
-				In case you forget the 6-digit code and you do not have access to WatchStormWeb, you can log into
-				the WatchStorm mobile application using your password and change the 6-digit code in the "WatchStormWeb" settings section.
+				Please enter your new password in the "Your new password" field, then confirm it by entering it again in the field below.
+				Then click the "Change password" button. Please note that the passwords you enter must match.
 			</span>
 		</div>
-		<input autocomplete="off" id="inputNewDigitCode" type="number" class="input-field dialog-input" placeholder="6-digit code" style="margin-top: 10px;">
-		<button id="buttonSaveDigitCode" disabled class="button-login" style="margin-top: 10px;">Save 6-digit code</button>
-		<div id="notificationDigitCodeHasBeenChanged" style="display: none; align-items: center; justify-content: center;">
+		<input autocomplete="off" id="inputNewPassword" type="password" class="input-field dialog-input" placeholder="Your new password" style="margin-top: 10px;" oninput="if (inputNewPassword.value !== '' && inputСonfirmNewPassword !== '' && inputNewPassword.value === inputСonfirmNewPassword.value) { buttonChangePassword.disabled = false;} else { buttonChangePassword.disabled = true; }">
+		<input autocomplete="off" id="inputСonfirmNewPassword" type="password" class="input-field dialog-input" placeholder="Confirm new password" style="margin-top: 10px;" oninput="if (inputNewPassword.value !== '' && inputСonfirmNewPassword !== '' && inputNewPassword.value === inputСonfirmNewPassword.value) { buttonChangePassword.disabled = false;} else { buttonChangePassword.disabled = true; }">
+		<button id="buttonChangePassword" disabled class="default-button" style="margin-top: 10px;">Change password</button>
+		<div id="notificationPasswordHasBeenChanged" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Your 6-digit code has been successfully changed!</span>
+			<span class="default-text positive">Your password has been successfully changed!</span>
 		</div>
-		<div id="notificationEnterValidDigitCode" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationEnterValidPassword" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please enter the correct 6-digit code!</span>
+			<span class="default-text negative">Please enter the correct password!</span>
 		</div>
 	</dialog>
-	<dialog id="importMoviesDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+	<dialog id="importMoviesDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center; justify-content: center;">
 			<span class="default-text">Import movies from JSON</span>
 		</div>
 		<div class="accent-container" style="margin-top: 10px;">
 			<span class="default-text">
-				Please note that importing movies from JSON will replace any movies you added with the movies from the file.
-				If you need to save the movies you added, please export them to JSON and copy the contents into the file you want to import.
+				Please note that importing movies from JSON will replace any movies you added with the movies from the
+				file.
+				If you need to save the movies you added, please export them to JSON and copy the contents into the file
+				you want to import.
 				Please do not upload multiple files at once, this may result in them being saved incorrectly.
 			</span>
 		</div>
@@ -268,19 +331,22 @@
 				<span class="default-text drop-zone-text">Drop a list of movies in JSON format here</span>
 			</div>
 			<div id="uploadedItem" class="uploaded-item">
-				<i style="margin-left: 70px; margin-top: 60px; filter: grayscale(1);" class="fa-solid fa-file fa fa-5x"></i>
+				<i style="margin-left: 70px; margin-top: 60px; filter: grayscale(1);"
+					class="fa-solid fa-file fa fa-5x"></i>
 				<div class="file-name-container">
 					<span id="uploadedFileName" class="file-name">movies.json</span>
 				</div>
 			</div>
 		</div>
-		<button id="buttonSaveImportedMovies" class="button-login" style="display: none; margin-top: 10px;">Import movies</button>
-		<div id="notificationUploadFileInJsonFormat" style="display: none; align-items: center; justify-content: center;">
+		<button id="buttonSaveImportedMovies" class="default-button" style="display: none; margin-top: 10px;">Import
+			movies</button>
+		<div id="notificationUploadFileInJsonFormat" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please upload file in JSON format!</span>
+			<span class="default-text negative">Please upload file in JSON format!</span>
 		</div>
 	</dialog>
-	<dialog id="leaveFeedbackDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+	<dialog id="leaveFeedbackDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center; justify-content: center;">
 			<span class="default-text">Leave a feedback</span>
 		</div>
@@ -291,62 +357,154 @@
 			</span>
 		</div>
 		<textarea id="inputFeedbackText" maxlength="340" placeholder="Your feedback..."></textarea>
-		<button id="buttonSendFeedback" class="button-login" style="background-color: rgb(40, 40, 40); margin-top: 10px;">Send feedback</button>
-		<div id="notificationFeedbackHasBeenSent" style="display: none; align-items: center; justify-content: center;">
+		<button id="buttonSendFeedback" class="default-button"
+			style="background-color: rgba(40, 40, 40, 0.75); margin-top: 10px;">Send feedback</button>
+		<div id="notificationFeedbackHasBeenSent" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Your feedback has been sent!</span>
+			<span class="default-text positive">Your feedback has been sent!</span>
 		</div>
-		<div id="notificationPleaseFillFeedbackField" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationPleaseFillFeedbackField" class="notification">
 			<div class="indicator-negative"></div>
-			<span class="default-text notification negative">Please fill in the feedback field!</span>
+			<span class="default-text negative">Please fill in the feedback field!</span>
 		</div>
 	</dialog>
-	<dialog id="contactTheDeveloperDialog" class="default-container" style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+	<dialog id="contactTheDeveloperDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
 		<div style="display: flex; align-items: center; justify-content: center;">
 			<span class="default-text">Contact the developer</span>
 		</div>
 		<div class="accent-container" style="margin-top: 10px;">
 			<span class="default-text">
-				If you would like to contact the developer of WatchStorm regarding any issue, please send an email to this email address:
+				If you would like to contact the developer of WatchStorm regarding any issue, please send an email to
+				this email address:
 			</span>
 		</div>
-		<div class="accent-container" style="margin-top: 10px; display: flex; align-items: center; justify-content: center;">
+		<div class="accent-container"
+			style="margin-top: 10px; display: flex; align-items: center;">
 			<div style="filter: grayscale(1);">
 				<i class="fa-solid fa-envelope fa fa-fw"></i>
 			</div>
-			<span class="default-text" style="margin-left: 10px; margin-right: 80px;">
+			<span class="default-text" style="margin-left: 5px;">
 				administrator@watchstorm.ru
 			</span>
 			<div id="buttonCopyEmail" class="copy-button">
-				<i class="fa-solid fa-copy fa fa-fw"></i>
+				<i class="fa-solid fa-copy fa-xs fa-fw" style="color: white;"></i>
 			</div>
 		</div>
-		<div id="notificationEmailHasBeenCopied" style="display: none; align-items: center; justify-content: center;">
+		<div id="notificationEmailHasBeenCopied" class="notification">
 			<div class="indicator-positive"></div>
-			<span class="default-text notification positive">Email has been copied to clipboard!</span>
+			<span class="default-text positive">Email has been copied to clipboard!</span>
+		</div>
+	</dialog>
+	<dialog id="verifiedAccountDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Verified Account</span>
+		</div>
+		<div class="accent-container">
+			<span class="default-text">
+				<span id="spanVerifedUserUsername" class="default-text" style="opacity: 0.75;">User</span><span class="default-text" style="opacity: 0.75;">'s</span>
+				account is marked with a verification badge
+				as it has been verified through the 
+				<span class="default-text" style="opacity: 0.75;">WatchStorm Verification Program.</span>
+			</span>
+		</div>
+		<div class="accent-container" style="padding-left: 16px;">
+			<div style="display: inline-flex; align-items: center; width: 100%; height: 25px;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.75;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76" stroke="transparent"/><path d="m9 12 2 2 4-4" stroke="#fff"/></svg>
+				<span class="default-text" style="opacity: 0.75; margin-left: 2px;">WatchStorm ID:</span>
+				<span id="spanWatchStormId" class="default-text watchstorm-id" style="opacity: 0.5; margin-left: 5px;">86U406J32A86U406J32A</span>
+			</div>
+		</div>
+	</dialog>
+	<dialog id="confirmationDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Confirmation</span>
+		</div>
+		<div class="accent-container">
+			<span class="default-text">
+				Are you sure you want to <span id="spanActionDescription" class="default-text">continue</span>? Please click <span class="accent-text">Confirm</span>
+				if you are ready to confirm this action, or <span class="accent-text">Cancel</span> to close this dialog.
+			</span>
+		</div>
+		<div style="display: inline-flex; width: 100%; margin-top: 10px;">
+			<button id="buttonCancelConfirmationDialog" class="default-button">Cancel</button>
+			<button id="buttonConfirmAction" data-action="none" class="default-button" style="margin-left: 10px;">Confirm</button>
+		</div>
+	</dialog>
+	<dialog id="configureTwoFactorAuthenticationDialog" class="default-container"
+		style="position: fixed; z-index: 2; margin: auto; padding: 20px;">
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<span class="default-text">Configure 2FA</span>
+		</div>
+		<div class="accent-container">
+			<span id="spanConfigureTwoFactorAuthenticationDescription" class="default-text">
+				Here you can enable <span class="accent-text">two-factor authentication</span> to protect your account. 
+				Scan the QR code below with any <span class="accent-text">authenticator app</span> 
+				(e.g. Google Authenticator, Microsoft Authenticator, etc.) or enter the <span class="accent-text">setup key</span>
+				(TOTP secret) in the authenticator app, then enter the 6-digit code from the authenticator app in the field below.
+			</span>
+		</div>
+		<div id="qrCodeContainerContent" class="qrcode-container accent-container" style="display: inline-flex; padding: 20px;">
+			<div id="qrcodeContainer" class="qrcode-container-content">
+				<img src="/images/qr-code-placeholder.png" style="display: block;">
+			</div>
+			<div class="qrcode-container-inner">
+				<div class="scan-this-qr-code-container" style="padding: 10px; background-color: rgba(40, 40, 40, 1); border-radius: 10px; display: inline-flex; align-items: center; width: 100%; opacity: 0.75;">
+					<i class="fa-solid fa-arrow-left fa-2xs fa-fw" style="color: white;"></i>
+					<span class="default-text" style="margin-left: 2px;">Scan this QR code</span>
+				</div>
+				<div class="setup-key-container" style="padding: 10px; background-color: rgba(40, 40, 40, 1); border-radius: 10px; display: block; width: 100%; margin-top: 10px;">
+					<div style="display: flex; align-items: center;">
+						<i class="fa-solid fa-2xs fa-fw fa-lock" style="color: white; opacity: 0.75;"></i>
+						<span class="default-text" style="opacity: 0.75; margin-left: 2px;">Setup Key:</span>
+					</div>
+					<span id="spanSetupKeyValue" class="default-text setup-key-value" style="opacity: 0.5; overflow-wrap: anywhere; font-size: 12px;">MXR5XLKADY63ZHZX</span>
+				</div>
+				<input id="inputTwoFactorAuthenticationDigitCode" autocomplete="off" type="number" class="input-field dialog-input totp-input" placeholder="6-digit code" style="margin-top: 10px; height: 33px; border-radius: 10px;" oninput="if (this.value.length > 6) this.value = this.value.slice(0, 6); if (this.value.length === 6) buttonSetupTwoFactorAuthentication.disabled = false; else buttonSetupTwoFactorAuthentication.disabled = true;">
+			</div>
+		</div>
+		<div style="display: inline-flex; width: 100%; margin-top: 10px;">
+			<button id="buttonSetupTwoFactorAuthentication" class="default-button" disabled>Configure 2FA</button>
+		</div>
+		<div id="notificationTwoFactorAuthenticationHasBeenConfigured" class="notification">
+			<div class="indicator-positive"></div>
+			<span class="default-text positive">2FA has been successfully configured!</span>
+		</div>
+		<div id="notificationTwoFactorAuthenticationHasBeenDisabled" class="notification">
+			<div class="indicator-positive"></div>
+			<span class="default-text positive">2FA has been successfully disabled!</span>
+		</div>
+		<div id="notificationEnterValidDigitCode" class="notification">
+			<div class="indicator-negative"></div>
+			<span class="default-text negative">Please enter the correct 6-digit code!</span>
 		</div>
 	</dialog>
 	<div class="limiter">
 		<div id="sidebar" class="sidebar">
 			<div id="headersContainer" class="headers-container">
 				<div id="menuHeader" class="menu-header">
-					<img id="logo" src="images/watchstorm-icon2.png" style="max-width: 12%; height: 16px; transition-duration: 1s;">
-					<header id="appname" style="transition-duration: 1000ms; font-weight: 500; margin-left: 5px; font-size: 16px;">WatchStormWeb</header>
+					<img id="logo" src="images/watchstorm-icon2.png"
+						style="max-width: 12%; height: 16px; transition-duration: 1s;">
+					<header id="appname"
+						style="transition-duration: 1000ms; font-weight: 500; margin-left: 5px; font-size: 16px;">
+						WatchStormWeb</header>
 				</div>
 			</div>
 			<ul>
-				<li><a id="moviesButton"><i class="fa-solid fa-film fa fa-fw"></i>My Movies</a></li>
-				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i>My Favorite Movies</a></li>
-				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i>Add New Movie</a></li>
-				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i>WatchStorm News</a></li>
-				<li><a id="recommendationsButton"><i class="fa-solid fa-floppy-disk fa fa-fw"></i>WatchStorm Assistant</a></li>
-				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i>Settings</a></li>
-				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i>Sign Out</a></li>
+				<li><a id="moviesButton"><i class="fa-solid fa-film fa fa-fw"></i><span class="default-text" style="font-size: 16px;">My Movies</span></a></li>
+				<li><a id="favoriteMoviesButton"><i class="fa-solid fa-heart fa fa-fw"></i><span class="default-text" style="font-size: 16px;">My Favorite Movies</span></a></li>
+				<li><a id="addNewMovieButton"><i class="fa-solid fa-calculator fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Add New Movie</span></a></li>
+				<li><a id="newsButton"><i class="fa-solid fa-fire fa fa-fw"></i><span class="default-text" style="font-size: 16px;">WatchStorm News</span></a></li>
+				<li><a id="recommendationsButton"><i class="fa-solid fa-floppy-disk fa fa-fw"></i><span class="default-text" style="font-size: 16px;">WatchStorm Assistant</span></a></li>
+				<li><a id="settingsButton"><i class="fa-solid fa-gear fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Settings</span></a></li>
+				<li><a id="signOutButton"><i class="fa-solid fa-power-off fa fa-fw"></i><span class="default-text" style="font-size: 16px;">Sign Out</span></a></li>
 			</ul>
-	   </div>
-		<div id="moviesList" class="movies-list">
 		</div>
+		<div id="moviesList" class="movies-list"></div>
 	</div>
 	<script type="module" src="scripts/script.js"></script>
 </body>
+
 </html>
