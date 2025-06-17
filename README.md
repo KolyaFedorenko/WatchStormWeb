@@ -9,7 +9,7 @@
 WatchStormWeb is a web version of the WatchStorm mobile app designed to add ratings to movies or TV shows you've watched.
 
 ### Features of WatchStormWeb:
-- Authorization using the 6-digit code specified in the WatchStorm mobile application
+- Authorization and registration in WatchStorm
 - Automatic synchronization with mobile application in real time
 - Storing all data in Firebase Realtime Database and Firebase Storage
 - Automatic movie search by title
