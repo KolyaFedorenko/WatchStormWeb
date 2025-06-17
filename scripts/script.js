@@ -658,6 +658,17 @@ function setOnAddNewMovieButtonClickListener() {
 								}
 							}
 						}
+					})
+					.catch((error) => {
+						searchMovieDialog.innerHTML += 
+						`
+						<div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+							<div style="opacity: 0.75;">
+								<i class="fa-solid fa-2x fa-fw fa-magnifying-glass" style="width: 100%; color: white;"></i>
+								<span class="default-text" style="font-size: 16px; margin-top: 10px; text-align: center; display: block; margin-bottom: 10px;">Sorry, but nothing was found<br>for your request</span>
+							</div>
+						</div>
+						`;
 					});
 			}
 			else {
