@@ -1308,7 +1308,7 @@ img {
   }
   
   .movies-list {
-    padding-top: 50px;
+    padding-top: 5px;
     padding-bottom: 70px;
   }
 
@@ -1476,12 +1476,7 @@ img {
   }
 
   .menu-header {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    top: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background-color: rgba(20, 20, 20, 1);
+    display: none !important;
   }
 
   .user-info-header {
