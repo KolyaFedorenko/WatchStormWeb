@@ -199,6 +199,7 @@ progress::-webkit-progress-value {
   background-color: rgb(20, 20, 20);
   transition: all 0.5s ease;
   z-index: 1;
+  padding-inline: 20px;
 }
 
 .sidebar-visible {
@@ -209,22 +210,37 @@ progress::-webkit-progress-value {
   font-size: 16px;
   color: white;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 140px;
+  text-overflow: ellipsis;
 }
 
 .sidebar ul a {
   display: block;
   height: 100%;
   width: 100%;
-  line-height: 100px;
+  line-height: 75px;
   font-size: 16px;
   color: white;
   padding-left: 20px;
+  margin-top: 10px;
   box-sizing: border-box;
+  border-radius: 15px;
   transition: 0.4s;
   text-decoration: none;
   filter: grayscale(100%);
   cursor: pointer;
   user-select: none;
+}
+
+ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+ul li {
+  list-style-type: none;
 }
 
 ul li:hover a {
@@ -294,6 +310,7 @@ input::placeholder {
   justify-content: left;
   align-items: center;
   padding-left: 20px;
+  border-radius: 15px;
   transform-origin: top;
   animation-duration: 1500ms;
 }
@@ -1416,6 +1433,7 @@ img {
     background-color: transparent;
     pointer-events: none;
     transform: translate(-800px);
+    padding: 0;
   }
 
   .sidebar ul {
@@ -1441,6 +1459,7 @@ img {
     padding: 0px;
     font-size: 12px;
     width: 100%;
+    margin-top: 0;
   }
 
   .sidebar ul a i {
