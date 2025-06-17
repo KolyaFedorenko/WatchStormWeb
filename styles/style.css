@@ -1282,6 +1282,10 @@ img {
   }
 }
 
+.menu-header-alternative {
+  display: none;
+}
+
 @media screen and (max-device-width: 768px) {
   .default-container {
     width: 90%;
@@ -1477,6 +1481,21 @@ img {
 
   .menu-header {
     display: none !important;
+  }
+
+  .menu-header-alternative {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: sticky;
+    height: 50px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(20, 20, 20, 1);
+    z-index: 5;
   }
 
   .user-info-header {
