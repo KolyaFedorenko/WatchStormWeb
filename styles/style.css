@@ -290,45 +290,21 @@ input::placeholder {
 }
 
 .user-info-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 20px;
   transform-origin: top;
   animation-duration: 1500ms;
-  animation-name: scale-user-info-header;
-}
-
-@keyframes scale-user-info-header {
-  from {
-    transform: scaleY(0);
-  }
-
-  to {
-    transform: scaleY(1);
-  }
 }
 
 .user-info-container {
   display: flex;
   justify-content: start;
   align-items: center;
-  padding-left: 20px;
-  padding-top: 5%;
   animation-duration: 2s;
-  animation-name: translate-user-info-container;
   filter: grayscale(100%);
   transition-duration: 1s;
-}
-
-@keyframes translate-user-info-container {
-  from {
-    transform: translateX(-300px);
-  }
-
-  50% {
-    transform: translateX(-300px);
-  }
-
-  to {
-    transform: translateX(0px);
-  }
 }
 
 .user-info-container:hover {
@@ -1274,6 +1250,21 @@ img {
   transition-duration: 1000ms;
 }
 
+.empty-movies-list-message-container {
+  animation: empty-movies-list-message-animation 500ms;
+}
+
+@keyframes empty-movies-list-message-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media screen and (max-device-width: 768px) {
   .default-container {
     width: 90%;
@@ -1564,6 +1555,10 @@ img {
     height: 40% !important;
   }
 
+  .search-movie-dialog {
+    width: 340px !important;
+  }
+
   .unavailable-content-overlay {
     display: flex;
   }
@@ -1599,6 +1594,82 @@ img {
   .totp-input {
     height: 40px !important;
     margin-top: 10px !important;
+  }
+
+  .empty-movies-list-message-header{
+    font-size: 20px !important;
+  }
+
+  .empty-movies-list-message-description{
+    width: 300px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (max-device-width: 374px) {
+  .movie-title {
+    max-width: 80px;
+  }
+
+  .sidebar ul li{
+    width: 13.2%;
+  }
+
+  .ratings-names {
+    width: 35% !important;
+  }
+
+  .audience-average-rating {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+    text-overflow: ellipsis;
+  }
+
+  .search-movie-dialog {
+    width: 290px !important;
+  }
+
+  .watchstorm-assistant-container span {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    text-overflow: ellipsis;
+  }
+
+  .vertical-line {
+    margin-left: 10px !important;
+  }
+
+  .watchstormweb-info {
+    margin-left: 10px !important;
+  }
+
+  .copy-button {
+    display: none;
+  }
+
+  .drop-zone {
+    display: block;
+    height: 115px;
+  }
+  
+  .setup-key-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .setup-key-container span{
+    margin-top: 0 !important;
+  }
+
+  .setup-key-container :nth-child(1){
+    display: none !important;
+  }
+
+  .watchstorm-id {
+    max-width: 80px !important;
   }
 }
 

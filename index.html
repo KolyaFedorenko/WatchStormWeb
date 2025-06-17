@@ -54,7 +54,7 @@
 			</div>
 		</div>
 	</dialog>
-	<dialog id="searchMovieDialog" class="default-container"
+	<dialog id="searchMovieDialog" class="default-container search-movie-dialog"
 		style="position: fixed; z-index: 2; margin: auto; width: 360px; height: 240px; padding-top: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; overflow-y: scroll;">
 	</dialog>
 	<dialog id="movieDialog" class="default-container" data-delete=""
@@ -62,7 +62,7 @@
 		<img class="selected-movie-image" id="selectedMovieImage" style="width: 390px; height: 390px; object-fit: cover; display: block;">
 		<div style="display: flex; justify-content: center;">
 			<button id="buttonDeleteMovie" class="button-delete-movie">
-				<i class="fa-regular fa-circle-xmark" style="padding-right: 5px;"></i>
+				<i class="fa-regular fa-circle-xmark fa-fw"></i>
 				Delete This Movie
 			</button>
 		</div>
@@ -259,7 +259,7 @@
 			<img src="images/watchstorm-icon2.png"
 				style="width: 100px; height: 100px; object-fit: cover; display: block;">
 			<span class="vertical-line"></span>
-			<div style="margin-left: 20px; color: white;">
+			<div class="watchstormweb-info" style="margin-left: 20px; color: white;">
 				<span>WatchStormWeb</span>
 				<span id="spanReleaseVersion" class="movie-year">Version: <span class="version">1.2</span></span>
 				<span id="spanReleaseDate" class="movie-year">Released: 18.07.2022</span>

@@ -25,7 +25,7 @@ const dbRef = ref(db);
 
 const moviesList = document.getElementById("moviesList");
 
-function getUserMovies(username, favorite) {
+function getUserMovies(username, isFavorite) {
 	get(child(dbRef, "WatchStorm/" + username + "/Movies/")).then((snapshot) => {
 		let movies = snapshot.val();
 		for (let movie in movies) {
@@ -99,7 +99,7 @@ function getUserMovies(username, favorite) {
 								<span class="default-text rating-name">
 									Your average rating:
 								</span>
-								<span class="default-text rating-name">
+								<span class="default-text rating-name audience-average-rating">
 									Audience average rating:
 								</span>
 							</div>
@@ -122,7 +122,7 @@ function getUserMovies(username, favorite) {
 				</div>
 			</div>
             `;
-			if (favorite) {
+			if (isFavorite) {
 				if (movies[movie].compositeRating == 100) {
 					moviesList.innerHTML += movieItem;
 					document.querySelectorAll('.movie').forEach(el => el.classList.add('favorite-movie'));
@@ -131,6 +131,23 @@ function getUserMovies(username, favorite) {
 			else {
 				moviesList.innerHTML += movieItem;
 			}
+		}
+		if (snapshot.val() === null) {
+			moviesList.innerHTML += 
+			`
+				<div class="empty-movies-list-message-container">
+					<div style="display: flex; align-items: center; justify-content: center;">
+						<span class="default-text empty-movies-list-message-header" style="font-size: 30px;">Oops! Your movies list is empty.</span>
+					</div>
+					<div style="margin-top: 10px;">
+						<span class="default-text empty-movies-list-message-description" style="opacity: 0.5; font-size: 20px; text-align: center; display: block; width: 500px;">
+							It seems you haven't added any movies or TV shows yet.
+							You can add a movie or TV show by clicking the "Add New Movie" button,
+							and it will be displayed here.
+						</span>
+					</div>
+				</div>
+			`;
 		}
 	});
 }
@@ -496,10 +513,10 @@ function updateUserDataInSidebar(username) {
 		`
 	<div id="userInfoHeader" class="user-info-header" style="height: 75px; background-color: rgba(30, 30, 30, 1);">
 		<div class="user-info-container">
-			<div style="display:flex-inline; align-items:center; justify-content:center;">
+			<div style="width: 50px; height: 50px;">
 				<img id="userProfileImage" src="images/profile-image-placeholder.png" style="max-width: 50px; height: 50px; transition-duration: 1s; border-radius: 50%;">
 			</div>
-			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px; padding-bottom: 5px;">
+			<div style="display:block; align-items:center; justify-content:center; margin-left: 10px;">
 				<div id="usernameContainer" style="display: inline-flex;">
 					<header id="username" style="transition-duration: 1000ms; font-weight: 500; font-size: 16px;">${username}</header>
 				</div>
@@ -520,9 +537,13 @@ function updateUserDataInSidebar(username) {
 		}
 	});
 
-	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`)).then((url) => {
-		userProfileImage.src = url;
-	});
+	getDownloadURL(sRef(storage, `${username}/Images/ProfileImage.jpg`))
+		.then((url) => {
+			userProfileImage.src = url;
+		})
+		.catch((error) => {
+			userProfileImage.src = "/images/profile-image-placeholder-alternative.png";
+		});;
 }
 
 function setOnFavoriteMoviesButtonClickListener(username) {
@@ -1482,6 +1503,6 @@ class WatchStormCrypto {
 	}
 }
 
-window.onload = async function () {
+window.onload = function () {
 	authorizeUser();
 }
