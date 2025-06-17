@@ -574,6 +574,13 @@ function setOnAddNewMovieButtonClickListener() {
 		let addMovieDialog = document.getElementById("addMovieDialog");
 		addMovieDialog.showModal();
 
+		addMovieDialog.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+				searchMovieByTitle();
+			}
+		});
+
 		setOnOutsideDialogClickListener(addMovieDialog, function () {
 			if (searchMovieDialog != null) {
 				searchMovieDialog.innerHTML = '';
@@ -582,6 +589,10 @@ function setOnAddNewMovieButtonClickListener() {
 		});
 
 		buttonSearchMovie.onclick = function () {
+			searchMovieByTitle();
+		}
+
+		function searchMovieByTitle() {
 			searchMovieDialog.innerHTML = '';
 			let movieTitleField = document.getElementById("movieTitleField");
 			let url;
